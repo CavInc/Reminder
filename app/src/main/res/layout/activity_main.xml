@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="cav.reminder.ui.activites.MainActivity">
+    tools:context=".ui.activites.activites.activites.MainActivity">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -21,7 +21,8 @@
         <ImageView
             android:layout_width="@dimen/img_size_24"
             android:layout_height="@dimen/img_size_24"
-            android:id="@+id/imageView"/>
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_add_black_24dp"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -29,7 +30,7 @@
             android:id="@+id/imageButton"/>
     </LinearLayout>
 
-    <ExpandableListView
+    <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listView"/>

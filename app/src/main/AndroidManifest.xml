@@ -6,7 +6,7 @@
     android:icon="@mipmap/ic_launcher"
     android:theme="@style/AppTheme"
     android:label="@string/app_name">
-    <activity android:name="cav.reminder.ui.activites.MainActivity">
+    <activity android:name=".ui.activites.MainActivity">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
             <category android:name="android.intent.category.LAUNCHER"/>
