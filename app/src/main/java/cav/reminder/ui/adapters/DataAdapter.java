@@ -15,11 +15,13 @@ import cav.reminder.data.RecordHeaderRes;
 public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
 
     private LayoutInflater mInflater;
+    private int resLayout;
     private RecordHeaderRes[] objects;
 
     public DataAdapter(Context context, int resource, RecordHeaderRes[] objects) {
         super(context, resource, objects);
-        this.objects=objects;
+        //this.objects=objects;
+        resLayout = resource;
         mInflater = LayoutInflater.from(context);
     }
 
@@ -29,7 +31,7 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         View row=convertView;
         System.out.println(mInflater);
         if(row==null){
-            row = super.getView(position,convertView,parent);
+            row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
             holder.headerRec = (TextView) row.findViewById(R.id.recordTitle);
             holder.dataRec = (TextView) row.findViewById(R.id.dateTitle);
@@ -39,12 +41,11 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             holder = (ViewHolder)row.getTag();
 
         }
-        RecordHeaderRes record = objects[position];
+
+        RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
         holder.bodyRec.setText(record.getBodyRec());
 
-
-       // return super.getView(position, convertView, parent);
         return row;
     }
 

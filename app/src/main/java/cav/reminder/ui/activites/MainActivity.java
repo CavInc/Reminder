@@ -33,7 +33,7 @@ public class MainActivity extends BaseActivity {
 
         };
 
-        ListAdapter adapter = new DataAdapter(this,R.layout.main_item_list,record);
+        DataAdapter adapter = new DataAdapter(this,R.layout.main_item_list,record);
         mListView.setAdapter(adapter);
 
 
