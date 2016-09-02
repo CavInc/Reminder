@@ -9,6 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import cav.reminder.R;
 import cav.reminder.data.RecordHeaderRes;
 
@@ -44,9 +48,15 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
 
         RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
+        holder.dataRec.setText(dateToStr(record.getDate()));
         holder.bodyRec.setText(record.getBodyRec());
 
         return row;
+    }
+
+    private String dateToStr(Date data){
+        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(data);
     }
 
     class ViewHolder {
