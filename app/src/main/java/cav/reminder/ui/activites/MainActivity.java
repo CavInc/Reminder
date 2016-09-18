@@ -2,6 +2,7 @@ package cav.reminder.ui.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import cav.reminder.ui.adapters.DataAdapter;
 import cav.reminder.utils.ConstantManager;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
+    private String TAG ="REMINDER_MAIN";
 
     ListView mListView;
     private ImageView newButton;
@@ -67,9 +69,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 showToast("Новая запись");
                 Intent intent = new Intent(MainActivity.this,ItemActivity.class);
                 intent.putExtra(ConstantManager.MODE_INS_RECORD,true);
-                startActivity(intent);
+               // startActivity(intent);
+                startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_NEW);
                 break;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case ConstantManager.ITEM_ACTIVITY_NEW:
+                Log.d(TAG,Integer.toString(resultCode));
+                System.out.println(data!=null);
+                if (resultCode == RESULT_OK && data !=null){
+                    Log.d(TAG,data.getStringExtra(ConstantManager.SHORT_DATA));
+                    System.out.println(data.getStringExtra(ConstantManager.LONG_DATA));
+
+                }
+                break;
+        }
+       // super.onActivityResult(requestCode, resultCode, data);
     }
 }
