@@ -5,4 +5,5 @@ package cav.reminder.utils;
  */
 public interface ConstantManager {
     String TAG_PREFIX = "REMINDER";
+    String MODE_INS_RECORD = "MODE_INS_RECORD";
 }

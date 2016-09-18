@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Reminder</string>
+    <string name="save_button_txt">Save</string>
 </resources>

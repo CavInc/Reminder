@@ -1,6 +1,8 @@
 package cav.reminder.ui.activites;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -13,8 +15,9 @@ import java.util.Date;
 import cav.reminder.R;
 import cav.reminder.data.RecordHeaderRes;
 import cav.reminder.ui.adapters.DataAdapter;
+import cav.reminder.utils.ConstantManager;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     ListView mListView;
     private ImageView newButton;
@@ -26,6 +29,7 @@ public class MainActivity extends BaseActivity {
 
         mListView = (ListView) findViewById(R.id.listView);
         newButton = (ImageView) findViewById(R.id.newButton);
+        newButton.setOnClickListener(this);
 
         // отладочные данные
         RecordHeaderRes[] record = {
@@ -54,5 +58,18 @@ public class MainActivity extends BaseActivity {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.newButton:
+                showToast("Новая запись");
+                Intent intent = new Intent(MainActivity.this,ItemActivity.class);
+                intent.putExtra(ConstantManager.MODE_INS_RECORD,true);
+                startActivity(intent);
+                break;
+        }
+
     }
 }
