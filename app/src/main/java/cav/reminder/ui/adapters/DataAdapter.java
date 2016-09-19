@@ -33,7 +33,6 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         View row=convertView;
-        System.out.println(mInflater);
         if(row==null){
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();

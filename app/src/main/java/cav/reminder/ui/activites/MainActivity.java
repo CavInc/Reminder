@@ -24,6 +24,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     ListView mListView;
     private ImageView newButton;
 
+    private DataAdapter mAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +48,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 new RecordHeaderRes("А вот прикольное фото2",strToDate("23.08.2015"),"Фотка в парке ")
         };
 
-        DataAdapter adapter = new DataAdapter(this,R.layout.main_item_list,record);
-        mListView.setAdapter(adapter);
-
+        mAdapter = new DataAdapter(this,R.layout.main_item_list,record);
+        mAdapter.setNotifyOnChange(true);
+        mListView.setAdapter(mAdapter);
 
     }
 
@@ -60,6 +62,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -85,7 +97,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 if (resultCode == RESULT_OK && data !=null){
                     Log.d(TAG,data.getStringExtra(ConstantManager.SHORT_DATA));
                     System.out.println(data.getStringExtra(ConstantManager.LONG_DATA));
-
+                    Log.d(TAG,data.getStringExtra(ConstantManager.DATE_DATA));
+                    /*
+                    RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
+                            strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
+                            data.getStringExtra(ConstantManager.LONG_DATA));
+                    */
+                    RecordHeaderRes lrecord= new RecordHeaderRes("А вот прикольное фото48",strToDate("23.08.2015"),"Фотка в парке ");
+                    System.out.println(lrecord.getHeaderRec()+" :: "+lrecord.getDate());
+                    mAdapter.add(lrecord);
+                   // mAdapter.notifyDataSetChanged();
                 }
                 break;
         }

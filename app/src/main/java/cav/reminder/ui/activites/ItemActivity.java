@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import cav.reminder.R;
 import cav.reminder.utils.ConstantManager;
 
@@ -39,10 +43,13 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.save_item_button:
+                DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                Date newDate = new Date();
                 // сохраниили и отдали данные
                 Intent answerIntent = new Intent();
                 answerIntent.putExtra(ConstantManager.SHORT_DATA,mShort.getText().toString());
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
+                answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
                 //answerIntent.putExtra(ConstantManager.DATE_DATA,); добавить текущую дату
                 setResult(RESULT_OK, answerIntent);
                 finish(); // закрываем активити
