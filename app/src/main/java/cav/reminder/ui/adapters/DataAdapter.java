@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import cav.reminder.R;
@@ -22,7 +23,7 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
     private int resLayout;
     private RecordHeaderRes[] objects;
 
-    public DataAdapter(Context context, int resource, RecordHeaderRes[] objects) {
+    public DataAdapter(Context context, int resource, ArrayList<RecordHeaderRes> objects) {
         super(context, resource, objects);
         //this.objects=objects;
         resLayout = resource;
