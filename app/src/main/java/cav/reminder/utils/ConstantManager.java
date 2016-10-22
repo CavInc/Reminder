@@ -1,5 +1,6 @@
 package cav.reminder.utils;
 
+
 /**
  * Created by cav on 02.08.16.
  */
@@ -11,6 +12,8 @@ public interface ConstantManager {
     String DATE_DATA = "DATE_DATA";
 
     int ITEM_ACTIVITY_NEW = 100;
+
+
 
 
 }
