@@ -16,6 +16,7 @@ import java.util.Date;
 
 import cav.reminder.R;
 import cav.reminder.data.RecordHeaderRes;
+import cav.reminder.utils.Func;
 
 public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
 
@@ -48,16 +49,13 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
 
         RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
-        holder.dataRec.setText(dateToStr(record.getDate()));
+        holder.dataRec.setText(Func.dateToStr(record.getDate()));
         holder.bodyRec.setText(record.getBodyRec());
 
         return row;
     }
 
-    private String dateToStr(Date data){
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        return format.format(data);
-    }
+
 
     class ViewHolder {
         public TextView headerRec;

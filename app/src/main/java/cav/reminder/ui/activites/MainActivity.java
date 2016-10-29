@@ -5,17 +5,14 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 import cav.reminder.R;
 import cav.reminder.data.RecordHeaderRes;
@@ -23,6 +20,7 @@ import cav.reminder.data.database.DBHelper;
 import cav.reminder.data.manager.DataManager;
 import cav.reminder.ui.adapters.DataAdapter;
 import cav.reminder.utils.ConstantManager;
+import cav.reminder.utils.Func;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private String TAG ="REMINDER_MAIN";
@@ -66,19 +64,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mAdapter.setNotifyOnChange(true);
         mListView.setAdapter(mAdapter);
 
+        mListView.setOnItemClickListener(mItemListener);
         mListView.setOnItemLongClickListener(itemLongListener);
 
+
     }
 
-    private Date strToDate(String dateS){
-        DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        try {
-            return format.parse(dateS);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 
     @Override
     protected void onResume() {
@@ -103,6 +95,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                // startActivity(intent);
                 startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_NEW);
                 break;
+
         }
 
     }
@@ -130,7 +123,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mAdapter.add(lrecord);
 */
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
-                            strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
+                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
                             data.getStringExtra(ConstantManager.LONG_DATA));
                     mDataManager.getDataBaseConnector().insertRecord(lrecord);
                     mAdapter.add(lrecord);
@@ -143,10 +136,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     AdapterView.OnItemLongClickListener itemLongListener = new AdapterView.OnItemLongClickListener() {
         @Override
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-            showToast("Long click in item "+Integer.toString(i));
-             adapterView.getSelectedItem();
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+            showToast("Long click in item "+Integer.toString(position));
+            System.out.println(adapterView.getSelectedItem());
+            System.out.println(adapterView.getClass());
+            System.out.println(mAdapter.getItem(position).getHeaderRec());
             return true;
         }
     };
+
+
+
+    AdapterView.OnItemClickListener mItemListener = new AdapterView.OnItemClickListener(){
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            Log.d(TAG, "CLICK");
+            System.out.println(adapterView.getSelectedItem());
+            System.out.println(mAdapter.getItem(position).getHeaderRec());
+        }
+
+    };
+
+
+
 }
