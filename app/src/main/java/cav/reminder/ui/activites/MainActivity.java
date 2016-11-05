@@ -1,14 +1,20 @@
 package cav.reminder.ui.activites;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,11 +32,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private String TAG ="REMINDER_MAIN";
 
     ListView mListView;
-    private ImageView newButton;
+    private FloatingActionButton newButton;
 
     private DataAdapter mAdapter;
 
     private DataManager mDataManager;
+    private RecordHeaderRes mItem=null;
 
     SQLiteDatabase db;
 
@@ -42,8 +49,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         //setDataBase();
         mDataManager = DataManager.getInstance(this);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
+        setupToolbar(toolbar);
+
         mListView = (ListView) findViewById(R.id.listView);
-        newButton = (ImageView) findViewById(R.id.newButton);
+        newButton = (FloatingActionButton) findViewById(R.id.newButton);
         newButton.setOnClickListener(this);
 /*
         // отладочные данные
@@ -70,7 +81,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
+    private void setupToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG,"BACK PRESSED");
+        super.onBackPressed();
+    }
 
     @Override
     protected void onResume() {
@@ -87,13 +111,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        Intent intent;
         switch (v.getId()){
             case R.id.newButton:
                 showToast("Новая запись");
-                Intent intent = new Intent(MainActivity.this,ItemActivity.class);
-                intent.putExtra(ConstantManager.MODE_INS_RECORD,true);
+                intent = new Intent(MainActivity.this,ItemActivity.class);
+                intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_INS_RECORD);
                // startActivity(intent);
                 startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_NEW);
+                break;
+            case R.id.edit_laout:
+                Log.d(TAG,"EDIT");
+                System.out.println(mItem.getId());
+                intent = new Intent(MainActivity.this,ItemActivity.class);
+                intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_EDIT_RECORD);
+                intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
+                intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
+                intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
+
+                startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_EDIT);
+
+                break;
+            case R.id.del_laout:
+                mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
+                mAdapter.remove(mItem);
+                mAdapter.notifyDataSetChanged();
                 break;
 
         }
@@ -130,6 +172,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
+            case ConstantManager.ITEM_ACTIVITY_EDIT:
+                Log.d(TAG,"RETURN EDIT");
+                if (resultCode == RESULT_OK && data !=null){
+                    RecordHeaderRes lrecord = new RecordHeaderRes(data.getIntExtra(ConstantManager.RECORD_ID,-1),
+                            data.getStringExtra(ConstantManager.SHORT_DATA),
+                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
+                            data.getStringExtra(ConstantManager.LONG_DATA));
+                    mDataManager.getDataBaseConnector().updateRecord(lrecord);
+
+                    mAdapter.notifyDataSetChanged();
+                }
+                break;
         }
        // super.onActivityResult(requestCode, resultCode, data);
     }
@@ -141,10 +195,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             System.out.println(adapterView.getSelectedItem());
             System.out.println(adapterView.getClass());
             System.out.println(mAdapter.getItem(position).getHeaderRec());
+            mItem = mAdapter.getItem(position);
+            viewItemDialog();
             return true;
         }
     };
 
+    private void viewItemDialog() {
+        Dialog dialog = new Dialog(this);
+        dialog.setTitle("Working in item...");
+
+        dialog.setContentView(R.layout.dialog_main_item);
+        LinearLayout mEditLayout = (LinearLayout) dialog.findViewById(R.id.edit_laout);
+        LinearLayout mDelLayout = (LinearLayout) dialog.findViewById(R.id.del_laout);
+        mEditLayout.setOnClickListener(this);
+        mDelLayout.setOnClickListener(this);
+
+        dialog.show();
+    }
 
 
     AdapterView.OnItemClickListener mItemListener = new AdapterView.OnItemClickListener(){

@@ -47,7 +47,19 @@ public class DataBaseConnector {
     }
     // удалить запись
     public void deleteRecord(int id_record){
-
+        open();
+        database.delete(DBHelper.TABLE_REMINDER,"_id="+id_record,null);
+        close();
+    }
+    // обновить запись
+    public void updateRecord(RecordHeaderRes record){
+        ContentValues updValue = new ContentValues();
+        updValue.put("short_name",record.getHeaderRec());
+        updValue.put("msg_body",record.getBodyRec());
+        updValue.put("rec_date",Func.dateToStr(record.getDate()));
+        open();
+        database.update(DBHelper.TABLE_REMINDER,updValue,"_id="+record.getId(),null);
+        close();
     }
 
 }

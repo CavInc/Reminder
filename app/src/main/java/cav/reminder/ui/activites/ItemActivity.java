@@ -22,6 +22,10 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private EditText mLong;
     private Button mSaveButton;
 
+    private int mRecID=-1;
+    private Date mDateRect;
+    private int mode=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +38,12 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         mSaveButton.setOnClickListener(this);
 
         // получили переданное значение
-        boolean mode = getIntent().getBooleanExtra(ConstantManager.MODE_INS_RECORD,true);
-        Log.d(TAG,"MODE :"+mode);
+        mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
+        if (mode==ConstantManager.MODE_EDIT_RECORD) {
+            mShort.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
+            mLong.setText(getIntent().getStringExtra(ConstantManager.RECORD_BODY));
+            mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
+        }
 
     }
 
@@ -50,6 +58,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.SHORT_DATA,mShort.getText().toString());
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
+                if (mode==ConstantManager.MODE_EDIT_RECORD){
+                    answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
+                }
                 //answerIntent.putExtra(ConstantManager.DATE_DATA,); добавить текущую дату
                 setResult(RESULT_OK, answerIntent);
                 finish(); // закрываем активити
