@@ -50,7 +50,9 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
         holder.dataRec.setText(Func.dateToStr(record.getDate()));
-        holder.bodyRec.setText(record.getBodyRec());
+        holder.bodyRec.setText(record.getBodyRec().substring(0,
+                (record.getBodyRec().length() < 60 ? record.getBodyRec().length() : 60)));
+
 
         return row;
     }

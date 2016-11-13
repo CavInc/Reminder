@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="save_button_txt">Сохранить</string>
+    <string name="app_name">Запоминалка</string>
+    <string name="dialog_title">Действия над записью</string>
+    <string name="close_button_txt">Закрыть</string>
 </resources>

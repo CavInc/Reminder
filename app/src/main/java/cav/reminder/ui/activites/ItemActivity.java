@@ -39,10 +39,19 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
         // получили переданное значение
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
-        if (mode==ConstantManager.MODE_EDIT_RECORD) {
+        if ((mode==ConstantManager.MODE_EDIT_RECORD) || (mode==ConstantManager.MODE_VIEW_RECORD)) {
             mShort.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
             mLong.setText(getIntent().getStringExtra(ConstantManager.RECORD_BODY));
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
+        }
+        if (mode==ConstantManager.MODE_VIEW_RECORD){
+            mShort.setFocusable(false);
+            mShort.setLongClickable(false);
+            mShort.setCursorVisible(false);
+            mLong.setFocusable(false);
+            mLong.setLongClickable(false);
+            mLong.setCursorVisible(false);
+            mSaveButton.setText(R.string.close_button_txt);
         }
 
     }

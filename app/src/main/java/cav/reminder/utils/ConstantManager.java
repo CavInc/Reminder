@@ -9,12 +9,15 @@ public interface ConstantManager {
     String MODE_RECORD = "MODE_REOCRD";
     int MODE_INS_RECORD = 0;
     int MODE_EDIT_RECORD = 1;
+    int MODE_VIEW_RECORD=2;
+
     String SHORT_DATA = "SHORT_DATA";
     String LONG_DATA = "LONG_DATA";
     String DATE_DATA = "DATE_DATA";
 
     int ITEM_ACTIVITY_NEW = 100;
     int ITEM_ACTIVITY_EDIT = 101;
+    int ITEM_ACTIVITY_VIEW = 102;
 
 
     String RECORD_ID="RECORD_ID";

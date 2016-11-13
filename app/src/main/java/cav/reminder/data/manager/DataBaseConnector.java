@@ -34,6 +34,13 @@ public class DataBaseConnector {
         return database.query(DBHelper.TABLE_REMINDER,
                 new String []{"_id","short_name","rec_date","msg_body"},null,null,null,null,"rec_date");
     }
+    // вернуть запись по _id
+    public RecordHeaderRes getRecord(int id){
+        RecordHeaderRes rec=null;
+
+
+        return rec;
+    }
 
     // добавить новую запись
     public void insertRecord(RecordHeaderRes record){

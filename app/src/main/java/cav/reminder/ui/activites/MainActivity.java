@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -90,6 +91,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            Log.d(TAG,"BACK BUTTON");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
     @Override
     public void onBackPressed() {
         Log.d(TAG,"BACK PRESSED");
@@ -122,6 +132,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.edit_laout:
                 Log.d(TAG,"EDIT");
+                dialog.cancel();
                 System.out.println(mItem.getId());
                 intent = new Intent(MainActivity.this,ItemActivity.class);
                 intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_EDIT_RECORD);
@@ -133,6 +144,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
                 break;
             case R.id.del_laout:
+                dialog.dismiss();
                 mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
                 mAdapter.remove(mItem);
                 mAdapter.notifyDataSetChanged();
@@ -142,11 +154,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
-    private void setDataBase() {
-        db = openOrCreateDatabase(DBHelper.DATABASE_NAME, Context.MODE_PRIVATE,
-                null);
-
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -155,9 +162,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 Log.d(TAG,Integer.toString(resultCode));
                 System.out.println(data!=null);
                 if (resultCode == RESULT_OK && data !=null){
-                    Log.d(TAG,data.getStringExtra(ConstantManager.SHORT_DATA));
-                    System.out.println(data.getStringExtra(ConstantManager.LONG_DATA));
-                    Log.d(TAG,data.getStringExtra(ConstantManager.DATE_DATA));
 /*
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
                             strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
@@ -179,10 +183,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
                             data.getStringExtra(ConstantManager.LONG_DATA));
+                    Log.d(TAG+" EDIT: ",data.getStringExtra(ConstantManager.LONG_DATA));
                     mDataManager.getDataBaseConnector().updateRecord(lrecord);
 
                     mAdapter.notifyDataSetChanged();
                 }
+                break;
+            case ConstantManager.ITEM_ACTIVITY_VIEW:
+                Log.d(TAG,"RETURN VIEW");
                 break;
         }
        // super.onActivityResult(requestCode, resultCode, data);
@@ -192,18 +200,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
             showToast("Long click in item "+Integer.toString(position));
-            System.out.println(adapterView.getSelectedItem());
-            System.out.println(adapterView.getClass());
-            System.out.println(mAdapter.getItem(position).getHeaderRec());
             mItem = mAdapter.getItem(position);
             viewItemDialog();
             return true;
         }
     };
 
+    private Dialog dialog;
+
     private void viewItemDialog() {
-        Dialog dialog = new Dialog(this);
-        dialog.setTitle("Working in item...");
+        dialog = new Dialog(this);
+        dialog.setTitle(R.string.dialog_title);
 
         dialog.setContentView(R.layout.dialog_main_item);
         LinearLayout mEditLayout = (LinearLayout) dialog.findViewById(R.id.edit_laout);
@@ -222,6 +229,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             Log.d(TAG, "CLICK");
             System.out.println(adapterView.getSelectedItem());
             System.out.println(mAdapter.getItem(position).getHeaderRec());
+            mItem = mAdapter.getItem(position);
+            Intent intent = new Intent(MainActivity.this,ItemActivity.class);
+            intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
+            intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
+            intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
+            intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
+
+            startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_VIEW);
         }
 
     };
