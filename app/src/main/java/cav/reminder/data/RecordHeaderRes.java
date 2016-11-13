@@ -24,6 +24,9 @@ public class RecordHeaderRes {
     public int getId(){
         return mId;
     }
+    public void setId(int id){
+        mId=id;
+    }
     public String getHeaderRec() {
         return mHeaderRec;
     }

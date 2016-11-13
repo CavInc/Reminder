@@ -171,8 +171,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
                             data.getStringExtra(ConstantManager.LONG_DATA));
-                    mDataManager.getDataBaseConnector().insertRecord(lrecord);
-                    mAdapter.add(lrecord);
+                    int id = mDataManager.getDataBaseConnector().insertRecord(lrecord);
+                    lrecord.setId(id);
+                    mAdapter.insert(lrecord,0);
+                    //mAdapter.add(lrecord);
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
@@ -185,6 +187,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getStringExtra(ConstantManager.LONG_DATA));
                     Log.d(TAG+" EDIT: ",data.getStringExtra(ConstantManager.LONG_DATA));
                     mDataManager.getDataBaseConnector().updateRecord(lrecord);
+                    Log.d(TAG +" EDIT POS: ",Integer.toString(mAdapter.getPosition(mItem)));
+                    int id = mAdapter.getPosition(mItem);
+                    mAdapter.remove(mItem);
+                    mAdapter.insert(lrecord,id);
 
                     mAdapter.notifyDataSetChanged();
                 }

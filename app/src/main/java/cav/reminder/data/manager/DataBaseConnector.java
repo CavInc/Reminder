@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.SystemClock;
+import android.util.Log;
 
 import cav.reminder.data.RecordHeaderRes;
 import cav.reminder.data.database.DBHelper;
@@ -13,6 +15,9 @@ import cav.reminder.utils.Func;
  * Created by cav on 09.10.16.
  */
 public class DataBaseConnector {
+
+    private String TAG="REMINDER_DBCONNECTOR";
+
     private SQLiteDatabase database;
     private DBHelper mDBHelper;
 
@@ -43,14 +48,16 @@ public class DataBaseConnector {
     }
 
     // добавить новую запись
-    public void insertRecord(RecordHeaderRes record){
+    public int insertRecord(RecordHeaderRes record){
         ContentValues newValue = new ContentValues();
         newValue.put("short_name",record.getHeaderRec());
         newValue.put("rec_date", Func.dateToStr(record.getDate()));
         newValue.put("msg_body",record.getBodyRec());
         open();
-        database.insert(DBHelper.TABLE_REMINDER,null,newValue);
+        long id =database.insert(DBHelper.TABLE_REMINDER,null,newValue);
+        Log.d(TAG,"REC ? "+Long.toString(id));
         close();
+        return (int) id;
     }
     // удалить запись
     public void deleteRecord(int id_record){
@@ -60,6 +67,7 @@ public class DataBaseConnector {
     }
     // обновить запись
     public void updateRecord(RecordHeaderRes record){
+        Log.d(TAG,"ID : "+Integer.toString(record.getId()));
         ContentValues updValue = new ContentValues();
         updValue.put("short_name",record.getHeaderRec());
         updValue.put("msg_body",record.getBodyRec());
