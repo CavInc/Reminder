@@ -3,4 +3,7 @@
     <string name="save_button_txt">Save</string>
     <string name="dialog_title">Working in item...</string>
     <string name="close_button_txt">Close</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_item_title">Exit ?</string>
 </resources>

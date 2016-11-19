@@ -1,7 +1,10 @@
 package cav.reminder.ui.activites;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -55,6 +58,37 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        if (this.mode==ConstantManager.MODE_EDIT_RECORD){
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle(getString(R.string.dialog_item_title));
+            dialog.setMessage("Вы уверены что хотите выйти без сохранения ?");
+            dialog.setIcon(android.R.drawable.ic_dialog_info);
+            dialog.setPositiveButton(R.string.dialog_yes, myDialogClickListener);
+            dialog.setNegativeButton(R.string.dialog_no, myDialogClickListener);
+            //dialog.create();
+            dialog.show();
+
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    DialogInterface.OnClickListener myDialogClickListener = new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case Dialog.BUTTON_POSITIVE:
+                    finish();
+                    break;
+                case Dialog.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onClick(View v) {

@@ -4,4 +4,7 @@
     <string name="app_name">Запоминалка</string>
     <string name="dialog_title">Действия над записью</string>
     <string name="close_button_txt">Закрыть</string>
+    <string name="dialog_yes">Да</string>
+    <string name="dialog_no">Нет</string>
+    <string name="dialog_item_title">Выходим ?</string>
 </resources>
