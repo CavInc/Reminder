@@ -4,8 +4,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,11 +37,15 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
         mShort = (EditText) findViewById(R.id.short_et);
         mLong = (EditText) findViewById(R.id.long_et);
         mSaveButton = (Button) findViewById(R.id.save_item_button);
 
         mSaveButton.setOnClickListener(this);
+        setupToolbar(toolbar);
 
         // получили переданное значение
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
@@ -59,8 +66,27 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    private void setupToolbar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            Log.d(TAG,"BACK BUTTON");
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onBackPressed() {
+        Log.d(TAG,"BACK PRESSED");
         if (this.mode==ConstantManager.MODE_EDIT_RECORD){
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setTitle(getString(R.string.dialog_item_title));
