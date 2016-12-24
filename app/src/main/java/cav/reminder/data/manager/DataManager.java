@@ -45,9 +45,10 @@ public class DataManager {
             record.add(new RecordHeaderRes(cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("short_name")),
                     Func.strToDate(cursor.getString(cursor.getColumnIndex("rec_date"))),
-                    cursor.getString(cursor.getColumnIndex("msg_body"))));
+                    cursor.getString(cursor.getColumnIndex("msg_body")),
+                    cursor.getString(cursor.getColumnIndex("photo_file")),
+                    (cursor.getInt(cursor.getColumnIndex("close_rec"))==1)));
         }
-
         this.mDbc.close();
         return record;
     }

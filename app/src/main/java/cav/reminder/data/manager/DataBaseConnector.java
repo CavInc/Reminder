@@ -37,7 +37,7 @@ public class DataBaseConnector {
     // Возвращаем все записи
     public Cursor getAllRecord (){
         return database.query(DBHelper.TABLE_REMINDER,
-                new String []{"_id","short_name","rec_date","msg_body"},null,null,null,null,"rec_date");
+                new String []{"_id","short_name","rec_date","msg_body","photo_file","close_rec"},null,null,null,null,"rec_date");
     }
     // вернуть запись по _id
     public RecordHeaderRes getRecord(int id){

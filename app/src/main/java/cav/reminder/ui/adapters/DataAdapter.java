@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -41,6 +42,8 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             holder.headerRec = (TextView) row.findViewById(R.id.recordTitle);
             holder.dataRec = (TextView) row.findViewById(R.id.dateTitle);
             holder.bodyRec = (TextView) row.findViewById(R.id.smallBodyRec);
+            holder.closeRec = (ImageView) row.findViewById(R.id.item_closerec_img);
+            holder.photoFile = (ImageView) row.findViewById(R.id.item_photo_img);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
@@ -50,6 +53,16 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
         holder.dataRec.setText(Func.dateToStr(record.getDate()));
+        if (record.isCloseRec()) {
+            holder.closeRec.setImageResource(R.drawable.ic_lock_black_24dp);
+        } else {
+            holder.closeRec.setImageResource(R.drawable.ic_lock_unlock_24dp1);
+        }
+        if (record.getPhotoFile().length()!=0){
+            holder.photoFile.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+        }else {
+            holder.photoFile.setImageResource(R.drawable.ic_camera_alt_gray_24dp);
+        }
         /*
         holder.bodyRec.setText(record.getBodyRec().substring(0,
                 (record.getBodyRec().length() < 60 ? record.getBodyRec().length() : 60)));*/
@@ -64,6 +77,8 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         public TextView headerRec;
         public TextView dataRec;
         public TextView bodyRec;
+        public ImageView photoFile;
+        public ImageView closeRec;
     }
 
 }

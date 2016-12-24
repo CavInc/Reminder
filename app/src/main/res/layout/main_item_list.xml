@@ -28,6 +28,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="@dimen/spacing_size_16">
+        <ImageView
+            android:id="@+id/item_photo_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera_alt_gray_24dp"/>
+        <ImageView
+            android:id="@+id/item_closerec_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lock_unlock_24dp1"/>
     </LinearLayout>
 </LinearLayout>

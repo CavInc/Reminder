@@ -39,7 +39,14 @@ public class DBHelper extends SQLiteOpenHelper{
                     "msg_body text," +
                     "photo_file text," +
                     "rec_avd_file text," +
-                    "rec_date text)");
+                    "rec_date text," +
+                    "close_rec integer default 0)");
+
+        }else {
+            /*
+            db.execSQL("alter table "+TABLE_REMINDER+""+
+            " add column close_rec integer;" );
+            */
 
         }
 
