@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,8 +94,33 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 return true;
             case R.id.lock_rec:
                 Log.d(TAG,"LOCK RECORD");
+                final Dialog dialog = new Dialog(this);
+                dialog.setTitle("Key");
+                dialog.setContentView(R.layout.key_item_dialog);
+                final EditText keyET = (EditText) dialog.findViewById(R.id.key_dialog_edit);
+                Button okButton = (Button) dialog.findViewById(R.id.ok_button);
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Log.d(TAG,"KEY DIALOG OK");
+                        String key= String.valueOf(keyET.getText());
+                        Log.d(TAG,key);
+                        mCloseRec = true;
+                        dialog.dismiss();
+                    }
+                });
+                Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mCloseRec = false;
+                        dialog.dismiss();
+                    }
+                });
 
-                mCloseRec = true;
+
+                dialog.show();
+
                 break;
             case R.id.unloc_rec:
                 mCloseRec = false;
@@ -103,6 +129,36 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * диалог получения секретного ключа
+     */
+    private void getSecyrityKeyDialog(){
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.key_item_dialog, null);
+        AlertDialog.Builder mDialogBuilder = new AlertDialog.Builder(this);
+        mDialogBuilder.setView(promptsView);
+        final EditText keyET = (EditText) promptsView.findViewById(R.id.key_dialog_edit);
+        mDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                      //  Log.d(TAG,keyET.getText());
+                    }
+                })
+                .setNegativeButton("Cancel",new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+        });
+
+        //Создаем AlertDialog:
+        AlertDialog alertDialog = mDialogBuilder.create();
+        alertDialog.show();
+
     }
 
     @Override
