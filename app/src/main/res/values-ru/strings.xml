@@ -7,4 +7,6 @@
     <string name="dialog_yes">Да</string>
     <string name="dialog_no">Нет</string>
     <string name="dialog_item_title">Выходим ?</string>
+    <string name="close_record">Закрыть запись</string>
+    <string name="open_record">Открыть запись</string>
 </resources>

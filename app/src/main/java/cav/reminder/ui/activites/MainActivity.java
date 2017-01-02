@@ -139,6 +139,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
                 intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
                 intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
+                intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
 
                 startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_EDIT);
 
@@ -170,7 +171,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 */
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA));
+                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false));
                     int id = mDataManager.getDataBaseConnector().insertRecord(lrecord);
                     lrecord.setId(id);
                     mAdapter.insert(lrecord,0);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/lock_rec"
+          android:title="@string/close_record"
+          android:showAsAction="never" />
+    <item android:id="@+id/unloc_rec"
+          android:title="@string/open_record"
+          android:showAsAction="never" />
+
+</menu>

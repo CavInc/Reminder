@@ -23,7 +23,7 @@ public interface ConstantManager {
     String RECORD_ID="RECORD_ID";
     String RECORD_HEADER="RECORD_HEADER";
     String RECORD_BODY="RECORD_BODY";
-
+    String RECORD_CLOSE="RECORD_CLOSE";
 
 
     ;

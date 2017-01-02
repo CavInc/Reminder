@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private int mRecID=-1;
     private Date mDateRect;
     private int mode=0;
+    private boolean mCloseRec = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mShort.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
             mLong.setText(getIntent().getStringExtra(ConstantManager.RECORD_BODY));
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
+            mCloseRec = getIntent().getBooleanExtra(ConstantManager.RECORD_CLOSE,false);
         }
         if (mode==ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
@@ -75,12 +78,30 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_item_activity,menu);
+        return true;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            Log.d(TAG,"BACK BUTTON");
-            onBackPressed();
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG,"BACK BUTTON");
+                onBackPressed();
+                return true;
+            case R.id.lock_rec:
+                Log.d(TAG,"LOCK RECORD");
+
+                mCloseRec = true;
+                break;
+            case R.id.unloc_rec:
+                mCloseRec = false;
+                break;
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -127,6 +148,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.SHORT_DATA,mShort.getText().toString());
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
+                answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }
