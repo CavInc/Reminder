@@ -25,6 +25,7 @@ public interface ConstantManager {
     String RECORD_BODY="RECORD_BODY";
     String RECORD_CLOSE="RECORD_CLOSE";
 
+    int MODE_SEC_DIALOG_LOCK = 0;
+    int MODE_SEC_DIALOG_UNLOCK = 1;
 
-    ;
 }

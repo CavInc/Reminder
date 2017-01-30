@@ -9,4 +9,6 @@
     <string name="dialog_item_title">Выходим ?</string>
     <string name="close_record">Закрыть запись</string>
     <string name="open_record">Открыть запись</string>
+    <string name="cancel">Отмена</string>
+    <string name="yes">Да</string>
 </resources>
