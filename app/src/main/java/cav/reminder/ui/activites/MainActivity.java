@@ -139,6 +139,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
                 intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
                 intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
+                intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
 
                 startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_EDIT);
 
@@ -170,7 +171,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 */
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA));
+                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false));
                     int id = mDataManager.getDataBaseConnector().insertRecord(lrecord);
                     lrecord.setId(id);
                     mAdapter.insert(lrecord,0);
@@ -184,7 +185,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getIntExtra(ConstantManager.RECORD_ID,-1),
                             data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA));
+                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false));
                     Log.d(TAG+" EDIT: ",data.getStringExtra(ConstantManager.LONG_DATA));
                     mDataManager.getDataBaseConnector().updateRecord(lrecord);
                     Log.d(TAG +" EDIT POS: ",Integer.toString(mAdapter.getPosition(mItem)));
@@ -232,6 +233,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            //TODO сделать вызов активити для прсотомра и редактирования в методе и убрать откуда не надо
             Log.d(TAG, "CLICK");
             System.out.println(adapterView.getSelectedItem());
             System.out.println(mAdapter.getItem(position).getHeaderRec());
@@ -241,7 +243,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
             intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
             intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
-
+            intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
             startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_VIEW);
         }
 

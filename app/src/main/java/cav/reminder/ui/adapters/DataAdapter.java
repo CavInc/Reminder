@@ -55,10 +55,12 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         holder.dataRec.setText(Func.dateToStr(record.getDate()));
         if (record.isCloseRec()) {
             holder.closeRec.setImageResource(R.drawable.ic_lock_black_24dp);
+            holder.bodyRec.setVisibility(View.GONE);
         } else {
             holder.closeRec.setImageResource(R.drawable.ic_lock_unlock_24dp1);
+            holder.bodyRec.setVisibility(View.VISIBLE);
         }
-        if (record.getPhotoFile().length()!=0){
+        if (record.getPhotoFile() !=null && record.getPhotoFile().length()!=0){
             holder.photoFile.setImageResource(R.drawable.ic_camera_alt_black_24dp);
         }else {
             holder.photoFile.setImageResource(R.drawable.ic_camera_alt_gray_24dp);

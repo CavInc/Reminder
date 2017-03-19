@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,6 +32,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private int mRecID=-1;
     private Date mDateRect;
     private int mode=0;
+    private boolean mCloseRec = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mShort.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
             mLong.setText(getIntent().getStringExtra(ConstantManager.RECORD_BODY));
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
+            mCloseRec = getIntent().getBooleanExtra(ConstantManager.RECORD_CLOSE,false);
         }
         if (mode==ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
@@ -75,13 +78,77 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId()==android.R.id.home){
-            Log.d(TAG,"BACK BUTTON");
-            onBackPressed();
-            return true;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mCloseRec){
+            // запись закрыта
+            getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK);
         }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //return super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_item_activity,menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Log.d(TAG,"BACK BUTTON");
+                onBackPressed();
+                return true;
+            case R.id.lock_rec:
+                Log.d(TAG,"LOCK RECORD");
+                getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_LOCK);
+                break;
+            case R.id.unloc_rec:
+                getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK);
+                break;
+        }
+
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private String keyPass;
+
+    /**
+     * диалог получения секретного ключа
+     */
+    private void getSecyrityKeyDialog(final int mode){
+        final Dialog dialog = new Dialog(this);
+        dialog.setTitle("Key");
+        dialog.setContentView(R.layout.key_item_dialog);
+        final EditText keyET = (EditText) dialog.findViewById(R.id.key_dialog_edit);
+        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG,"KEY DIALOG OK");
+                keyPass= String.valueOf(keyET.getText());
+                Log.d(TAG,keyPass);
+                if (mode==ConstantManager.MODE_SEC_DIALOG_LOCK) {
+                    mCloseRec = true;
+                }
+                if (mode == ConstantManager.MODE_SEC_DIALOG_UNLOCK) {
+                    mCloseRec = false;
+                }
+                dialog.dismiss();
+            }
+        });
+        Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
     }
 
     @Override
@@ -127,6 +194,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.SHORT_DATA,mShort.getText().toString());
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
+                answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
+                answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,keyPass);
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }

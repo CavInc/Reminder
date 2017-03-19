@@ -23,8 +23,11 @@ public interface ConstantManager {
     String RECORD_ID="RECORD_ID";
     String RECORD_HEADER="RECORD_HEADER";
     String RECORD_BODY="RECORD_BODY";
+    String RECORD_CLOSE="RECORD_CLOSE";
+    String RECORD_PASS_SAVE = "RECORD_PASS_SAVE";
+
+    int MODE_SEC_DIALOG_LOCK = 0;
+    int MODE_SEC_DIALOG_UNLOCK = 1;
 
 
-
-    ;
 }

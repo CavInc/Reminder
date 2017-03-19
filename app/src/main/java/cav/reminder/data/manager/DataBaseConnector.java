@@ -53,6 +53,7 @@ public class DataBaseConnector {
         newValue.put("short_name",record.getHeaderRec());
         newValue.put("rec_date", Func.dateToStr(record.getDate()));
         newValue.put("msg_body",record.getBodyRec());
+        newValue.put("close_rec",record.getCloseRec());
         open();
         long id =database.insert(DBHelper.TABLE_REMINDER,null,newValue);
         Log.d(TAG,"REC ? "+Long.toString(id));
@@ -72,6 +73,9 @@ public class DataBaseConnector {
         updValue.put("short_name",record.getHeaderRec());
         updValue.put("msg_body",record.getBodyRec());
         updValue.put("rec_date",Func.dateToStr(record.getDate()));
+        updValue.put("close_rec",record.getCloseRec());
+        Log.d(TAG,"CLOSE REC : " +Integer.toString(record.getCloseRec()));
+
         open();
         database.update(DBHelper.TABLE_REMINDER,updValue,"_id="+record.getId(),null);
         close();

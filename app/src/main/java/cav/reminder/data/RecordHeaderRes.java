@@ -69,4 +69,8 @@ public class RecordHeaderRes {
     public boolean isCloseRec() {
         return mCloseRec;
     }
+    public int getCloseRec(){
+        if (mCloseRec) return 1;
+        else return 0;
+    }
 }

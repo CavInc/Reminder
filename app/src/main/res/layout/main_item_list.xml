@@ -11,12 +11,34 @@
         android:text="Выкопать картошку"
         android:id="@+id/recordTitle"
         android:textSize="@dimen/font_size"/>
-
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="26.05.2016"
-        android:id="@+id/dateTitle"/>
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/small_size_4"
+        android:layout_marginBottom="@dimen/small_size_8">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="26.05.2016"
+            android:id="@+id/dateTitle"
+            android:layout_weight="1"
+            android:layout_marginTop="6dp"/>
+        <ImageView
+            android:id="@+id/item_photo_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_camera_alt_gray_24dp"
+            android:layout_marginTop="2dp"/>
+        <ImageView
+            android:id="@+id/item_closerec_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lock_unlock_24dp1"/>
+
+    </LinearLayout>
+
+
 
     <TextView
         android:layout_width="match_parent"
@@ -25,20 +47,5 @@
         android:id="@+id/smallBodyRec"
         android:ellipsize="end"
         android:maxLines="4"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/spacing_size_16">
-        <ImageView
-            android:id="@+id/item_photo_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_camera_alt_gray_24dp"/>
-        <ImageView
-            android:id="@+id/item_closerec_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_lock_unlock_24dp1"/>
-    </LinearLayout>
+
 </LinearLayout>

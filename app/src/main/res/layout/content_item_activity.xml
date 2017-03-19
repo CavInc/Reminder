@@ -48,6 +48,7 @@
         android:id="@+id/save_item_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/rounded_button"
         android:text="@string/save_button_txt"
         android:layout_alignParentBottom="true"/>
 

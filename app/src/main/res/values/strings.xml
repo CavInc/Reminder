@@ -6,4 +6,8 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_item_title">Exit ?</string>
+    <string name="close_record">Close Record</string>
+    <string name="open_record">Open Record</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>
