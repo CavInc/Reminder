@@ -40,7 +40,8 @@ public class DBHelper extends SQLiteOpenHelper{
                     "photo_file text," +
                     "rec_avd_file text," +
                     "rec_date text," +
-                    "close_rec integer default 0)");
+                    "close_rec integer default 0, "+
+                    "pass_rec text)");
 
         }else {
             /*

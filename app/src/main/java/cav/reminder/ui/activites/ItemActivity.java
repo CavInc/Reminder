@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,6 +79,16 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mCloseRec){
+            // запись закрыта
+            getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK);
+        }
+
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //return super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_item_activity,menu);
@@ -105,6 +114,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+    private String keyPass;
+
     /**
      * диалог получения секретного ключа
      */
@@ -118,8 +129,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Log.d(TAG,"KEY DIALOG OK");
-                String key= String.valueOf(keyET.getText());
-                Log.d(TAG,key);
+                keyPass= String.valueOf(keyET.getText());
+                Log.d(TAG,keyPass);
                 if (mode==ConstantManager.MODE_SEC_DIALOG_LOCK) {
                     mCloseRec = true;
                 }
@@ -184,6 +195,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
                 answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
+                answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,keyPass);
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }
