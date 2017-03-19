@@ -3,6 +3,9 @@ package cav.reminder.utils;
 import android.os.Environment;
 
 import java.io.File;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,5 +39,18 @@ public class Func {
             }
         }
         return path.getPath();
+    }
+
+    public static String md5Hash(String val){
+        if (val==null) val="----------";
+        MessageDigest m = null;
+        try {
+            m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        m.update(val.getBytes(),0,val.length());
+        String hash = new BigInteger(1, m.digest()).toString(16);
+        return hash;
     }
 }

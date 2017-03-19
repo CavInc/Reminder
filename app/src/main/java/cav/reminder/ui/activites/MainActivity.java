@@ -171,7 +171,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 */
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false));
+                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     int id = mDataManager.getDataBaseConnector().insertRecord(lrecord);
                     lrecord.setId(id);
                     mAdapter.insert(lrecord,0);
@@ -185,7 +186,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getIntExtra(ConstantManager.RECORD_ID,-1),
                             data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false));
+                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     Log.d(TAG+" EDIT: ",data.getStringExtra(ConstantManager.LONG_DATA));
                     mDataManager.getDataBaseConnector().updateRecord(lrecord);
                     Log.d(TAG +" EDIT POS: ",Integer.toString(mAdapter.getPosition(mItem)));
@@ -244,6 +246,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
             intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
             intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
+            intent.putExtra(ConstantManager.RECORD_PASS_SAVE,mItem.getPassHash());
             startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_VIEW);
         }
 
