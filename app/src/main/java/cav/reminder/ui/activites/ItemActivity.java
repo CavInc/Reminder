@@ -20,6 +20,7 @@ import java.util.Date;
 
 import cav.reminder.R;
 import cav.reminder.utils.ConstantManager;
+import cav.reminder.utils.Func;
 
 public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
@@ -33,6 +34,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private Date mDateRect;
     private int mode=0;
     private boolean mCloseRec = false;
+    private String mKeyHash ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mLong.setText(getIntent().getStringExtra(ConstantManager.RECORD_BODY));
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
             mCloseRec = getIntent().getBooleanExtra(ConstantManager.RECORD_CLOSE,false);
+            mKeyHash = getIntent().getStringExtra(ConstantManager.RECORD_PASS_SAVE);
         }
         if (mode==ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
@@ -81,6 +84,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG,"KEY HAS :"+mKeyHash);
         if (mCloseRec){
             // запись закрыта
             getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK);
@@ -195,7 +199,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
                 answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
-                answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,keyPass);
+                answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,Func.md5Hash(keyPass));
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }
