@@ -92,9 +92,10 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //return super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_item_activity,menu);
         return true;
     }
@@ -139,6 +140,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                     mCloseRec = true;
                 }
                 if (mode == ConstantManager.MODE_SEC_DIALOG_UNLOCK) {
+                    Log.d(TAG,Func.md5Hash(keyPass));
+                    Log.d(TAG,mKeyHash);
+                    if (Func.md5Hash(keyPass).equals(mKeyHash)){
+                        Log.d(TAG,"PASS SUCCEFUL");
+                    }
                     mCloseRec = false;
                 }
                 dialog.dismiss();

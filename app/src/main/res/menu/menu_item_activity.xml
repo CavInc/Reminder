@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/photo_rec"
+        android:icon="@drawable/ic_camera_alt_black_24dp"
+        android:title="Take Photo"
+        android:showAsAction="ifRoom|withText"/>
     <item android:id="@+id/lock_rec"
           android:title="@string/close_record"
           android:showAsAction="never" />
