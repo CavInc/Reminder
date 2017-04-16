@@ -87,7 +87,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG,"KEY HAS :"+mKeyHash);
         if (mCloseRec){
             // запись закрыта
-            getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK);
+            getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK,true);
         }
 
     }
@@ -108,10 +108,10 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 return true;
             case R.id.lock_rec:
                 Log.d(TAG,"LOCK RECORD");
-                getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_LOCK);
+                getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_LOCK,false);
                 break;
             case R.id.unloc_rec:
-                getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK);
+                getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK,false);
                 break;
         }
 
@@ -124,7 +124,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     /**
      * диалог получения секретного ключа
      */
-    private void getSecyrityKeyDialog(final int mode){
+    private void getSecyrityKeyDialog(final int mode,final boolean work_form){
         final Dialog dialog = new Dialog(this);
         dialog.setTitle("Key");
         dialog.setContentView(R.layout.key_item_dialog);
@@ -144,6 +144,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                     Log.d(TAG,mKeyHash);
                     if (Func.md5Hash(keyPass).equals(mKeyHash)){
                         Log.d(TAG,"PASS SUCCEFUL");
+                    } else {
+                        Log.d(TAG,"NO PASS");
+                        return;
                     }
                     mCloseRec = false;
                 }
@@ -155,6 +158,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                if (work_form) {
+                    finish();
+                }
             }
         });
         dialog.show();
