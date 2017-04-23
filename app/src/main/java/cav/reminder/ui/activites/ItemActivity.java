@@ -153,7 +153,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                         Log.d(TAG,"NO PASS");
                         return;
                     }
-                    mCloseRec = false;
+                    if (! work_form)
+                        mCloseRec = false;
                 }
                 dialog.dismiss();
             }
