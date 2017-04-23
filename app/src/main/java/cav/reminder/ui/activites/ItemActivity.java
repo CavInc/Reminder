@@ -97,6 +97,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_item_activity,menu);
+        if (mode==ConstantManager.MODE_VIEW_RECORD){
+            Log.d(TAG,"GREATE MENU NO ENABLE");
+            MenuItem item = (MenuItem) findViewById(R.id.lock_rec);
+            //item.setEnabled(false);
+        }
         return true;
     }
 
