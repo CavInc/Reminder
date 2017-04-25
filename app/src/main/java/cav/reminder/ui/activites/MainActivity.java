@@ -140,6 +140,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
                 intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
                 intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
+                intent.putExtra(ConstantManager.RECORD_PASS_SAVE,mItem.getPassHash());
 
                 startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_EDIT);
 
