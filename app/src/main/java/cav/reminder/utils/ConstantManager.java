@@ -30,4 +30,5 @@ public interface ConstantManager {
     int MODE_SEC_DIALOG_UNLOCK = 1;
 
 
+    int REQUEST_CAMERA_PICTURE = 99;
 }

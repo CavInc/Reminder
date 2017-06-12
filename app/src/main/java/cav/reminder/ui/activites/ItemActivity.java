@@ -3,7 +3,10 @@ package cav.reminder.ui.activites;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +17,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,6 +40,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private int mode=0;
     private boolean mCloseRec = false;
     private String mKeyHash ;
+    private File mPhotoFile = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +126,36 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             case R.id.unloc_rec:
                 getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK,false);
                 break;
+            case R.id.photo_rec:
+                loadProtoFromCamera();
+                break;
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void loadProtoFromCamera() {
+        Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            mPhotoFile = createImageFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        captureImage.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+        startActivityForResult(captureImage,ConstantManager.REQUEST_CAMERA_PICTURE);
+
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFile = "JPEG_"+timeStamp+"_";
+        // TODO переделать на свою директорию
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        File image = File.createTempFile(imageFile,"jpg",storageDir);
+        return image;
     }
 
     private String keyPass;
@@ -226,6 +258,19 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 //answerIntent.putExtra(ConstantManager.DATE_DATA,); добавить текущую дату
                 setResult(RESULT_OK, answerIntent);
                 finish(); // закрываем активити
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case ConstantManager.REQUEST_CAMERA_PICTURE:
+                if (resultCode == RESULT_OK && mPhotoFile !=null){
+                   // mSelectedImage = Uri.fromFile(mPhotoFile);
+                  //  insertProfileImage(mSelectedImage);
+                }
                 break;
         }
     }
