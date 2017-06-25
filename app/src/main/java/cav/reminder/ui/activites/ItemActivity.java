@@ -152,7 +152,20 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFile = "JPEG_"+timeStamp+"_";
         // TODO переделать на свою директорию
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+      //  File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+            return null;
+
+        File storageDir = new File (Environment.getExternalStorageDirectory(), "Reminder");
+      // для общего каталога Pictures/
+        //File path = new File (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES));
+        if (! storageDir.exists()) {
+            if (!storageDir.mkdirs()){
+                return null;
+            }
+        }
+
+
 
         File image = File.createTempFile(imageFile,"jpg",storageDir);
         return image;
