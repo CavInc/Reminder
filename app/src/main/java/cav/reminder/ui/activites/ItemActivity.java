@@ -265,6 +265,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
                 answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
                 answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,Func.md5Hash(keyPass));
+                answerIntent.putExtra(ConstantManager.RECORD_PHOTO_FILE,mPhotoFile.toString());
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }
@@ -283,6 +284,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 if (resultCode == RESULT_OK && mPhotoFile !=null){
                    // mSelectedImage = Uri.fromFile(mPhotoFile);
                   //  insertProfileImage(mSelectedImage);
+                } else {
+                    mPhotoFile = null;
                 }
                 break;
         }

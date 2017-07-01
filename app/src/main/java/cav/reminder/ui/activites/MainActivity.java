@@ -13,6 +13,7 @@ import android.util.Log;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,8 +80,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mListView.setOnItemClickListener(mItemListener);
         mListView.setOnItemLongClickListener(itemLongListener);
 
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE){
+                    newButton.show();
+                    flag = true;
+                }
+            }
 
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (flag /*newButton.isShown()*/){
+                    newButton.hide();
+                    flag = false;
+                }
+            }
+        });
     }
+    private boolean flag = false;
 
     private void setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
@@ -170,9 +188,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getStringExtra(ConstantManager.LONG_DATA));
                     mAdapter.add(lrecord);
 */
+                    String x = data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE);
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                            data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     int id = mDataManager.getDataBaseConnector().insertRecord(lrecord);
                     lrecord.setId(id);
@@ -187,7 +207,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getIntExtra(ConstantManager.RECORD_ID,-1),
                             data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
-                            data.getStringExtra(ConstantManager.LONG_DATA),"",data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                            data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     Log.d(TAG+" EDIT: ",data.getStringExtra(ConstantManager.LONG_DATA));
                     mDataManager.getDataBaseConnector().updateRecord(lrecord);

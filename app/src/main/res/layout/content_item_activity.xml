@@ -43,6 +43,10 @@
         android:layout_alignEnd="@+id/short_et"
         android:layout_above="@+id/save_item_button"
         android:gravity="top"/>
+    <ImageView
+        android:id="@+id/photo_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/save_item_button"

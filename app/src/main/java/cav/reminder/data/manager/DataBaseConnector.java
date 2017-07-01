@@ -55,6 +55,7 @@ public class DataBaseConnector {
         newValue.put("msg_body",record.getBodyRec());
         newValue.put("close_rec",record.getCloseRec());
         newValue.put("pass_rec",record.getPassHash());
+        newValue.put("photo_file",record.getPhotoFile());
         open();
         long id =database.insert(DBHelper.TABLE_REMINDER,null,newValue);
         Log.d(TAG,"REC ? "+Long.toString(id));
