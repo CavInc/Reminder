@@ -159,6 +159,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
                 intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
                 intent.putExtra(ConstantManager.RECORD_PASS_SAVE,mItem.getPassHash());
+                intent.putExtra(ConstantManager.RECORD_PHOTO_FILE,mItem.getPhotoFile());
 
                 startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_EDIT);
 
@@ -269,6 +270,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
             intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
             intent.putExtra(ConstantManager.RECORD_PASS_SAVE,mItem.getPassHash());
+            intent.putExtra(ConstantManager.RECORD_PHOTO_FILE,mItem.getPhotoFile());
             startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_VIEW);
         }
 

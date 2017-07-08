@@ -3,6 +3,8 @@ package cav.reminder.ui.activites;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +37,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private EditText mShort;
     private EditText mLong;
     private Button mSaveButton;
+    private ImageView mPhotoView;
 
     private int mRecID=-1;
     private Date mDateRect;
@@ -53,6 +57,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         mShort = (EditText) findViewById(R.id.short_et);
         mLong = (EditText) findViewById(R.id.long_et);
         mSaveButton = (Button) findViewById(R.id.save_item_button);
+        mPhotoView = (ImageView) findViewById(R.id.photo_item);
 
         mSaveButton.setOnClickListener(this);
         setupToolbar(toolbar);
@@ -65,6 +70,12 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
             mCloseRec = getIntent().getBooleanExtra(ConstantManager.RECORD_CLOSE,false);
             mKeyHash = getIntent().getStringExtra(ConstantManager.RECORD_PASS_SAVE);
+            String sf = getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE);
+            if (sf != null) {
+                mPhotoFile = new File(getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE));
+                mPhotoView.setVisibility(View.VISIBLE);
+                mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
+            }
         }
         if (mode==ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
@@ -265,7 +276,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
                 answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
                 answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,Func.md5Hash(keyPass));
-                answerIntent.putExtra(ConstantManager.RECORD_PHOTO_FILE,mPhotoFile.toString());
+                if (mPhotoFile != null) {
+                    answerIntent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mPhotoFile.toString());
+                }
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }
@@ -289,5 +302,30 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
         }
+    }
+
+    // обрезка изображения
+    private void setPic(String mCurrentPhotoPath) {
+        // Get the dimensions of the View
+        int targetW = mPhotoView.getWidth();
+        int targetH = mPhotoView.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        mPhotoView.setImageBitmap(bitmap);
     }
 }

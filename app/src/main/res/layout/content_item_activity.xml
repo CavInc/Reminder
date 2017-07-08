@@ -41,12 +41,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/long_text_tv"
         android:layout_alignEnd="@+id/short_et"
-        android:layout_above="@+id/save_item_button"
         android:gravity="top"/>
     <ImageView
         android:id="@+id/photo_item"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/save_item_button"
+        android:layout_below="@+id/long_et"/>
 
     <Button
         android:id="@+id/save_item_button"
