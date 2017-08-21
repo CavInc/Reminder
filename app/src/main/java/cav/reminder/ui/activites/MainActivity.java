@@ -13,8 +13,11 @@ import android.util.Log;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,6 +38,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     ListView mListView;
     private FloatingActionButton newButton;
+
+    private FloatingActionButton mNewRecord;
+    private FloatingActionButton mNewTodo;
+
+    // animation fab
+    Animation show_fab_record;
+    Animation hide_fab_record;
+    Animation show_fab_todo;
+    Animation hide_fab_todo;
 
     private DataAdapter mAdapter;
 
@@ -58,19 +70,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mListView = (ListView) findViewById(R.id.listView);
         newButton = (FloatingActionButton) findViewById(R.id.newButton);
         newButton.setOnClickListener(this);
-/*
-        // отладочные данные
-        ArrayList<RecordHeaderRes> record = new ArrayList<>();
-        record.add(new RecordHeaderRes("Яблоки",strToDate("12.05.2016"),"Нашол ялоки дешевые в 15 палатке на рынке"));
-        record.add(new RecordHeaderRes("Не забыть выпить таблетки",strToDate("18.02.2016"),"Таблетки от забывчивости"));
-        record.add(new RecordHeaderRes("А вот прикольное фото",strToDate("23.08.2016"),"Фотка в парке "));
-        record.add(new RecordHeaderRes("Яблоки",strToDate("12.05.2016"),"Нашол ялоки дешевые в 15 палатке на рынке"));
-        record.add(new RecordHeaderRes("Не забыть выпить таблетки",strToDate("18.02.2016"),"Таблетки от забывчивости"));
-        record.add(new RecordHeaderRes("А вот прикольное фото",strToDate("23.08.2015"),"Фотка в парке "));
-        record.add(new RecordHeaderRes("Яблоки fd",strToDate("12.05.2016"),"Нашол ялоки дешевые в 15 палатке на рынке"));
-        record.add(new RecordHeaderRes("Не забыть выпить таблетки",strToDate("18.02.2015"),"Таблетки от забывчивости"));
-        record.add(new RecordHeaderRes("А вот прикольное фото2",strToDate("23.08.2015"),"Фотка в парке "));
-*/
+
+        mNewRecord = (FloatingActionButton) findViewById(R.id.fab_new_record);
+        mNewTodo = (FloatingActionButton) findViewById(R.id.fab_new_todo);
+
+        // animation
+        show_fab_record =  AnimationUtils.loadAnimation(getApplication(), R.anim.fab_new_rec_show);
+        hide_fab_record = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_rec_hide);
+        show_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_show);
+        hide_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_hide);
+
         ArrayList<RecordHeaderRes> record = mDataManager.getAllRecord();
 
         mAdapter = new DataAdapter(this,R.layout.main_item_list,record);
@@ -142,16 +151,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         Intent intent;
         switch (v.getId()){
             case R.id.newButton:
-                showToast("Новая запись");
-                intent = new Intent(MainActivity.this,ItemActivity.class);
-                intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_INS_RECORD);
-               // startActivity(intent);
-                startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_NEW);
+                showFABMenu();
                 break;
             case R.id.edit_laout:
                 Log.d(TAG,"EDIT");
                 dialog.cancel();
-                System.out.println(mItem.getId());
                 intent = new Intent(MainActivity.this,ItemActivity.class);
                 intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_EDIT_RECORD);
                 intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
@@ -173,6 +177,48 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         }
 
+    }
+
+    // показать float button menu
+    private void showFABMenu(){
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
+        layoutParams.rightMargin += (int) (mNewRecord.getWidth() * 1.7);
+        layoutParams.bottomMargin += (int) (mNewRecord.getHeight() * 0.25);
+        mNewRecord.setLayoutParams(layoutParams);
+        mNewRecord.setAnimation(show_fab_record);
+        mNewRecord.setClickable(true);
+
+        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mNewTodo.getLayoutParams();
+        layoutParams2.rightMargin += (int) (mNewTodo.getWidth() * 1.5);
+        layoutParams2.bottomMargin += (int) (mNewTodo.getHeight() * 1.5);
+        mNewTodo.setLayoutParams(layoutParams2);
+        mNewTodo.startAnimation(show_fab_todo);
+        mNewTodo.setClickable(true);
+    }
+    // скрыть float button menu
+    private void hideFABMenu(){
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
+        layoutParams.rightMargin -= (int) (mNewRecord.getWidth() * 1.7);
+        layoutParams.bottomMargin -= (int) (mNewRecord.getHeight() * 0.25);
+        mNewRecord.setLayoutParams(layoutParams);
+        mNewRecord.setAnimation(hide_fab_record);
+        mNewRecord.setClickable(false);
+
+        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mNewTodo.getLayoutParams();
+        layoutParams2.rightMargin -= (int) (mNewTodo.getWidth() * 1.5);
+        layoutParams2.bottomMargin -= (int) (mNewTodo.getHeight() * 1.5);
+        mNewTodo.setLayoutParams(layoutParams2);
+        mNewTodo.startAnimation(hide_fab_todo);
+        mNewTodo.setClickable(false);
+
+    }
+
+    // добавляем новую заметку
+    private void addNewRecord(){
+        Intent intent = new Intent(MainActivity.this,ItemActivity.class);
+        intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_INS_RECORD);
+        // startActivity(intent);
+        startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_NEW);
     }
 
 
@@ -260,8 +306,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             //TODO сделать вызов активити для прсотомра и редактирования в методе и убрать откуда не надо
             Log.d(TAG, "CLICK");
-            System.out.println(adapterView.getSelectedItem());
-            System.out.println(mAdapter.getItem(position).getHeaderRec());
             mItem = mAdapter.getItem(position);
             Intent intent = new Intent(MainActivity.this,ItemActivity.class);
             intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
