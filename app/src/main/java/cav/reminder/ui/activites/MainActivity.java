@@ -75,6 +75,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         mNewRecord = (FloatingActionButton) findViewById(R.id.fab_new_record);
         mNewTodo = (FloatingActionButton) findViewById(R.id.fab_new_todo);
+        mNewRecord.setOnClickListener(this);
+        mNewTodo.setOnClickListener(this);
 
         // animation
         show_fab_record =  AnimationUtils.loadAnimation(getApplication(), R.anim.fab_new_rec_show);
@@ -145,7 +147,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG,"PAUSE");
     }
 
     @Override
@@ -181,6 +182,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
                 mAdapter.remove(mItem);
                 mAdapter.notifyDataSetChanged();
+                break;
+            case R.id.fab_new_record:
+                hideFABMenu();
+                addNewRecord();
                 break;
 
         }
