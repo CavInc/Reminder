@@ -13,6 +13,7 @@ public class DBHelper extends SQLiteOpenHelper{
     public static final int DATABASE_VERSION = 1 ;
     public static final String TABLE_REMINDER = "REMINDER";
     public static final String TABLE_TODO_SPEC ="TODO_SPEC";
+    public static final String TABLE_ALARM = "ALARM";
 
     public static final String DATABASE_NAME = "reminder.db3";
 

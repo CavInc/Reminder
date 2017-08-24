@@ -48,12 +48,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     Animation show_fab_todo;
     Animation hide_fab_todo;
 
+    private boolean statusFab = false;
+
     private DataAdapter mAdapter;
 
     private DataManager mDataManager;
     private RecordHeaderRes mItem=null;
 
-    SQLiteDatabase db;
+        SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +153,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         Intent intent;
         switch (v.getId()){
             case R.id.newButton:
-                showFABMenu();
+                if (!statusFab) {
+                    showFABMenu();
+                    statusFab = true;
+                } else {
+                    hideFABMenu();
+                    statusFab = false;
+                }
                 break;
             case R.id.edit_laout:
                 Log.d(TAG,"EDIT");
@@ -182,15 +190,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     // показать float button menu
     private void showFABMenu(){
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
-        layoutParams.rightMargin += (int) (mNewRecord.getWidth() * 1.7);
+        layoutParams.rightMargin += (int) (mNewRecord.getWidth() * 0.8);
         layoutParams.bottomMargin += (int) (mNewRecord.getHeight() * 0.25);
         mNewRecord.setLayoutParams(layoutParams);
         mNewRecord.setAnimation(show_fab_record);
         mNewRecord.setClickable(true);
 
         FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mNewTodo.getLayoutParams();
-        layoutParams2.rightMargin += (int) (mNewTodo.getWidth() * 1.5);
-        layoutParams2.bottomMargin += (int) (mNewTodo.getHeight() * 1.5);
+        layoutParams2.rightMargin += (int) (mNewTodo.getWidth() * 0.25);
+        layoutParams2.bottomMargin += (int) (mNewTodo.getHeight() * 0.7);
         mNewTodo.setLayoutParams(layoutParams2);
         mNewTodo.startAnimation(show_fab_todo);
         mNewTodo.setClickable(true);
@@ -198,15 +206,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     // скрыть float button menu
     private void hideFABMenu(){
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
-        layoutParams.rightMargin -= (int) (mNewRecord.getWidth() * 1.7);
+        layoutParams.rightMargin -= (int) (mNewRecord.getWidth() * 0.8);
         layoutParams.bottomMargin -= (int) (mNewRecord.getHeight() * 0.25);
         mNewRecord.setLayoutParams(layoutParams);
         mNewRecord.setAnimation(hide_fab_record);
         mNewRecord.setClickable(false);
 
         FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mNewTodo.getLayoutParams();
-        layoutParams2.rightMargin -= (int) (mNewTodo.getWidth() * 1.5);
-        layoutParams2.bottomMargin -= (int) (mNewTodo.getHeight() * 1.5);
+        layoutParams2.rightMargin -= (int) (mNewTodo.getWidth() * 0.25);
+        layoutParams2.bottomMargin -= (int) (mNewTodo.getHeight() * 0.7);
         mNewTodo.setLayoutParams(layoutParams2);
         mNewTodo.startAnimation(hide_fab_todo);
         mNewTodo.setClickable(false);
