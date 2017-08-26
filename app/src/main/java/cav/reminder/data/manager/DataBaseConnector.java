@@ -4,10 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.SystemClock;
 import android.util.Log;
 
-import cav.reminder.data.RecordHeaderRes;
+import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.data.database.DBHelper;
 import cav.reminder.utils.Func;
 

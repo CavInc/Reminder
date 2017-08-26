@@ -10,6 +10,6 @@
     <dimen name="small_size_8">8dp</dimen>
     <dimen name="spacing_size_16">16dp</dimen>
     <dimen name="small_size_4">4dp</dimen>
-    
+
     <dimen name="size_small_large_72">72dp</dimen>
 </resources>

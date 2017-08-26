@@ -10,13 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import cav.reminder.R;
-import cav.reminder.data.RecordHeaderRes;
+import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.utils.Func;
 
 public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {

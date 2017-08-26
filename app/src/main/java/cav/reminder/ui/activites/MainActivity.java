@@ -1,11 +1,9 @@
 package cav.reminder.ui.activites;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -18,7 +16,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -26,8 +23,7 @@ import java.util.ArrayList;
 
 
 import cav.reminder.R;
-import cav.reminder.data.RecordHeaderRes;
-import cav.reminder.data.database.DBHelper;
+import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.data.manager.DataManager;
 import cav.reminder.ui.adapters.DataAdapter;
 import cav.reminder.utils.ConstantManager;
@@ -184,7 +180,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 mAdapter.notifyDataSetChanged();
                 break;
             case R.id.fab_new_record:
-                hideFABMenu();
+               // hideFABMenu();
                 addNewRecord();
                 break;
 

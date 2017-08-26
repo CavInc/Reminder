@@ -6,8 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import cav.reminder.data.RecordHeaderRes;
-import cav.reminder.ui.activites.MainActivity;
+import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.utils.Func;
 
 public class DataManager {

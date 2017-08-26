@@ -54,6 +54,9 @@ public class DBHelper extends SQLiteOpenHelper{
                     " todo_title text,"+
                     " done_flg boolean default 0,primary key(_id,position_id)"+")");
 
+            db.execSQL("create table "+TABLE_ALARM+" "+
+                    "(item_id integer not null)");
+
 
         }else {
             /*

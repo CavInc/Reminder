@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".ui.activites.ItemActivity">
         </activity>
+        <activity android:name=".ui.activites.TodoActivity">
+        </activity>
     </application>
 
 </manifest>
