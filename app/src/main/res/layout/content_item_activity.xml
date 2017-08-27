@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
+        android:lines="10"
         android:id="@+id/long_et"
         android:layout_below="@+id/long_text_tv"
         android:layout_alignParentLeft="false"

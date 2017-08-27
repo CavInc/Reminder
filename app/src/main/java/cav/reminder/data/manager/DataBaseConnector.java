@@ -36,7 +36,9 @@ public class DataBaseConnector {
     // Возвращаем все записи
     public Cursor getAllRecord (){
         return database.query(DBHelper.TABLE_REMINDER,
-                new String []{"_id","short_name","rec_date","msg_body","photo_file","close_rec","pass_rec"},null,null,null,null,"rec_date");
+                new String []{"_id","short_name","rec_date","msg_body","photo_file",
+                        "close_rec","pass_rec","type_rec","todo_done_count","todo_count"},
+                null,null,null,null,"rec_date");
     }
     // вернуть запись по _id
     public RecordHeaderRes getRecord(int id){
@@ -76,6 +78,7 @@ public class DataBaseConnector {
         updValue.put("rec_date",Func.dateToStr(record.getDate()));
         updValue.put("close_rec",record.getCloseRec());
         updValue.put("pass_rec",record.getPassHash());
+
         Log.d(TAG,"CLOSE REC : " +Integer.toString(record.getCloseRec()));
 
         open();

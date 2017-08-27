@@ -46,7 +46,10 @@ public class DataManager {
                     cursor.getString(cursor.getColumnIndex("msg_body")),
                     cursor.getString(cursor.getColumnIndex("photo_file")),
                     (cursor.getInt(cursor.getColumnIndex("close_rec"))==1),
-                    cursor.getString(cursor.getColumnIndex("pass_rec"))));
+                    cursor.getString(cursor.getColumnIndex("pass_rec")),
+                    cursor.getInt(cursor.getColumnIndex("type_rec")),
+                    cursor.getInt(cursor.getColumnIndex("todo_done_count")),
+                    cursor.getInt(cursor.getColumnIndex("todo_count"))));
         }
         this.mDbc.close();
         return record;

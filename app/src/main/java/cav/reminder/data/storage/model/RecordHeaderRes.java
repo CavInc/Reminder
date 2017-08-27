@@ -46,6 +46,21 @@ public class RecordHeaderRes {
         mPassHash = passHash;
     }
 
+    public RecordHeaderRes(int id, String headerRec, Date date,
+                           String bodyRec, String photoFile,
+                           boolean closeRec, String passHash, int typeRec, int allTodoCount, int doneCount) {
+        mId = id;
+        mHeaderRec = headerRec;
+        mDate = date;
+        mBodyRec = bodyRec;
+        mPhotoFile = photoFile;
+        mCloseRec = closeRec;
+        mPassHash = passHash;
+        mTypeRec = typeRec;
+        mAllTodoCount = allTodoCount;
+        mDoneCount = doneCount;
+    }
+
     public int getId(){
         return mId;
     }
@@ -82,5 +97,17 @@ public class RecordHeaderRes {
 
     public String getPassHash() {
         return mPassHash;
+    }
+
+    public int getTypeRec() {
+        return mTypeRec;
+    }
+
+    public int getAllTodoCount() {
+        return mAllTodoCount;
+    }
+
+    public int getDoneCount() {
+        return mDoneCount;
     }
 }

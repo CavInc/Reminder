@@ -183,6 +183,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                // hideFABMenu();
                 addNewRecord();
                 break;
+            case R.id.fab_new_todo:
+                addNewTODO();
+                break;
 
         }
 
@@ -230,9 +233,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_NEW);
     }
 
+    // добавляем новое TO DO
+    private void addNewTODO(){
+        Intent intent = new Intent(this,TodoActivity.class);
+        startActivityForResult(intent,ConstantManager.ITEM_TODO_NEW);
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (statusFab) {
+            hideFABMenu();
+            statusFab = false;
+        }
+
         switch (requestCode){
             case ConstantManager.ITEM_ACTIVITY_NEW:
                 Log.d(TAG,Integer.toString(resultCode));
@@ -315,16 +329,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
             //TODO сделать вызов активити для прсотомра и редактирования в методе и убрать откуда не надо
             Log.d(TAG, "CLICK");
+            if (statusFab) {
+                hideFABMenu();
+                statusFab = false;
+            }
             mItem = mAdapter.getItem(position);
-            Intent intent = new Intent(MainActivity.this,ItemActivity.class);
-            intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
-            intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
-            intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
-            intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
-            intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
-            intent.putExtra(ConstantManager.RECORD_PASS_SAVE,mItem.getPassHash());
-            intent.putExtra(ConstantManager.RECORD_PHOTO_FILE,mItem.getPhotoFile());
-            startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_VIEW);
+            if (mItem.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
+                Intent intent = new Intent(MainActivity.this, ItemActivity.class);
+                intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_VIEW_RECORD);
+                intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
+                intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
+                intent.putExtra(ConstantManager.RECORD_BODY, mItem.getBodyRec());
+                intent.putExtra(ConstantManager.RECORD_CLOSE, mItem.isCloseRec());
+                intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
+                intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
+                startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_VIEW);
+            }
         }
 
     };
