@@ -14,10 +14,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import cav.reminder.R;
 import cav.reminder.data.TodoSpecModel;
 import cav.reminder.data.manager.DataManager;
+import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.ui.adapters.TodoAdapter;
 import cav.reminder.utils.ConstantManager;
 
@@ -29,6 +31,8 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
     private DataManager mDataManager;
     private TodoAdapter mTodoAdapter;
+
+    private RecordHeaderRes mRecord;
 
     private int mode=0;
 
@@ -100,4 +104,21 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             mTodoAdapter.notifyDataSetChanged();
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    public void saveDate(){
+        if (mName.getText().toString().length() != 0) {
+            ArrayList<TodoSpecModel> models = new ArrayList<>();
+            for (int i=0;i<mTodoAdapter.getCount();i++){
+                models.add(mTodoAdapter.getItem(i));
+            }
+            mRecord = new RecordHeaderRes(mName.getText().toString(),new Date(),"");
+            mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
+        }
+
+    }
 }

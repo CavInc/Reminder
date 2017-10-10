@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
+import cav.reminder.data.TodoSpecModel;
 import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.data.database.DBHelper;
 import cav.reminder.utils.Func;
@@ -83,6 +86,26 @@ public class DataBaseConnector {
 
         open();
         database.update(DBHelper.TABLE_REMINDER,updValue,"_id="+record.getId(),null);
+        close();
+    }
+
+    // Список дел
+    public void addToDoRec(RecordHeaderRes record, ArrayList<TodoSpecModel> model){
+        open();
+        ContentValues values = new ContentValues();
+        values.put("short_name",record.getHeaderRec());
+        values.put("type_rec",1);
+        values.put("todo_count",model.size());
+        long id = database.insert(DBHelper.TABLE_REMINDER,null,values);
+
+        for (int i=0;i<model.size();i++){
+            values.clear();
+            values.put("_id",id);
+            values.put("position_id",i);
+            values.put("todo_title",model.get(i).getName());
+            //values.put("done_flg");
+            database.insert(DBHelper.TABLE_TODO_SPEC,null,values);
+        }
         close();
     }
 
