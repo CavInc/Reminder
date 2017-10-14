@@ -95,6 +95,7 @@ public class DataBaseConnector {
         ContentValues values = new ContentValues();
         values.put("short_name",record.getHeaderRec());
         values.put("type_rec",1);
+        values.put("rec_date", Func.dateToStr(record.getDate()));
         values.put("todo_count",model.size());
         long id = database.insert(DBHelper.TABLE_REMINDER,null,values);
 

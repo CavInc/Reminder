@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
     private ListView mListView;
     private FloatingActionButton mFabNew;
-    private TextView mName;
+    private EditText mName;
 
     private DataManager mDataManager;
     private TodoAdapter mTodoAdapter;
@@ -46,7 +47,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         mFabNew = (FloatingActionButton) findViewById(R.id.fab_todo_add_item);
 
         mFabNew.setOnClickListener(this);
-        mName = (TextView) findViewById(R.id.short_text_tv);
+        mName = (EditText) findViewById(R.id.short_et);
 
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
 
@@ -108,6 +109,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        saveDate();
     }
 
     public void saveDate(){
