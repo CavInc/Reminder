@@ -121,6 +121,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home){
             Log.d(TAG,"BACK BUTTON");
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

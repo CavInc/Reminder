@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import cav.reminder.R;
 import cav.reminder.data.storage.model.RecordHeaderRes;
+import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
 public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
@@ -41,31 +42,44 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             holder.bodyRec = (TextView) row.findViewById(R.id.smallBodyRec);
             holder.closeRec = (ImageView) row.findViewById(R.id.item_closerec_img);
             holder.photoFile = (ImageView) row.findViewById(R.id.item_photo_img);
+            holder.todoItem = (ImageView) row.findViewById(R.id.item_todo);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
-
         }
 
         RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
         holder.dataRec.setText(Func.dateToStr(record.getDate()));
-        if (record.isCloseRec()) {
-            holder.closeRec.setImageResource(R.drawable.ic_lock_black_24dp);
-            holder.bodyRec.setVisibility(View.GONE);
-        } else {
-            holder.closeRec.setImageResource(R.drawable.ic_lock_unlock_24dp1);
-            holder.bodyRec.setVisibility(View.VISIBLE);
-        }
-        if (record.getPhotoFile() !=null && record.getPhotoFile().length()!=0){
-            holder.photoFile.setImageResource(R.drawable.ic_camera_alt_black_24dp);
-        }else {
-            holder.photoFile.setImageResource(R.drawable.ic_camera_alt_gray_24dp);
-        }
+
+        if (record.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
+            holder.todoItem.setVisibility(View.GONE);
+            holder.closeRec.setVisibility(View.VISIBLE);
+            holder.photoFile.setVisibility(View.VISIBLE);
+
+            if (record.isCloseRec()) {
+                holder.closeRec.setImageResource(R.drawable.ic_lock_black_24dp);
+                holder.bodyRec.setVisibility(View.GONE);
+            } else {
+                holder.closeRec.setImageResource(R.drawable.ic_lock_unlock_24dp1);
+                holder.bodyRec.setVisibility(View.VISIBLE);
+            }
+            if (record.getPhotoFile() != null && record.getPhotoFile().length() != 0) {
+                holder.photoFile.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+            } else {
+                holder.photoFile.setImageResource(R.drawable.ic_camera_alt_gray_24dp);
+            }
         /*
         holder.bodyRec.setText(record.getBodyRec().substring(0,
                 (record.getBodyRec().length() < 60 ? record.getBodyRec().length() : 60)));*/
-        holder.bodyRec.setText(record.getBodyRec());
+            holder.bodyRec.setText(record.getBodyRec());
+        }
+        if (record.getTypeRec() == ConstantManager.TYPE_REC_TODO) {
+            holder.todoItem.setVisibility(View.VISIBLE);
+            holder.closeRec.setVisibility(View.GONE);
+            holder.photoFile.setVisibility(View.GONE);
+            holder.bodyRec.setVisibility(View.GONE);
+        }
 
         return row;
     }
@@ -78,6 +92,7 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         public TextView bodyRec;
         public ImageView photoFile;
         public ImageView closeRec;
+        public ImageView todoItem;
     }
 
 }
