@@ -12,8 +12,8 @@ public class RecordHeaderRes {
     private boolean mCloseRec; // зашифрованная запись
     private String mPassHash;
     private int mTypeRec; // тип записи
-    private int mAllTodoCount; // количество все записей TO DO в блоке
-    private int mDoneCount; // количество выполненных записей в блоке
+    private int mAllTodoCount = 0 ; // количество все записей TO DO в блоке
+    private int mDoneCount = 0; // количество выполненных записей в блоке
 
     public RecordHeaderRes(String headerRec, Date date, String bodyRec) {
         mHeaderRec = headerRec;

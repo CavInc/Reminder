@@ -267,7 +267,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.save_item_button:
-                DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 Date newDate = new Date();
                 // сохраниили и отдали данные
                 Intent answerIntent = new Intent();

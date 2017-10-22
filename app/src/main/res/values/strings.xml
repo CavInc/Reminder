@@ -10,4 +10,6 @@
     <string name="open_record">Open Record</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="all_count_todo">All ToDo : </string>
+    <string name="done_todo">Done ToDo : </string>
 </resources>

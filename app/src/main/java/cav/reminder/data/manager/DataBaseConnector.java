@@ -110,4 +110,20 @@ public class DataBaseConnector {
         close();
     }
 
+    // получить список дел
+    public ArrayList<TodoSpecModel> getToDoRec(int recID) {
+        ArrayList<TodoSpecModel> rec =new ArrayList<>();
+        open();
+        Cursor cursor = database.query(DBHelper.TABLE_TODO_SPEC,
+                new String [] {"position_id","todo_title","alarm_date","alarm_time","done_flg"},
+                "_id="+recID,null,null,null,"position_id");
+        while (cursor.moveToNext()){
+            rec.add(new TodoSpecModel(cursor.getInt(cursor.getColumnIndex("position_id")),
+                    cursor.getString(cursor.getColumnIndex("todo_title")),
+                    (cursor.getInt(cursor.getColumnIndex("done_flg")) == 1 ? true : false)));
+        }
+        close();
+        return rec;
+    }
+
 }

@@ -22,10 +22,11 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
     private LayoutInflater mInflater;
     private int resLayout;
     private RecordHeaderRes[] objects;
+    private Context mContext;
 
     public DataAdapter(Context context, int resource, ArrayList<RecordHeaderRes> objects) {
         super(context, resource, objects);
-        //this.objects=objects;
+        mContext = context;
         resLayout = resource;
         mInflater = LayoutInflater.from(context);
     }
@@ -78,7 +79,8 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             holder.todoItem.setVisibility(View.VISIBLE);
             holder.closeRec.setVisibility(View.GONE);
             holder.photoFile.setVisibility(View.GONE);
-            holder.bodyRec.setVisibility(View.GONE);
+            holder.bodyRec.setText(mContext.getString(R.string.all_count_todo)
+                    +record.getAllTodoCount()+" "+mContext.getString(R.string.done_todo)+record.getDoneCount());
         }
 
         return row;

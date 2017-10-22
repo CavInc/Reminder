@@ -335,6 +335,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 statusFab = false;
             }
             mItem = mAdapter.getItem(position);
+            // обычная запись
             if (mItem.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
                 Intent intent = new Intent(MainActivity.this, ItemActivity.class);
                 intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_VIEW_RECORD);
@@ -345,6 +346,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
                 intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
                 startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_VIEW);
+            }
+            // запись с 'to do'
+            if (mItem.getTypeRec() == ConstantManager.TYPE_REC_TODO) {
+                Intent intent = new Intent(MainActivity.this,TodoActivity.class);
+                intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
+                intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
+                intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
+
+                startActivity(intent);
             }
         }
 

@@ -35,7 +35,8 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
     private RecordHeaderRes mRecord;
 
-    private int mode=0;
+    private int mode = 0;
+    private int mRecID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +50,31 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         mFabNew.setOnClickListener(this);
         mName = (EditText) findViewById(R.id.short_et);
 
+        // получили переданное значение
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
 
         mListView = (ListView) findViewById(R.id.todo_list);
 
         ArrayList<TodoSpecModel> model = new ArrayList<>();
+
+        if ((mode == ConstantManager.MODE_VIEW_RECORD) || (mode == ConstantManager.MODE_EDIT_RECORD)) {
+            mName.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
+            mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
+            model = mDataManager.getDataBaseConnector().getToDoRec(mRecID);
+        }
+
         mTodoAdapter = new TodoAdapter(this,R.layout.todo_item,model);
         mListView.setAdapter(mTodoAdapter);
 
 
         setupToolbar(toolbar);
+
+
+
+        if (mode == ConstantManager.MODE_VIEW_RECORD) {
+            mName.setFocusable(false);
+            mFabNew.setVisibility(View.GONE);
+        }
     }
 
     private void setupToolbar(Toolbar toolbar) {
