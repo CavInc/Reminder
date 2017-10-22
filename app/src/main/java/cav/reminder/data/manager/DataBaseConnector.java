@@ -55,7 +55,7 @@ public class DataBaseConnector {
     public int insertRecord(RecordHeaderRes record){
         ContentValues newValue = new ContentValues();
         newValue.put("short_name",record.getHeaderRec());
-        newValue.put("rec_date", Func.dateToStr(record.getDate()));
+        newValue.put("rec_date", Func.dateToStr(record.getDate(),"yyyy-MM-dd"));
         newValue.put("msg_body",record.getBodyRec());
         newValue.put("close_rec",record.getCloseRec());
         newValue.put("pass_rec",record.getPassHash());
@@ -78,7 +78,7 @@ public class DataBaseConnector {
         ContentValues updValue = new ContentValues();
         updValue.put("short_name",record.getHeaderRec());
         updValue.put("msg_body",record.getBodyRec());
-        updValue.put("rec_date",Func.dateToStr(record.getDate()));
+        updValue.put("rec_date",Func.dateToStr(record.getDate(),"yyyy-MM-dd"));
         updValue.put("close_rec",record.getCloseRec());
         updValue.put("pass_rec",record.getPassHash());
 
@@ -95,7 +95,7 @@ public class DataBaseConnector {
         ContentValues values = new ContentValues();
         values.put("short_name",record.getHeaderRec());
         values.put("type_rec",1);
-        values.put("rec_date", Func.dateToStr(record.getDate()));
+        values.put("rec_date", Func.dateToStr(record.getDate(),"yyyy-MM-dd"));
         values.put("todo_count",model.size());
         long id = database.insert(DBHelper.TABLE_REMINDER,null,values);
 

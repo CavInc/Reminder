@@ -261,7 +261,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 */
                     String x = data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE);
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
-                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
+                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA),"yyyy-MM-dd"),
                             data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
@@ -277,7 +277,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 if (resultCode == RESULT_OK && data !=null){
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getIntExtra(ConstantManager.RECORD_ID,-1),
                             data.getStringExtra(ConstantManager.SHORT_DATA),
-                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA)),
+                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA),"yyyy-MM-dd"),
                             data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));

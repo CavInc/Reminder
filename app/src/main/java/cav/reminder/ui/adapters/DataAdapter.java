@@ -51,7 +51,7 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
 
         RecordHeaderRes record = getItem(position);
         holder.headerRec.setText(record.getHeaderRec());
-        holder.dataRec.setText(Func.dateToStr(record.getDate()));
+        holder.dataRec.setText(Func.dateToStr(record.getDate(),"dd.MM.yyyy"));
 
         if (record.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
             holder.todoItem.setVisibility(View.GONE);

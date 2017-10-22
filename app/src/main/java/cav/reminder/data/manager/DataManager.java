@@ -42,7 +42,7 @@ public class DataManager {
             Log.d(TAG,cursor.getString(cursor.getColumnIndex("short_name")));
             record.add(new RecordHeaderRes(cursor.getInt(cursor.getColumnIndex("_id")),
                     cursor.getString(cursor.getColumnIndex("short_name")),
-                    Func.strToDate(cursor.getString(cursor.getColumnIndex("rec_date"))),
+                    Func.strToDate(cursor.getString(cursor.getColumnIndex("rec_date")),"yyyy-MM-dd"),
                     cursor.getString(cursor.getColumnIndex("msg_body")),
                     cursor.getString(cursor.getColumnIndex("photo_file")),
                     (cursor.getInt(cursor.getColumnIndex("close_rec"))==1),
