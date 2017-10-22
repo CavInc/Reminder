@@ -74,7 +74,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             if (sf != null) {
                 mPhotoFile = new File(getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE));
                 mPhotoView.setVisibility(View.VISIBLE);
-                mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
+                //mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
+                mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString()));
             }
         }
         if (mode==ConstantManager.MODE_VIEW_RECORD){
@@ -175,9 +176,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 return null;
             }
         }
-
-
-
         File image = File.createTempFile(imageFile,"jpg",storageDir);
         return image;
     }

@@ -294,6 +294,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case ConstantManager.ITEM_ACTIVITY_VIEW:
                 Log.d(TAG,"RETURN VIEW");
                 break;
+            //"To Do" ac
+            case ConstantManager.ITEM_TODO_NEW:
+                if (resultCode == RESULT_OK && data !=null){
+                    RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
+                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA),"yyyy-MM-dd"),
+                            data.getStringExtra(ConstantManager.LONG_DATA),
+                            data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                            data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                    mAdapter.insert(lrecord,0);
+                    mAdapter.notifyDataSetChanged();
+                }
+                break;
+            case ConstantManager.ITEM_TODO_EDIT:
+                if (resultCode == RESULT_OK && data !=null){
+
+                }
+                break;
         }
        // super.onActivityResult(requestCode, resultCode, data);
     }

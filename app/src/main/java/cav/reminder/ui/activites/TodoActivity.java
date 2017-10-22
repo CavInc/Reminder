@@ -1,6 +1,7 @@
 package cav.reminder.ui.activites;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +24,7 @@ import cav.reminder.data.manager.DataManager;
 import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.ui.adapters.TodoAdapter;
 import cav.reminder.utils.ConstantManager;
+import cav.reminder.utils.Func;
 
 public class TodoActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -125,7 +127,9 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        saveDate();
+        if (mode != ConstantManager.MODE_VIEW_RECORD) {
+            saveDate();
+        }
     }
 
     public void saveDate(){
@@ -136,6 +140,14 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             }
             mRecord = new RecordHeaderRes(mName.getText().toString(),new Date(),"");
             mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
+
+            // сохраниили и отдали данные
+            Intent answerIntent = new Intent();
+            answerIntent.putExtra(ConstantManager.SHORT_DATA,mName.getText().toString());
+            answerIntent.putExtra(ConstantManager.DATE_DATA, Func.dateToStr(new Date(),"yyyy-MM-dd"));
+            answerIntent.putExtra(ConstantManager.RECORD_CLOSE,false);
+            answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,"");
+            setResult(RESULT_OK, answerIntent);
         }
 
     }

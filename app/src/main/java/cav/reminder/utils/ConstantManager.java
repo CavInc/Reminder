@@ -34,6 +34,9 @@ public interface ConstantManager {
     int REQUEST_CAMERA_PICTURE = 99;
 
     int ITEM_TODO_NEW = 200;
+    int ITEM_TODO_EDIT = 201;
+
     int TYPE_REC_MEMO  = 0;
     int TYPE_REC_TODO  = 1;
+
 }
