@@ -91,7 +91,7 @@ public class DataBaseConnector {
     }
 
     // Список дел
-    public void addToDoRec(RecordHeaderRes record, ArrayList<TodoSpecModel> model){
+    public int addToDoRec(RecordHeaderRes record, ArrayList<TodoSpecModel> model){
         open();
         ContentValues values = new ContentValues();
         values.put("short_name",record.getHeaderRec());
@@ -109,6 +109,7 @@ public class DataBaseConnector {
             database.insert(DBHelper.TABLE_TODO_SPEC,null,values);
         }
         close();
+        return (int) id;
     }
 
     // получить список дел

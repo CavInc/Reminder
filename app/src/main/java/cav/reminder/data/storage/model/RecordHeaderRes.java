@@ -110,4 +110,8 @@ public class RecordHeaderRes {
     public int getDoneCount() {
         return mDoneCount;
     }
+
+    public void setTypeRec(int typeRec) {
+        mTypeRec = typeRec;
+    }
 }

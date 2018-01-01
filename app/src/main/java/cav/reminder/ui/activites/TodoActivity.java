@@ -92,6 +92,9 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
+                if (mode != ConstantManager.MODE_VIEW_RECORD) {
+                    saveDate();
+                }
                 onBackPressed();
                 return true;
         }
@@ -127,9 +130,6 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mode != ConstantManager.MODE_VIEW_RECORD) {
-            saveDate();
-        }
     }
 
     public void saveDate(){
@@ -139,7 +139,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
                 models.add(mTodoAdapter.getItem(i));
             }
             mRecord = new RecordHeaderRes(mName.getText().toString(),new Date(),"");
-            mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
+            int id = mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
 
             // сохраниили и отдали данные
             Intent answerIntent = new Intent();
@@ -147,6 +147,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             answerIntent.putExtra(ConstantManager.DATE_DATA, Func.dateToStr(new Date(),"yyyy-MM-dd"));
             answerIntent.putExtra(ConstantManager.RECORD_CLOSE,false);
             answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,"");
+            answerIntent.putExtra(ConstantManager.RECORD_ID,id);
             setResult(RESULT_OK, answerIntent);
         }
 
