@@ -70,6 +70,7 @@ public class DataBaseConnector {
     public void deleteRecord(int id_record){
         open();
         database.delete(DBHelper.TABLE_REMINDER,"_id="+id_record,null);
+        database.delete(DBHelper.TABLE_TODO_SPEC,"_id="+id_record,null);
         close();
     }
     // обновить запись

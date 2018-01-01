@@ -162,16 +162,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.edit_laout:
                 Log.d(TAG,"EDIT");
                 dialog.cancel();
-                intent = new Intent(MainActivity.this,ItemActivity.class);
-                intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_EDIT_RECORD);
-                intent.putExtra(ConstantManager.RECORD_ID,mItem.getId());
-                intent.putExtra(ConstantManager.RECORD_HEADER,mItem.getHeaderRec());
-                intent.putExtra(ConstantManager.RECORD_BODY,mItem.getBodyRec());
-                intent.putExtra(ConstantManager.RECORD_CLOSE,mItem.isCloseRec());
-                intent.putExtra(ConstantManager.RECORD_PASS_SAVE,mItem.getPassHash());
-                intent.putExtra(ConstantManager.RECORD_PHOTO_FILE,mItem.getPhotoFile());
+                if (mItem.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
+                    intent = new Intent(MainActivity.this, ItemActivity.class);
+                    intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_EDIT_RECORD);
+                    intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
+                    intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
+                    intent.putExtra(ConstantManager.RECORD_BODY, mItem.getBodyRec());
+                    intent.putExtra(ConstantManager.RECORD_CLOSE, mItem.isCloseRec());
+                    intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
+                    intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
 
-                startActivityForResult(intent,ConstantManager.ITEM_ACTIVITY_EDIT);
+                    startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_EDIT);
+                } else {
+                    intent = new Intent(MainActivity.this,TodoActivity.class);
+                    intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_EDIT_RECORD);
+                    intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
+                    intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
+
+                    startActivityForResult(intent,ConstantManager.ITEM_TODO_EDIT);
+                }
 
                 break;
             case R.id.del_laout:
@@ -309,7 +318,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case ConstantManager.ITEM_TODO_EDIT:
                 if (resultCode == RESULT_OK && data !=null){
+                    RecordHeaderRes lrecord = new RecordHeaderRes(data.getStringExtra(ConstantManager.SHORT_DATA),
+                            Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA),"yyyy-MM-dd"),
+                            data.getStringExtra(ConstantManager.LONG_DATA),
+                            data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                            data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
 
+                    int id = mAdapter.getPosition(mItem);
+                    mAdapter.remove(mItem);
+                    mAdapter.insert(lrecord,id);
+
+                    mAdapter.notifyDataSetChanged();
                 }
                 break;
         }
