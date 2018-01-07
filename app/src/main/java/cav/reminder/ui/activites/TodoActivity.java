@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,14 +69,13 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         mTodoAdapter = new TodoAdapter(this,R.layout.todo_item,model);
         mListView.setAdapter(mTodoAdapter);
 
-
         setupToolbar(toolbar);
-
-
 
         if (mode == ConstantManager.MODE_VIEW_RECORD) {
             mName.setFocusable(false);
             mFabNew.setVisibility(View.GONE);
+        } else {
+            mListView.setOnItemClickListener(mItemClickListener);
         }
     }
 
@@ -152,4 +152,18 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    AdapterView.OnItemClickListener mItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            TodoSpecModel mx = (TodoSpecModel) adapterView.getItemAtPosition(position);
+            if (mx.isCheck()){
+                mTodoAdapter.getItem(position).setCheck(false);
+            } else {
+                mTodoAdapter.getItem(position).setCheck(true);
+            }
+            mTodoAdapter.notifyDataSetChanged();
+
+        }
+    };
 }
