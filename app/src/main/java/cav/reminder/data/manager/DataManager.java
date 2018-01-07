@@ -48,8 +48,8 @@ public class DataManager {
                     (cursor.getInt(cursor.getColumnIndex("close_rec"))==1),
                     cursor.getString(cursor.getColumnIndex("pass_rec")),
                     cursor.getInt(cursor.getColumnIndex("type_rec")),
-                    cursor.getInt(cursor.getColumnIndex("todo_done_count")),
-                    cursor.getInt(cursor.getColumnIndex("todo_count"))));
+                    cursor.getInt(cursor.getColumnIndex("todo_count")),
+                    cursor.getInt(cursor.getColumnIndex("todo_done_count"))));
         }
         this.mDbc.close();
         return record;
