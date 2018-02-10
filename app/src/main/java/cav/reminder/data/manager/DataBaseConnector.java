@@ -98,15 +98,19 @@ public class DataBaseConnector {
         values.put("type_rec",1);
         values.put("rec_date", Func.dateToStr(record.getDate(),"yyyy-MM-dd"));
         values.put("todo_count",model.size());
-        long id = database.insert(DBHelper.TABLE_REMINDER,null,values);
+        if (record.getId() != -1){
+            values.put("_id",record.getId());
+        }
+        long id = database.insertWithOnConflict(DBHelper.TABLE_REMINDER,null,values,SQLiteDatabase.CONFLICT_REPLACE);
 
         for (int i=0;i<model.size();i++){
             values.clear();
             values.put("_id",id);
             values.put("position_id",i);
             values.put("todo_title",model.get(i).getName());
+            values.put("done_flg",model.get(i).isCheck());
             //values.put("done_flg");
-            database.insert(DBHelper.TABLE_TODO_SPEC,null,values);
+            database.insertWithOnConflict(DBHelper.TABLE_TODO_SPEC,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         }
         close();
         return (int) id;

@@ -3,7 +3,7 @@ package cav.reminder.data.storage.model;
 import java.util.Date;
 
 public class RecordHeaderRes {
-    private int mId;
+    private int mId = -1;
     private String mHeaderRec;
     private Date mDate;
     private String mBodyRec;
