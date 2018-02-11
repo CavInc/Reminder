@@ -114,4 +114,12 @@ public class RecordHeaderRes {
     public void setTypeRec(int typeRec) {
         mTypeRec = typeRec;
     }
+
+    public void setAllTodoCount(int allTodoCount) {
+        mAllTodoCount = allTodoCount;
+    }
+
+    public void setDoneCount(int doneCount) {
+        mDoneCount = doneCount;
+    }
 }

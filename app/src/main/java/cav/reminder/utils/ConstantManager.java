@@ -39,4 +39,6 @@ public interface ConstantManager {
     int TYPE_REC_MEMO  = 0;
     int TYPE_REC_TODO  = 1;
 
+    String TODO_COUNT_SIZE = "TODO_COUNT_SIZE";
+    String TODO_DONE_COUNT = "TODO_DONE_COUNT";
 }

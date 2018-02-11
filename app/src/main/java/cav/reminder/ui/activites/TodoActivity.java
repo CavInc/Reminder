@@ -134,9 +134,13 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
     public void saveDate(){
         if (mName.getText().toString().length() != 0) {
+            int checkCount = 0;
             ArrayList<TodoSpecModel> models = new ArrayList<>();
             for (int i=0;i<mTodoAdapter.getCount();i++){
                 models.add(mTodoAdapter.getItem(i));
+                if (mTodoAdapter.getItem(i).isCheck()){
+                    checkCount += 1;
+                }
             }
             mRecord = new RecordHeaderRes(mRecID,mName.getText().toString(),new Date(),"");
             int id = mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
@@ -148,6 +152,8 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             answerIntent.putExtra(ConstantManager.RECORD_CLOSE,false);
             answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,"");
             answerIntent.putExtra(ConstantManager.RECORD_ID,id);
+            answerIntent.putExtra(ConstantManager.TODO_COUNT_SIZE,models.size());
+            answerIntent.putExtra(ConstantManager.TODO_DONE_COUNT,checkCount);
             setResult(RESULT_OK, answerIntent);
         }
 

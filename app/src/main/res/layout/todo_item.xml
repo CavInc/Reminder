@@ -18,5 +18,5 @@
         android:id="@+id/todo_item_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_lock_unlock_24dp1"/>
+        android:src="@drawable/ic_alarm_gray_24dp"/>
 </LinearLayout>

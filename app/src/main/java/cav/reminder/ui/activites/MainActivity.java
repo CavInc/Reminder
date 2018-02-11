@@ -314,6 +314,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     lrecord.setTypeRec(ConstantManager.TYPE_REC_TODO);
                     lrecord.setId(data.getIntExtra(ConstantManager.RECORD_ID,-1));
+                    lrecord.setAllTodoCount(data.getIntExtra(ConstantManager.TODO_COUNT_SIZE,0));
+                    lrecord.setDoneCount(data.getIntExtra(ConstantManager.TODO_DONE_COUNT,0));
                     mAdapter.insert(lrecord,0);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -329,6 +331,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     lrecord.setTypeRec(ConstantManager.TYPE_REC_TODO);
+                    lrecord.setAllTodoCount(data.getIntExtra(ConstantManager.TODO_COUNT_SIZE,0));
+                    lrecord.setDoneCount(data.getIntExtra(ConstantManager.TODO_DONE_COUNT,0));
                     int id = mAdapter.getPosition(mItem);
                     mAdapter.remove(mItem);
                     mAdapter.insert(lrecord,id);
