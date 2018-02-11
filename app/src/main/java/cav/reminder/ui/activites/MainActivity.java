@@ -313,6 +313,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
                             data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                     lrecord.setTypeRec(ConstantManager.TYPE_REC_TODO);
+                    lrecord.setId(data.getIntExtra(ConstantManager.RECORD_ID,-1));
                     mAdapter.insert(lrecord,0);
                     mAdapter.notifyDataSetChanged();
                 }

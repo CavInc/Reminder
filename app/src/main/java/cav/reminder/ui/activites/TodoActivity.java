@@ -138,7 +138,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             for (int i=0;i<mTodoAdapter.getCount();i++){
                 models.add(mTodoAdapter.getItem(i));
             }
-            mRecord = new RecordHeaderRes(mName.getText().toString(),new Date(),"");
+            mRecord = new RecordHeaderRes(mRecID,mName.getText().toString(),new Date(),"");
             int id = mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
 
             // сохраниили и отдали данные
