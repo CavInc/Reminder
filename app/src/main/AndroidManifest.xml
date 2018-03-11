@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".ui.activites.TodoActivity">
         </activity>
+        <activity android:name=".ui.activites.PhotoViewActivity">
+        </activity>
     </application>
 
 </manifest>

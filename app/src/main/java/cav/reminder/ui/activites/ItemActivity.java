@@ -58,6 +58,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         mLong = (EditText) findViewById(R.id.long_et);
         mSaveButton = (Button) findViewById(R.id.save_item_button);
         mPhotoView = (ImageView) findViewById(R.id.photo_item);
+        mPhotoView.setOnClickListener(this);
 
         mSaveButton.setOnClickListener(this);
         setupToolbar(toolbar);
@@ -283,6 +284,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 //answerIntent.putExtra(ConstantManager.DATE_DATA,); добавить текущую дату
                 setResult(RESULT_OK, answerIntent);
                 finish(); // закрываем активити
+                break;
+            case R.id.photo_item:
                 break;
         }
     }
