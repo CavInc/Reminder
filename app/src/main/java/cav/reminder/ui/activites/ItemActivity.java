@@ -286,6 +286,10 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 finish(); // закрываем активити
                 break;
             case R.id.photo_item:
+                Intent intent = new Intent(this,PhotoViewActivity.class);
+                intent.putExtra(ConstantManager.RECORD_PHOTO_FILE,
+                        getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE));
+                startActivity(intent);
                 break;
         }
     }
