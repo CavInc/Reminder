@@ -8,4 +8,11 @@
     <color name="white">#FFFFFF</color>
     <color name="gray_ligth">#9c9c9c</color>
     <color name="colorFAB">#5fbddf</color>
+
+    <color name="deep_purple">#512DA8</color>
+    <color name="deep_purple_light">#7E57C2</color>
+    <color name="depp_purple_dark">#4527A0</color>
+
+
+
 </resources>
