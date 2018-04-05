@@ -16,4 +16,20 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!-- LOCK BUTTON -->
+    <style name="lock_button" parent="Base.Widget.AppCompat.Button">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="lock_button.unlock" parent="lock_button">
+        <item name="android:textColor">@color/app_red</item>
+        <item name="android:background">@drawable/lock_button_unlock</item>
+    </style>
+
+    <style name="lock_button.lock">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/lock_button_lock</item>
+    </style>
+
 </resources>

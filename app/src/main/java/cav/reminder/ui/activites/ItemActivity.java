@@ -122,6 +122,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             item.setEnabled(false);
             item = menu.findItem(R.id.unloc_rec);
             item.setEnabled(false);
+            item = menu.findItem(R.id.photo_rec);
+            item.setEnabled(false);
         }
         return true;
     }

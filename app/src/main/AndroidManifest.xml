@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".ui.activites.TodoActivity">
         </activity>
-        <activity android:name=".ui.activites.PhotoViewActivity">
+        <activity android:name=".ui.activites.PhotoViewActivity"
+            android:screenOrientation="landscape">
         </activity>
     </application>
 
