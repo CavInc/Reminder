@@ -34,7 +34,6 @@ public class DataManager {
     }
 
     public ArrayList<RecordHeaderRes> getAllRecord (){
-        Log.d(TAG,"ALL RECORD ");
         ArrayList<RecordHeaderRes> record = new ArrayList<>();
         this.mDbc.open();
         Cursor cursor = this.mDbc.getAllRecord();
