@@ -22,32 +22,34 @@
         android:layout_height="wrap_content"
         android:id="@+id/short_et"
         android:layout_below="@+id/short_text_tv"/>
+    <ImageView
+        android:id="@+id/photo_item"
+        android:layout_width="@dimen/size_small_large_72"
+        android:layout_height="@dimen/size_small_large_72"
+        android:layout_below="@+id/short_et"
+        android:layout_marginTop="@dimen/small_size_8"
+        android:layout_marginBottom="@dimen/small_size_8"
+        android:visibility="gone"
+        android:scaleType="centerCrop"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Детальное описание"
-        android:layout_below="@+id/short_et"
+        android:layout_below="@+id/photo_item"
         android:id="@+id/long_text_tv"/>
-
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:inputType="textMultiLine"
         android:ems="10"
         android:lines="10"
         android:id="@+id/long_et"
         android:layout_below="@+id/long_text_tv"
-        android:gravity="top"/>
-    <ImageView
-        android:id="@+id/photo_item"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/size_small_large_72"
         android:layout_above="@+id/save_item_button"
-        android:layout_below="@+id/long_et"
-        android:layout_marginBottom="@dimen/small_size_8"
-        android:visibility="gone"
-        android:scaleType="centerCrop"/>
+        android:gravity="top"/>
+
 
     <Button
         android:id="@+id/save_item_button"
