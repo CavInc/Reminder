@@ -3,6 +3,9 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <!-- - для HTC и некоторых других: -->
+    <uses-permission android:name="android.permission.QUICKBOOT_POWERON"/>
 
     <application
         android:allowBackup="true"
@@ -20,9 +23,23 @@
         </activity>
         <activity android:name=".ui.activites.TodoActivity">
         </activity>
-        <activity android:name=".ui.activites.PhotoViewActivity"
+        <activity
+            android:name=".ui.activites.PhotoViewActivity"
             android:screenOrientation="landscape">
         </activity>
+
+        <receiver
+            android:name=".services.AlarmBootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.REBOOT"/> <!-- для Xiaomi -->
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
