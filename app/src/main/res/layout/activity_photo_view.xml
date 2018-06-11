@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/app_blue_ligth"
     tools:context="cav.reminder.ui.activites.PhotoViewActivity">
     <ImageView
         android:id="@+id/photo_view_iv"
