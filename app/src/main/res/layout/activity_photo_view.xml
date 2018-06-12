@@ -12,7 +12,7 @@
     tools:context="cav.reminder.ui.activites.PhotoViewActivity">
     <ImageView
         android:id="@+id/photo_view_iv"
-
+        android:background="@color/app_blue_ligth"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="center"/>

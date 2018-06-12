@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import cav.reminder.data.TodoSpecModel;
 import cav.reminder.data.storage.model.RecordHeaderRes;
@@ -130,6 +131,16 @@ public class DataBaseConnector {
         }
         close();
         return rec;
+    }
+
+    // ставим будильник
+    public void setAlarm(int id,int position_id,Date alarmDate){
+        open();
+        ContentValues values = new ContentValues();
+        values.put("alarm_date",Func.dateToStr(alarmDate,"yyyy-MM-dd"));
+        values.put("alarm_time",Func.dateToStr(alarmDate,"HH:mm"));
+
+        close();
     }
 
 }
