@@ -13,4 +13,5 @@
     <string name="yes">Да</string>
     <string name="all_count_todo">Всего : </string>
     <string name="done_todo"> Выполнено : </string>
+    <string name="todo_setalarm">Установить будильник</string>
 </resources>

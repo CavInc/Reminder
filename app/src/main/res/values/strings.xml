@@ -12,4 +12,5 @@
     <string name="cancel">Cancel</string>
     <string name="all_count_todo">All ToDo : </string>
     <string name="done_todo">Done ToDo : </string>
+    <string name="todo_setalarm">Set Alarm</string>
 </resources>

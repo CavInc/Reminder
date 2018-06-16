@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,7 +29,7 @@ import cav.reminder.ui.adapters.TodoAdapter;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
-public class TodoActivity extends AppCompatActivity implements View.OnClickListener {
+public class TodoActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemLongClickListener {
 
     private ListView mListView;
     private FloatingActionButton mFabNew;
@@ -40,6 +42,8 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
     private int mode = 0;
     private int mRecID = -1;
+
+    private Menu mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         if (mode == ConstantManager.MODE_VIEW_RECORD) {
             mName.setFocusable(false);
             mFabNew.setVisibility(View.GONE);
+            mListView.setOnItemLongClickListener(this);
         } else {
             mListView.setOnItemClickListener(mItemClickListener);
         }
@@ -89,6 +94,15 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mMenu = menu;
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.todo_menu, menu);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
@@ -96,6 +110,10 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
                     saveDate();
                 }
                 onBackPressed();
+                return true;
+            case R.id.todo_setalarm:
+                //TODO диалог устаовки времени
+                mMenu.findItem(R.id.todo_setalarm).setVisible(false);
                 return true;
         }
         return true;
@@ -172,4 +190,11 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     };
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+        TodoSpecModel mx = (TodoSpecModel) adapterView.getItemAtPosition(position);
+        mMenu.findItem(R.id.todo_setalarm).setVisible(true);
+        return true;
+    }
 }
