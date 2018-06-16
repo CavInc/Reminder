@@ -30,7 +30,7 @@ import cav.reminder.R;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
-public class ItemActivity extends BaseActivity implements View.OnClickListener {
+public class ItemActivity extends BaseActivity implements View.OnClickListener,View.OnLongClickListener {
 
     private String TAG = "REMINDER_ITEM";
 
@@ -334,5 +334,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         mPhotoView.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+
+        return true;
     }
 }

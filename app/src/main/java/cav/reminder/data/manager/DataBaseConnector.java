@@ -139,7 +139,7 @@ public class DataBaseConnector {
         ContentValues values = new ContentValues();
         values.put("alarm_date",Func.dateToStr(alarmDate,"yyyy-MM-dd"));
         values.put("alarm_time",Func.dateToStr(alarmDate,"HH:mm"));
-
+        database.update(DBHelper.TABLE_TODO_SPEC,values,"_id="+id+" and  position_id="+position_id,null);
         close();
     }
 
