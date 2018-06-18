@@ -41,4 +41,10 @@ public interface ConstantManager {
 
     String TODO_COUNT_SIZE = "TODO_COUNT_SIZE";
     String TODO_DONE_COUNT = "TODO_DONE_COUNT";
+
+    int ALARM_CONST = 235;
+
+    String TODO_POS_ID = "TODO_POS_ID";
+    String TODO_REC_NAME = "TODO_REC_NAME";
+    String TODO_REC_ID = "TODO_REC_ID";
 }

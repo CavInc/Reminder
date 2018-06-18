@@ -26,6 +26,7 @@ import cav.reminder.data.TodoSpecModel;
 import cav.reminder.data.manager.DataManager;
 import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.ui.adapters.TodoAdapter;
+import cav.reminder.ui.dialogs.DateTimerFragment;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
@@ -44,6 +45,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
     private int mRecID = -1;
 
     private Menu mMenu;
+    private boolean mSetMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +116,9 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.todo_setalarm:
                 //TODO диалог устаовки времени
                 mMenu.findItem(R.id.todo_setalarm).setVisible(false);
+                DateTimerFragment dateTimerFragment = new DateTimerFragment();
+                dateTimerFragment.setOnDateTimeChangeListener(mDateTimeChangeListener);
+                dateTimerFragment.show(getFragmentManager(),"DT");
                 return true;
         }
         return true;
@@ -142,6 +147,13 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             TodoSpecModel model = new TodoSpecModel(mTodoAdapter.getCount()+1,mNameItem.getText().toString(),false);
             mTodoAdapter.add(model);
             mTodoAdapter.notifyDataSetChanged();
+        }
+    };
+
+    DateTimerFragment.OnDateTimeChangeListener mDateTimeChangeListener = new DateTimerFragment.OnDateTimeChangeListener() {
+        @Override
+        public void OnDateTimeChange(Date date) {
+            Func.addAlert(TodoActivity.this,date,selectedItem,mRecID);
         }
     };
 
@@ -191,10 +203,20 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
 
+    private TodoSpecModel selectedItem;
+
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-        TodoSpecModel mx = (TodoSpecModel) adapterView.getItemAtPosition(position);
-        mMenu.findItem(R.id.todo_setalarm).setVisible(true);
+        selectedItem = (TodoSpecModel) adapterView.getItemAtPosition(position);
+        // если задание выполнено то будильник не ставим
+        if (selectedItem.isCheck()) return true;
+
+        if (!mSetMode) {
+            mMenu.findItem(R.id.todo_setalarm).setVisible(true);
+        } else {
+            mMenu.findItem(R.id.todo_setalarm).setVisible(false);
+        }
+        mSetMode = !mSetMode;
         return true;
     }
 }

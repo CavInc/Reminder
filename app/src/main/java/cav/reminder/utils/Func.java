@@ -1,5 +1,9 @@
 package cav.reminder.utils;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -11,7 +15,11 @@ import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import cav.reminder.data.TodoSpecModel;
+import cav.reminder.services.AlarmTaskReciver;
 
 /**
  * Created by Kotov Alexandr on 16.10.16.
@@ -83,4 +91,19 @@ public class Func {
         return bitmap;
 
     }
+
+    // добавим будильник
+    public static void addAlert(Context context,Date date,TodoSpecModel model,int recid){
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent=new Intent(context, AlarmTaskReciver.class);
+        intent.putExtra(ConstantManager.TODO_POS_ID,model.getPosition());
+        intent.putExtra(ConstantManager.TODO_REC_NAME,model.getName());
+        intent.putExtra(ConstantManager.TODO_REC_ID,recid);
+
+        PendingIntent pi= PendingIntent.getBroadcast(context,ConstantManager.ALARM_CONST, intent,0);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
+    }
+
 }
