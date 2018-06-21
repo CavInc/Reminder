@@ -13,4 +13,9 @@
     <string name="all_count_todo">All ToDo : </string>
     <string name="done_todo">Done ToDo : </string>
     <string name="todo_setalarm">Set Alarm</string>
+
+    <!-- admob -->
+    <string name="admob_id" translatable="false">ca-app-pub-9439056714762229~6755749342</string>
+    <string name="admob_baner" translatable="false">ca-app-pub-9439056714762229/3005022236</string>
+
 </resources>
