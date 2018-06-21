@@ -65,8 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         MobileAds.initialize(this,getResources().getString(R.string.admob_id));
         mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+
 
         //setDataBase();
         mDataManager = DataManager.getInstance(this);
@@ -116,6 +115,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 }
             }
         });
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
     private boolean flag = false;
 
@@ -148,12 +150,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"RESUME");
-
+        if (mAdView != null) {
+            mAdView.resume();
+        }
     }
 
     @Override
     protected void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
         super.onPause();
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
     @Override
