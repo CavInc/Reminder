@@ -116,6 +116,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         });
 
+
+
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
