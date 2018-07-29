@@ -39,6 +39,12 @@ public class TodoAdapter extends ArrayAdapter<TodoSpecModel>{
         TodoSpecModel record = getItem(position);
         holder.mTodoTextView.setText(record.getName());
         holder.mTodoTextView.setChecked(record.isCheck());
+        if (record.isAlarm()) {
+            holder.mIcon.setImageResource(R.drawable.ic_alarm_black_24dp);
+        } else {
+            holder.mIcon.setImageResource(R.drawable.ic_alarm_gray_24dp);
+        }
+
         return row;
     }
 

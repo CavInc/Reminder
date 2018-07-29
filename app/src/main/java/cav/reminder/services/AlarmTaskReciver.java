@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+import cav.reminder.R;
+import cav.reminder.data.TodoSpecModel;
 import cav.reminder.utils.ConstantManager;
 
 public class AlarmTaskReciver extends BroadcastReceiver {
@@ -37,17 +39,22 @@ public class AlarmTaskReciver extends BroadcastReceiver {
 
         Notification notification = null;
 
-        Intent intent = new Intent();
+        Intent intent = new Intent(context, TodoSpecModel.class);
+        intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
+        intent.putExtra(ConstantManager.RECORD_ID,mRecID);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent pi = PendingIntent.getActivity(context,mRecID,intent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(mContext);
         builder.setContentIntent(pi)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("Внимание !!!")
-                .setTicker(mName)
+                .setTicker("Внимание !!!")
                 .setContentText(mName)
                 .setOngoing(true)
+                .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND);
 
         if (Build.VERSION.SDK_INT < 16){

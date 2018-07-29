@@ -1,9 +1,13 @@
 package cav.reminder.data;
 
+import java.util.Date;
+
 public class TodoSpecModel {
     private int mPosition;
     private String mName;
     private boolean mCheck;
+    private Date mDate;
+    private boolean mAlarm = false;
 
     public TodoSpecModel(int position, String name, boolean check) {
         mPosition = position;
@@ -25,5 +29,9 @@ public class TodoSpecModel {
 
     public void setCheck(boolean check) {
         mCheck = check;
+    }
+
+    public boolean isAlarm() {
+        return mAlarm;
     }
 }

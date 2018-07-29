@@ -143,4 +143,9 @@ public class DataBaseConnector {
         close();
     }
 
+    // сброс будильника
+    public void closeAlarm(int id,int pos_id){
+
+    }
+
 }

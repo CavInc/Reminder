@@ -7,6 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import cav.reminder.data.storage.model.RecordHeaderRes;
+import cav.reminder.utils.App;
 import cav.reminder.utils.Func;
 
 public class DataManager {
@@ -16,10 +17,12 @@ public class DataManager {
 
     private PreferensManager mPreferensManager;
     private DataBaseConnector mDbc;
+    private Context mContext;
 
     public DataManager(Context context) {
         this.mPreferensManager = new PreferensManager();
         this.mDbc = new DataBaseConnector(context);
+        mContext = App.getContext();
     }
 
     public static DataManager getInstance(Context context) {
