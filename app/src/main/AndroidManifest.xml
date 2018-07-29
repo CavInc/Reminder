@@ -24,7 +24,12 @@
         </activity>
         <activity android:name=".ui.activites.ItemActivity">
         </activity>
-        <activity android:name=".ui.activites.TodoActivity">
+        <activity android:name=".ui.activites.TodoActivity"
+            android:parentActivityName=".ui.activites.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activites.MainActivity">
+            </meta-data>
         </activity>
         <activity
             android:name=".ui.activites.PhotoViewActivity"

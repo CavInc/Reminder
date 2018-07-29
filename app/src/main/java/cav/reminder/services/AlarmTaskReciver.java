@@ -6,11 +6,13 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
 import cav.reminder.R;
 import cav.reminder.data.TodoSpecModel;
+import cav.reminder.ui.activites.TodoActivity;
 import cav.reminder.utils.ConstantManager;
 
 public class AlarmTaskReciver extends BroadcastReceiver {
@@ -39,16 +41,17 @@ public class AlarmTaskReciver extends BroadcastReceiver {
 
         Notification notification = null;
 
-        Intent intent = new Intent(context, TodoSpecModel.class);
+        Intent intent = new Intent(context, TodoActivity.class);
         intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
         intent.putExtra(ConstantManager.RECORD_ID,mRecID);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pi = PendingIntent.getActivity(context,mRecID,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
 
         Notification.Builder builder = new Notification.Builder(mContext);
         builder.setContentIntent(pi)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(android.R.drawable.ic_dialog_email)
                 .setWhen(System.currentTimeMillis())
                 .setContentTitle("Внимание !!!")
                 .setTicker("Внимание !!!")
@@ -62,6 +65,6 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         }else{
             notification = builder.build();
         }
-        notificationManager.notify(ConstantManager.NOTIFY_ID_F+mPosID, notification);
+        notificationManager.notify(ConstantManager.NOTIFY_ID_F+mRecID+mPosID, notification);
     }
 }

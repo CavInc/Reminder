@@ -48,5 +48,5 @@ public interface ConstantManager {
     String TODO_REC_NAME = "TODO_REC_NAME";
     String TODO_REC_ID = "TODO_REC_ID";
 
-    int NOTIFY_ID_F = 1050;
+    int NOTIFY_ID_F = 10050;
 }
