@@ -3,7 +3,6 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <!-- - для HTC и некоторых других: -->
@@ -24,7 +23,8 @@
         </activity>
         <activity android:name=".ui.activites.ItemActivity">
         </activity>
-        <activity android:name=".ui.activites.TodoActivity"
+        <activity
+            android:name=".ui.activites.TodoActivity"
             android:parentActivityName=".ui.activites.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -53,6 +53,12 @@
             android:enabled="true"
             android:exported="true">
         </receiver>
+
+        <service
+            android:name=".services.StartAlarmInReboot"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
