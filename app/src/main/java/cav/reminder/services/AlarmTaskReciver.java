@@ -12,6 +12,7 @@ import android.util.Log;
 
 import cav.reminder.R;
 import cav.reminder.data.TodoSpecModel;
+import cav.reminder.data.manager.DataManager;
 import cav.reminder.ui.activites.TodoActivity;
 import cav.reminder.utils.ConstantManager;
 
@@ -32,6 +33,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         mPosID = intent.getIntExtra(ConstantManager.TODO_POS_ID,-1);
         mName = intent.getStringExtra(ConstantManager.TODO_REC_NAME);
         Log.d(TAG,"ALARM REST");
+        DataManager.getInstance(context).getDataBaseConnector().closeAlarm(mRecID,mPosID);
         setNotification(context);
     }
 

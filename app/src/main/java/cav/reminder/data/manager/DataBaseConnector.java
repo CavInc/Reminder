@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.widget.ActionBarContextView;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -125,9 +126,13 @@ public class DataBaseConnector {
                 new String [] {"position_id","todo_title","alarm_date","alarm_time","done_flg"},
                 "_id="+recID,null,null,null,"position_id");
         while (cursor.moveToNext()){
+            Date dt = Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
+                    cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:ss");
+
             rec.add(new TodoSpecModel(cursor.getInt(cursor.getColumnIndex("position_id")),
                     cursor.getString(cursor.getColumnIndex("todo_title")),
-                    (cursor.getInt(cursor.getColumnIndex("done_flg")) == 1 ? true : false)));
+                    (cursor.getInt(cursor.getColumnIndex("done_flg")) == 1 ? true : false),
+                    dt));
         }
         close();
         return rec;
@@ -145,7 +150,12 @@ public class DataBaseConnector {
 
     // сброс будильника
     public void closeAlarm(int id,int pos_id){
-
+        open();
+        ContentValues values = new ContentValues();
+        values.put("alarm_date","");
+        values.put("alarm_time","");
+        database.update(DBHelper.TABLE_TODO_SPEC,values,"_id="+id+" and  position_id="+pos_id,null);
+        close();
     }
 
 }

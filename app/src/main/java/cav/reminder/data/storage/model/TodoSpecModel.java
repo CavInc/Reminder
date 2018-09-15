@@ -15,6 +15,13 @@ public class TodoSpecModel {
         mCheck = check;
     }
 
+    public TodoSpecModel(int position, String name, boolean check, Date date) {
+        mPosition = position;
+        mName = name;
+        mCheck = check;
+        mDate = date;
+    }
+
     public int getPosition() {
         return mPosition;
     }
