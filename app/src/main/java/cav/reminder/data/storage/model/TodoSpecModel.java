@@ -20,6 +20,10 @@ public class TodoSpecModel {
         mName = name;
         mCheck = check;
         mDate = date;
+        if (date == null) return;
+        if (mDate.before(new Date())){
+            mAlarm = true;
+        }
     }
 
     public int getPosition() {
