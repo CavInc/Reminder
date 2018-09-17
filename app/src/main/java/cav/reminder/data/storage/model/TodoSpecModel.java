@@ -1,6 +1,10 @@
 package cav.reminder.data;
 
+import android.util.Log;
+
 import java.util.Date;
+
+import cav.reminder.utils.Func;
 
 public class TodoSpecModel {
     private int mPosition;
@@ -21,9 +25,18 @@ public class TodoSpecModel {
         mCheck = check;
         mDate = date;
         if (date == null) return;
-        if (mDate.before(new Date())){
+        Date x = new Date();
+        if (mDate.after(x)){
             mAlarm = true;
+            Log.d("TSM", Func.dateToStr(date,"yyyy-MM-dd HH:mm"));
+            Log.d("TSM",Func.dateToStr(x,"yyyy-MM-dd HH:mm"));
+        } else {
+            Log.d("TSM","After :"+Func.dateToStr(date,"yyyy-MM-dd HH:mm"));
+            Log.d("TSM","After :"+Func.dateToStr(x,"yyyy-MM-dd HH:mm"));
         }
+        Log.d("TSM","VS A:"+mDate.after(x)); // после
+        Log.d("TSM","VX B:"+mDate.before(x)); // перед
+
     }
 
     public int getPosition() {
@@ -44,5 +57,9 @@ public class TodoSpecModel {
 
     public boolean isAlarm() {
         return mAlarm;
+    }
+
+    public void setAlarm(boolean alarm) {
+        mAlarm = alarm;
     }
 }

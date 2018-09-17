@@ -155,6 +155,12 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         public void OnDateTimeChange(Date date) {
             Func.addAlert(TodoActivity.this,date,selectedItem,mRecID);
             mDataManager.getDataBaseConnector().setAlarm(mRecID,selectedItem.getPosition(),date);
+            selectedItem.setAlarm(true);
+
+            int id = mTodoAdapter.getPosition(selectedItem);
+            mTodoAdapter.remove(selectedItem);
+            mTodoAdapter.insert(selectedItem,id);
+            //mTodoAdapter.add(selectedItem);  // обновляем ?
             mTodoAdapter.notifyDataSetChanged();
         }
     };
