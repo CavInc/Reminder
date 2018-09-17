@@ -4,8 +4,16 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import java.util.ArrayList;
+
+import cav.reminder.data.TodoSpecModel;
+import cav.reminder.data.manager.DataManager;
+
 public class StartAlarmInReboot extends Service {
+    private DataManager mDataManager;
+
     public StartAlarmInReboot() {
+        mDataManager = DataManager.getInstance(getBaseContext());
     }
 
     @Override
@@ -21,6 +29,8 @@ public class StartAlarmInReboot extends Service {
     }
 
     private void restartAlarm() {
+        ArrayList<TodoSpecModel> data = mDataManager.getDataBaseConnector().getActiveAlarm();
+
 
     }
 }

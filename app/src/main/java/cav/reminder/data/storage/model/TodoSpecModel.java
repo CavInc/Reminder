@@ -12,6 +12,7 @@ public class TodoSpecModel {
     private boolean mCheck;
     private Date mDate;
     private boolean mAlarm = false;
+    private int mRecId;
 
     public TodoSpecModel(int position, String name, boolean check) {
         mPosition = position;
@@ -37,6 +38,10 @@ public class TodoSpecModel {
         Log.d("TSM","VS A:"+mDate.after(x)); // после
         Log.d("TSM","VX B:"+mDate.before(x)); // перед
 
+    }
+
+    public int getRecId() {
+        return mRecId;
     }
 
     public int getPosition() {

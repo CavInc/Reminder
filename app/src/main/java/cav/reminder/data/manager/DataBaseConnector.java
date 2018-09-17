@@ -158,4 +158,18 @@ public class DataBaseConnector {
         close();
     }
 
+    // список будильников при старте
+    public ArrayList<TodoSpecModel> getActiveAlarm(){
+        ArrayList<TodoSpecModel> rec = new ArrayList<>();
+        String sql = "select _id,position_id,todo_title,alarm_date,alarm_time from todo_spec\n" +
+                "where not alarm_date is null and done_flg=0";
+        open();
+        Cursor cursor = database.rawQuery(sql,null);
+        while (cursor.moveToNext()){
+
+        }
+        close();
+        return rec;
+    }
+
 }
