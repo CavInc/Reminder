@@ -17,5 +17,7 @@
     <!-- admob -->
     <string name="admob_id" translatable="false">ca-app-pub-9439056714762229~6755749342</string>
     <string name="admob_baner" translatable="false">ca-app-pub-9439056714762229/3005022236</string>
+    <string name="menu_settings">Settings</string>
+    <string name="ringtone_setting_str">Ringtone</string>
 
 </resources>

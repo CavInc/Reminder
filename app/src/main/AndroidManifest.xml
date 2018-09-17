@@ -59,6 +59,10 @@
             android:enabled="true"
             android:exported="false">
         </service>
+
+        <activity android:name=".ui.activites.PrefActivity"
+            android:label="@string/menu_settings">
+        </activity>
     </application>
 
 </manifest>

@@ -14,4 +14,6 @@
     <string name="all_count_todo">Всего : </string>
     <string name="done_todo"> Выполнено : </string>
     <string name="todo_setalarm">Установить будильник</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="ringtone_setting_str">Рингтон уведомления</string>
 </resources>

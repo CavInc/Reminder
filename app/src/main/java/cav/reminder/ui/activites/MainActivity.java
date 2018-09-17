@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -132,11 +133,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home){
             Log.d(TAG,"BACK BUTTON");
             onBackPressed();
             return true;
+        }
+        if (item.getItemId() == R.id.menu_setting) {
+            Intent setting = new Intent(this,PrefActivity.class);
+            startActivity(setting);
         }
         return super.onOptionsItemSelected(item);
     }
