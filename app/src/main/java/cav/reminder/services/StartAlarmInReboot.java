@@ -3,6 +3,7 @@ package cav.reminder.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,6 @@ public class StartAlarmInReboot extends Service {
 
     private void restartAlarm() {
         ArrayList<TodoSpecModel> data = mDataManager.getDataBaseConnector().getActiveAlarm();
-
-
+        Toast.makeText(mDataManager.getContext(),"Start Alram",Toast.LENGTH_LONG).show();
     }
 }

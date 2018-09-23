@@ -57,4 +57,11 @@ public class DataManager {
         return record;
     }
 
+    public Context getContext() {
+        return mContext;
+    }
+
+    public PreferensManager getPreferensManager() {
+        return mPreferensManager;
+    }
 }
