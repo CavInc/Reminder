@@ -52,7 +52,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo);
 
-        mDataManager = DataManager.getInstance(this);
+        mDataManager = DataManager.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFabNew = (FloatingActionButton) findViewById(R.id.fab_todo_add_item);
 

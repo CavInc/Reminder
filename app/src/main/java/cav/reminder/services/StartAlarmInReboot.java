@@ -14,7 +14,7 @@ public class StartAlarmInReboot extends Service {
     private DataManager mDataManager;
 
     public StartAlarmInReboot() {
-        mDataManager = DataManager.getInstance(getBaseContext());
+        mDataManager = DataManager.getInstance();
     }
 
     @Override

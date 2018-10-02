@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
         //setDataBase();
-        mDataManager = DataManager.getInstance(this);
+        mDataManager = DataManager.getInstance();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -387,7 +387,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     AdapterView.OnItemLongClickListener itemLongListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
-            showToast("Long click in item "+Integer.toString(position));
+           // showToast("Long click in item "+Integer.toString(position));
             mItem = mAdapter.getItem(position);
             viewItemDialog();
             return true;

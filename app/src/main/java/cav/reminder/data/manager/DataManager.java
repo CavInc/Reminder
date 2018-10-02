@@ -19,15 +19,16 @@ public class DataManager {
     private DataBaseConnector mDbc;
     private Context mContext;
 
-    public DataManager(Context context) {
-        this.mPreferensManager = new PreferensManager();
-        this.mDbc = new DataBaseConnector(context);
+    public DataManager() {
         mContext = App.getContext();
+        this.mPreferensManager = new PreferensManager();
+        this.mDbc = new DataBaseConnector(mContext);
+
     }
 
-    public static DataManager getInstance(Context context) {
+    public static DataManager getInstance() {
         if (INSTANCE==null){
-            INSTANCE = new DataManager(context);
+            INSTANCE = new DataManager();
         }
         return INSTANCE;
     }

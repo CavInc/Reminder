@@ -33,7 +33,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         mPosID = intent.getIntExtra(ConstantManager.TODO_POS_ID,-1);
         mName = intent.getStringExtra(ConstantManager.TODO_REC_NAME);
         Log.d(TAG,"ALARM REST");
-        DataManager.getInstance(context).getDataBaseConnector().closeAlarm(mRecID,mPosID);
+        DataManager.getInstance().getDataBaseConnector().closeAlarm(mRecID,mPosID);
         setNotification(context);
     }
 
