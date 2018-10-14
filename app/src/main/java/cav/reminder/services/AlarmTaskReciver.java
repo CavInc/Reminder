@@ -51,6 +51,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
 
+
         Notification.Builder builder = new Notification.Builder(mContext);
         builder.setContentIntent(pi)
                 .setSmallIcon(android.R.drawable.ic_dialog_email)

@@ -32,5 +32,8 @@ public class StartAlarmInReboot extends Service {
     private void restartAlarm() {
         ArrayList<TodoSpecModel> data = mDataManager.getDataBaseConnector().getActiveAlarm();
         Toast.makeText(mDataManager.getContext(),"Start Alram",Toast.LENGTH_LONG).show();
+        for (TodoSpecModel lx :data){
+            Toast.makeText(mDataManager.getContext(),lx.getName(),Toast.LENGTH_LONG).show();
+        }
     }
 }

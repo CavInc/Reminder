@@ -17,4 +17,8 @@ public class PreferensManager {
     public SharedPreferences getSharedPreferences() {
         return mSharedPreferences;
     }
+
+    public int getAlarmRingtone(){
+        return mSharedPreferences.getInt("alarm_ringtone",-1);
+    }
 }

@@ -35,6 +35,9 @@
             android:name=".ui.activites.PhotoViewActivity"
             android:screenOrientation="landscape">
         </activity>
+        <activity android:name=".ui.activites.PrefActivity"
+                  android:label="@string/menu_settings">
+        </activity>
 
         <receiver
             android:name=".services.AlarmBootReceiver"
@@ -60,9 +63,7 @@
             android:exported="false">
         </service>
 
-        <activity android:name=".ui.activites.PrefActivity"
-            android:label="@string/menu_settings">
-        </activity>
+
     </application>
 
 </manifest>
