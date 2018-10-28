@@ -53,10 +53,9 @@ public class AlarmTaskReciver extends BroadcastReceiver {
 
         PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Uri ringURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        //Uri ringURI = RingtoneManager.getDefaultUri(mDataManager.getPreferensManager().getAlarmRingtone());
+        //Uri ringURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri ringURI = Uri.parse(mDataManager.getPreferensManager().getRingtone());
 
-        Log.d(TAG,"ID ALARM :"+mDataManager.getPreferensManager().getAlarmRingtone());
         Log.d(TAG,"String alarm :"+mDataManager.getPreferensManager().getRingtone());
 
 
