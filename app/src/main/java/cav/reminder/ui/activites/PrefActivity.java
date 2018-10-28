@@ -3,6 +3,7 @@ package cav.reminder.ui.activites;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import cav.reminder.R;
@@ -14,19 +15,24 @@ public class PrefActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pref);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        setToolBar();
+        setupToolBar(toolbar);
+
 
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new PrefFragment()).commit();
+                .replace(R.id.pref_conent, new PrefFragment()).commit();
+
 
     }
 
-    private void setToolBar() {
+    private void setupToolBar(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null){
+        if (actionBar!=null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
     }
 
     @Override
