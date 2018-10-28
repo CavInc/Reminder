@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
     private int mRecID;
     private String mName;
     private int mPosID;
+    private DataManager mDataManager;
 
     public AlarmTaskReciver() {
     }
@@ -32,6 +34,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         mRecID = intent.getIntExtra(ConstantManager.TODO_REC_ID,-1);
         mPosID = intent.getIntExtra(ConstantManager.TODO_POS_ID,-1);
         mName = intent.getStringExtra(ConstantManager.TODO_REC_NAME);
+        mDataManager = DataManager.getInstance();
         Log.d(TAG,"ALARM REST");
         DataManager.getInstance().getDataBaseConnector().closeAlarm(mRecID,mPosID);
         setNotification(context);
@@ -50,6 +53,12 @@ public class AlarmTaskReciver extends BroadcastReceiver {
 
         PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Uri ringURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        //Uri ringURI = RingtoneManager.getDefaultUri(mDataManager.getPreferensManager().getAlarmRingtone());
+
+        Log.d(TAG,"ID ALARM :"+mDataManager.getPreferensManager().getAlarmRingtone());
+        Log.d(TAG,"String alarm :"+mDataManager.getPreferensManager().getRingtone());
+
 
 
         Notification.Builder builder = new Notification.Builder(mContext);
@@ -61,7 +70,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
                 .setContentText(mName)
                 .setOngoing(true)
                 .setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_SOUND);
+                .setSound(ringURI);
 
         if (Build.VERSION.SDK_INT < 16){
             notification = builder.getNotification(); // до API 16
