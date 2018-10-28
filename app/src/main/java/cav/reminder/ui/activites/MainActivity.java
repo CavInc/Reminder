@@ -164,8 +164,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"RESUME");
-        if (mAdView != null) {
-            mAdView.resume();
+        if (! mDataManager.isOnline()) {
+            mAdView.setVisibility(View.GONE);
+        } else {
+            mAdView.setVisibility(View.VISIBLE);
+            if (mAdView != null) {
+                mAdView.resume();
+            }
         }
     }
 

@@ -2,6 +2,8 @@ package cav.reminder.data.manager;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -64,5 +66,12 @@ public class DataManager {
 
     public PreferensManager getPreferensManager() {
         return mPreferensManager;
+    }
+
+    // включена ли сеть
+    public boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo !=null && netInfo.isConnectedOrConnecting();
     }
 }
