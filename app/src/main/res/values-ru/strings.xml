@@ -16,4 +16,6 @@
     <string name="todo_setalarm">Установить будильник</string>
     <string name="menu_settings">Настройки</string>
     <string name="ringtone_setting_str">Рингтон уведомления</string>
+    <string name="fab_add_item">Добавить запись</string>
+    <string name="fab_add_todo">Добавить список дел</string>
 </resources>

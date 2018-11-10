@@ -19,5 +19,7 @@
     <string name="admob_baner" translatable="false">ca-app-pub-9439056714762229/3005022236</string>
     <string name="menu_settings">Settings</string>
     <string name="ringtone_setting_str">Ringtone</string>
+    <string name="fab_add_item">Add a note</string>
+    <string name="fab_add_todo">Add To Do List</string>
 
 </resources>

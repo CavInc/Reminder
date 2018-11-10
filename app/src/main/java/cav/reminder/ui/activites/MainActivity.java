@@ -20,6 +20,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -38,16 +39,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private String TAG ="REMINDER_MAIN";
 
     ListView mListView;
-    private FloatingActionButton newButton;
+    //private FloatingActionButton newButton;
 
-    private FloatingActionButton mNewRecord;
-    private FloatingActionButton mNewTodo;
+  //  private FloatingActionButton mNewRecord;
+  //  private FloatingActionButton mNewTodo;
 
-    // animation fab
+
+
+     // animation fab
     Animation show_fab_record;
     Animation hide_fab_record;
     Animation show_fab_todo;
     Animation hide_fab_todo;
+
+    private FloatingActionMenu mFabMenu;
 
     private boolean statusFab = false;
 
@@ -76,19 +81,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setupToolbar(toolbar);
 
         mListView = (ListView) findViewById(R.id.listView);
-        newButton = (FloatingActionButton) findViewById(R.id.newButton);
-        newButton.setOnClickListener(this);
+      //  newButton = (FloatingActionButton) findViewById(R.id.newButton);
+      //  newButton.setOnClickListener(this);
 
-        mNewRecord = (FloatingActionButton) findViewById(R.id.fab_new_record);
-        mNewTodo = (FloatingActionButton) findViewById(R.id.fab_new_todo);
-        mNewRecord.setOnClickListener(this);
-        mNewTodo.setOnClickListener(this);
+      //  mNewRecord = (FloatingActionButton) findViewById(R.id.fab_new_record);
+      //  mNewTodo = (FloatingActionButton) findViewById(R.id.fab_new_todo);
+     //   mNewRecord.setOnClickListener(this);
+      //  mNewTodo.setOnClickListener(this);
 
         // animation
-        show_fab_record =  AnimationUtils.loadAnimation(getApplication(), R.anim.fab_new_rec_show);
-        hide_fab_record = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_rec_hide);
-        show_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_show);
-        hide_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_hide);
+      //  show_fab_record =  AnimationUtils.loadAnimation(getApplication(), R.anim.fab_new_rec_show);
+     //   hide_fab_record = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_rec_hide);
+     //   show_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_show);
+    //    hide_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_hide);
+        mFabMenu = findViewById(R.id.fab_menu);
+
+        findViewById(R.id.fab_add_item).setOnClickListener(this);
+        findViewById(R.id.fab_add_todo).setOnClickListener(this);
 
         ArrayList<RecordHeaderRes> record = mDataManager.getAllRecord();
 
@@ -99,6 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mListView.setOnItemClickListener(mItemListener);
         mListView.setOnItemLongClickListener(itemLongListener);
 
+        /*
         mListView.setOnScrollListener(new AbsListView.OnScrollListener(){
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -110,12 +120,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (flag /*newButton.isShown()*/){
+                if (flag /*newButton.isShown()*//*){
                     newButton.hide();
                     flag = false;
                 }
             }
         });
+        */
 
 
 
@@ -193,17 +204,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        mFabMenu.close(true);
         Intent intent;
         switch (v.getId()){
+            /*
             case R.id.newButton:
                 if (!statusFab) {
-                    showFABMenu();
+                    //showFABMenu();
                     statusFab = true;
                 } else {
-                    hideFABMenu();
+                   // hideFABMenu();
                     statusFab = false;
                 }
                 break;
+            */
             case R.id.edit_laout:
                 Log.d(TAG,"EDIT");
                 dialog.cancel();
@@ -234,6 +248,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 mAdapter.remove(mItem);
                 mAdapter.notifyDataSetChanged();
                 break;
+            /*
             case R.id.fab_new_record:
                // hideFABMenu();
                 addNewRecord();
@@ -241,12 +256,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case R.id.fab_new_todo:
                 addNewTODO();
                 break;
-
+                */
+            case R.id.fab_add_item:
+                addNewRecord();
+                break;
+            case R.id.fab_add_todo:
+                addNewTODO();
+                break;
         }
 
     }
 
     // показать float button menu
+    /*
     private void showFABMenu(){
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
         layoutParams.rightMargin += (int) (mNewRecord.getWidth() * 0.8);
@@ -279,6 +301,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mNewTodo.setClickable(false);
 
     }
+    */
 
     // добавляем новую заметку
     private void addNewRecord(){
@@ -298,7 +321,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (statusFab) {
-            hideFABMenu();
+           // hideFABMenu();
             statusFab = false;
         }
 
@@ -422,7 +445,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             //TODO сделать вызов активити для прсотомра и редактирования в методе и убрать откуда не надо
             Log.d(TAG, "CLICK");
             if (statusFab) {
-                hideFABMenu();
+              //  hideFABMenu();
                 statusFab = false;
             }
             mItem = mAdapter.getItem(position);
