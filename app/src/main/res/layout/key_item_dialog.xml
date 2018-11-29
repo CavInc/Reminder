@@ -25,12 +25,20 @@
             android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_color"
+            android:textColor="@color/white"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:text="@string/yes"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_color"
+            android:textColor="@color/white"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
             android:text="@string/cancel"
             android:layout_weight="1"/>
     </LinearLayout>
