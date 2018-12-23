@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -425,6 +426,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private Dialog dialog;
 
     private void viewItemDialog() {
+
         dialog = new Dialog(this);
         dialog.setTitle(R.string.dialog_title);
 
@@ -435,6 +437,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mDelLayout.setOnClickListener(this);
 
         dialog.show();
+
+        /*
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.dialog_title)
+                .setView(R.layout.dialog_main_item);
+        builder.show();
+        */
+        //LinearLayout mEditLayout =
     }
 
 

@@ -1,14 +1,17 @@
 package cav.reminder.ui.activites;
 
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -151,14 +154,38 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void loadProtoFromCamera() {
-        Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            mPhotoFile = createImageFile();
-        } catch (IOException e) {
-            e.printStackTrace();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFile = "JPEG_"+timeStamp+"_";
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
+            return ;
+        File storageDir = new File (Environment.getExternalStorageDirectory(), "Reminder");
+        if (! storageDir.exists()) {
+            if (!storageDir.mkdirs()){
+                return;
+            }
         }
 
-        captureImage.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+        try {
+            mPhotoFile = File.createTempFile(imageFile, "jpg", storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpg");
+            Uri fileUri = FileProvider.getUriForFile(this,
+                    this.getApplicationContext().getPackageName() + ".provider", mPhotoFile);
+
+            captureImage.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT,fileUri);
+        } else {
+            captureImage.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mPhotoFile));
+        }
+
         startActivityForResult(captureImage,ConstantManager.REQUEST_CAMERA_PICTURE);
 
     }
@@ -179,7 +206,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 return null;
             }
         }
-        File image = File.createTempFile(imageFile,"jpg",storageDir);
+
+        File image = File.createTempFile(imageFile, "jpg", storageDir);
+
         return image;
     }
 
