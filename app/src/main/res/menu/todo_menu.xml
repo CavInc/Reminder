@@ -9,12 +9,13 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/todo_edit"
-        android:title="Edit"
+        android:title="@string/todo_menu_edit"
         android:icon="@drawable/ic_create_white_24dp"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/todo_done"
-        android:title="Done"
+        android:visible="false"
+        android:title="@string/todo_menu_done"
         android:icon="@drawable/ic_done_white_24dp"
-        app:showAsActiob="ifRoom"/>
+        app:showAsAction="ifRoom"/>
 </menu>

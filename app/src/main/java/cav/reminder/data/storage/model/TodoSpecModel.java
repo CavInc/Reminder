@@ -67,4 +67,12 @@ public class TodoSpecModel {
     public void setAlarm(boolean alarm) {
         mAlarm = alarm;
     }
+
+    public Date getDate() {
+        return mDate;
+    }
+
+    public void setDate(Date date) {
+        mDate = date;
+    }
 }

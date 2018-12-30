@@ -101,6 +101,10 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.todo_menu, menu);
 
+        if (mode == ConstantManager.MODE_INS_RECORD | mode == -1){
+            mMenu.findItem(R.id.todo_edit).setVisible(false);
+        }
+
         return true;
     }
 
@@ -123,12 +127,14 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.todo_edit:
                 mMenu.findItem(R.id.todo_edit).setVisible(false);
                 mMenu.findItem(R.id.todo_done).setVisible(true);
+                mFabNew.setVisibility(View.VISIBLE);
 
                 return true;
             case R.id.todo_done:
                 mMenu.findItem(R.id.todo_edit).setVisible(true);
                 mMenu.findItem(R.id.todo_done).setVisible(false);
-
+                mFabNew.setVisibility(View.GONE);
+                saveDate();
                 return true;
         }
         return true;
@@ -166,6 +172,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             Func.addAlert(TodoActivity.this,date,selectedItem,mRecID);
             mDataManager.getDataBaseConnector().setAlarm(mRecID,selectedItem.getPosition(),date);
             selectedItem.setAlarm(true);
+            selectedItem.setDate(date);
 
             int id = mTodoAdapter.getPosition(selectedItem);
             mTodoAdapter.remove(selectedItem);

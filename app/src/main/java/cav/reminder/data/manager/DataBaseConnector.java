@@ -126,9 +126,11 @@ public class DataBaseConnector {
                 new String [] {"position_id","todo_title","alarm_date","alarm_time","done_flg"},
                 "_id="+recID,null,null,null,"position_id");
         while (cursor.moveToNext()){
-            Date dt = Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
-                    cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:mm");
-
+            Date dt = null;
+            if (cursor.getString(cursor.getColumnIndex("alarm_date")) != null) {
+                dt = Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
+                        cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:mm");
+            }
             rec.add(new TodoSpecModel(cursor.getInt(cursor.getColumnIndex("position_id")),
                     cursor.getString(cursor.getColumnIndex("todo_title")),
                     (cursor.getInt(cursor.getColumnIndex("done_flg")) == 1 ? true : false),

@@ -25,6 +25,7 @@
         </activity>
         <activity
             android:name=".ui.activites.TodoActivity"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:parentActivityName=".ui.activites.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

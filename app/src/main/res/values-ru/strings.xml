@@ -18,4 +18,6 @@
     <string name="ringtone_setting_str">Рингтон уведомления</string>
     <string name="fab_add_item">Добавить запись</string>
     <string name="fab_add_todo">Добавить список дел</string>
+    <string name="todo_menu_edit">Редактировать</string>
+    <string name="todo_menu_done">Сохранить</string>
 </resources>
