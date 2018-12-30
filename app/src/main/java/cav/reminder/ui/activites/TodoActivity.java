@@ -120,6 +120,16 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
                 dateTimerFragment.setOnDateTimeChangeListener(mDateTimeChangeListener);
                 dateTimerFragment.show(getFragmentManager(),"DT");
                 return true;
+            case R.id.todo_edit:
+                mMenu.findItem(R.id.todo_edit).setVisible(false);
+                mMenu.findItem(R.id.todo_done).setVisible(true);
+
+                return true;
+            case R.id.todo_done:
+                mMenu.findItem(R.id.todo_edit).setVisible(true);
+                mMenu.findItem(R.id.todo_done).setVisible(false);
+
+                return true;
         }
         return true;
     }

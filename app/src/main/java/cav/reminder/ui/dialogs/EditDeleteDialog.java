@@ -28,6 +28,9 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
         LinearLayout mEditLayout = (LinearLayout) v.findViewById(R.id.edit_laout);
         LinearLayout mDelLayout = (LinearLayout) v.findViewById(R.id.del_laout);
 
+        mEditLayout.setOnClickListener(this);
+        mDelLayout.setOnClickListener(this);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_title)
                 .setView(v);
@@ -43,5 +46,6 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
         if (mSelectEditDeleteListener != null){
             mSelectEditDeleteListener.selectItem(v.getId());
         }
+        dismiss();
     }
 }

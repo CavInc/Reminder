@@ -33,6 +33,7 @@ import cav.reminder.R;
 import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.data.manager.DataManager;
 import cav.reminder.ui.adapters.DataAdapter;
+import cav.reminder.ui.dialogs.EditDeleteDialog;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
@@ -219,36 +220,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 }
                 break;
             */
-            case R.id.edit_laout:
-                Log.d(TAG,"EDIT");
-                dialog.cancel();
-                if (mItem.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
-                    intent = new Intent(MainActivity.this, ItemActivity.class);
-                    intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_EDIT_RECORD);
-                    intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
-                    intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
-                    intent.putExtra(ConstantManager.RECORD_BODY, mItem.getBodyRec());
-                    intent.putExtra(ConstantManager.RECORD_CLOSE, mItem.isCloseRec());
-                    intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
-                    intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
-
-                    startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_EDIT);
-                } else {
-                    intent = new Intent(MainActivity.this,TodoActivity.class);
-                    intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_EDIT_RECORD);
-                    intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
-                    intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
-
-                    startActivityForResult(intent,ConstantManager.ITEM_TODO_EDIT);
-                }
-
-                break;
-            case R.id.del_laout:
-                dialog.dismiss();
-                mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
-                mAdapter.remove(mItem);
-                mAdapter.notifyDataSetChanged();
-                break;
             /*
             case R.id.fab_new_record:
                // hideFABMenu();
@@ -417,6 +388,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
            // showToast("Long click in item "+Integer.toString(position));
+            mFabMenu.close(true);
             mItem = mAdapter.getItem(position);
             viewItemDialog();
             return true;
@@ -426,32 +398,54 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private Dialog dialog;
 
     private void viewItemDialog() {
-
-        dialog = new Dialog(this);
-        dialog.setTitle(R.string.dialog_title);
-
-        dialog.setContentView(R.layout.dialog_main_item);
-        LinearLayout mEditLayout = (LinearLayout) dialog.findViewById(R.id.edit_laout);
-        LinearLayout mDelLayout = (LinearLayout) dialog.findViewById(R.id.del_laout);
-        mEditLayout.setOnClickListener(this);
-        mDelLayout.setOnClickListener(this);
-
-        dialog.show();
-
-        /*
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.dialog_title)
-                .setView(R.layout.dialog_main_item);
-        builder.show();
-        */
-        //LinearLayout mEditLayout =
+        EditDeleteDialog deleteDialog = new EditDeleteDialog();
+        deleteDialog.setSelectEditDeleteListener(mSelectEditDeleteListener);
+        deleteDialog.show(getSupportFragmentManager(),"EDD");
     }
+
+    EditDeleteDialog.SelectEditDeleteListener mSelectEditDeleteListener = new EditDeleteDialog.SelectEditDeleteListener() {
+        @Override
+        public void selectItem(int id) {
+            Intent intent;
+            switch (id) {
+                case R.id.edit_laout:
+                    Log.d(TAG,"EDIT");
+                    if (mItem.getTypeRec() == ConstantManager.TYPE_REC_MEMO) {
+                        intent = new Intent(MainActivity.this, ItemActivity.class);
+                        intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_EDIT_RECORD);
+                        intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
+                        intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
+                        intent.putExtra(ConstantManager.RECORD_BODY, mItem.getBodyRec());
+                        intent.putExtra(ConstantManager.RECORD_CLOSE, mItem.isCloseRec());
+                        intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
+                        intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
+
+                        startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_EDIT);
+                    } else {
+                        intent = new Intent(MainActivity.this,TodoActivity.class);
+                        intent.putExtra(ConstantManager.MODE_RECORD, ConstantManager.MODE_EDIT_RECORD);
+                        intent.putExtra(ConstantManager.RECORD_ID, mItem.getId());
+                        intent.putExtra(ConstantManager.RECORD_HEADER, mItem.getHeaderRec());
+
+                        startActivityForResult(intent,ConstantManager.ITEM_TODO_EDIT);
+                    }
+
+                    break;
+                case R.id.del_laout:
+                    mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
+                    mAdapter.remove(mItem);
+                    mAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 
 
     AdapterView.OnItemClickListener mItemListener = new AdapterView.OnItemClickListener(){
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            mFabMenu.close(true);
             //TODO сделать вызов активити для прсотомра и редактирования в методе и убрать откуда не надо
             Log.d(TAG, "CLICK");
             if (statusFab) {
