@@ -103,6 +103,9 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
         if (mode == ConstantManager.MODE_INS_RECORD | mode == -1){
             mMenu.findItem(R.id.todo_edit).setVisible(false);
+        } else if (mode == ConstantManager.MODE_EDIT_RECORD){
+            mMenu.findItem(R.id.todo_edit).setVisible(false);
+            mMenu.findItem(R.id.todo_done).setVisible(true);
         }
 
         return true;
