@@ -23,5 +23,6 @@
     <string name="fab_add_todo">Add To Do List</string>
     <string name="todo_menu_edit">Edit</string>
     <string name="todo_menu_done">Done</string>
+    <string name="security_key">Security key:</string>
 
 </resources>

@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -107,7 +108,6 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             mMenu.findItem(R.id.todo_edit).setVisible(false);
             mMenu.findItem(R.id.todo_done).setVisible(true);
         }
-
         return true;
     }
 

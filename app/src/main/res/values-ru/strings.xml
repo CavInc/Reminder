@@ -20,4 +20,5 @@
     <string name="fab_add_todo">Добавить список дел</string>
     <string name="todo_menu_edit">Редактировать</string>
     <string name="todo_menu_done">Сохранить</string>
+    <string name="security_key">Пароль</string>
 </resources>

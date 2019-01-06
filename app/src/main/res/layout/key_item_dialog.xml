@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Security key:"
+        android:text="@string/security_key"
         android:textSize="@dimen/font_size"
         android:textStyle="bold"
         android:paddingBottom="@dimen/small_size_8"/>
