@@ -132,11 +132,18 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
                 mMenu.findItem(R.id.todo_done).setVisible(true);
                 mFabNew.setVisibility(View.VISIBLE);
 
+                mListView.setOnItemLongClickListener(null);
+                mListView.setOnItemClickListener(mItemClickListener);
+
                 return true;
             case R.id.todo_done:
                 mMenu.findItem(R.id.todo_edit).setVisible(true);
                 mMenu.findItem(R.id.todo_done).setVisible(false);
                 mFabNew.setVisibility(View.GONE);
+
+                mListView.setOnItemLongClickListener(this);
+                mListView.setOnItemClickListener(null);
+
                 saveDate();
                 return true;
         }
