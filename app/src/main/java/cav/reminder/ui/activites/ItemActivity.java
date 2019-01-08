@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cav.reminder.R;
+import cav.reminder.ui.dialogs.KeyDialog;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
@@ -48,6 +49,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private boolean mCloseRec = false;
     private String mKeyHash ;
     private File mPhotoFile = null;
+    private int keyMode=-1;
+    private boolean work_form = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG,"KEY HAS :"+mKeyHash);
         if (mCloseRec){
             // запись закрыта
+            keyMode = ConstantManager.MODE_SEC_DIALOG_UNLOCK;
+            work_form = true;
             getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK,true);
         }
 
@@ -139,9 +144,13 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 return true;
             case R.id.lock_rec:
                 Log.d(TAG,"LOCK RECORD");
+                keyMode = ConstantManager.MODE_SEC_DIALOG_LOCK;
+                work_form = false;
                 getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_LOCK,false);
                 break;
             case R.id.unloc_rec:
+                keyMode = ConstantManager.MODE_SEC_DIALOG_UNLOCK;
+                work_form = false;
                 getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK,false);
                 break;
             case R.id.photo_rec:
@@ -218,6 +227,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
      * диалог получения секретного ключа
      */
     private void getSecyrityKeyDialog(final int mode,final boolean work_form){
+        KeyDialog keyDialog = new KeyDialog();
+        keyDialog.setKeyDialogListener(mKeyDialogListener);
+        keyDialog.show(getSupportFragmentManager(),"KD");
+
+        /*
         final Dialog dialog = new Dialog(this);
         dialog.setTitle("Key");
         dialog.setContentView(R.layout.key_item_dialog);
@@ -258,8 +272,38 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         dialog.show();
+        */
 
     }
+
+    KeyDialog.KeyDialogListener mKeyDialogListener = new KeyDialog.KeyDialogListener() {
+        @Override
+        public void okDialog(String keyPass) {
+            Log.d(TAG,keyPass);
+            if (keyMode == ConstantManager.MODE_SEC_DIALOG_LOCK) {
+                mCloseRec = true;
+            }
+            if (keyMode == ConstantManager.MODE_SEC_DIALOG_UNLOCK) {
+                Log.d(TAG,Func.md5Hash(keyPass));
+                Log.d(TAG,mKeyHash);
+                if (Func.md5Hash(keyPass).equals(mKeyHash)){
+                    Log.d(TAG,"PASS SUCCEFUL");
+                } else {
+                    Log.d(TAG,"NO PASS");
+                    return;
+                }
+                if (! work_form)
+                    mCloseRec = false;
+            }
+        }
+
+        @Override
+        public void closeDialog() {
+            if (work_form) {
+                finish();
+            }
+        }
+    };
 
     @Override
     public void onBackPressed() {

@@ -1,10 +1,14 @@
 package cav.reminder.ui.activites;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -38,6 +42,7 @@ import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
+    private static final int REQUEST_WRITER = 845;
     private String TAG ="REMINDER_MAIN";
 
     ListView mListView;
@@ -184,6 +189,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             if (mAdView != null) {
                 mAdView.resume();
             }
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITER);
         }
     }
 
