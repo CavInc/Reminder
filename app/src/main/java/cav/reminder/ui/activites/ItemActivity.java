@@ -112,11 +112,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         Log.d(TAG,"KEY HAS :"+mKeyHash);
         if (mCloseRec){
             // запись закрыта
+            mLong.setVisibility(View.INVISIBLE);
             keyMode = ConstantManager.MODE_SEC_DIALOG_UNLOCK;
             work_form = true;
             getSecyrityKeyDialog(ConstantManager.MODE_SEC_DIALOG_UNLOCK,true);
         }
-
     }
 
 
@@ -221,7 +221,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         return image;
     }
 
-    private String keyPass;
+    private String mKeyPass;
 
     /**
      * диалог получения секретного ключа
@@ -241,15 +241,15 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Log.d(TAG,"KEY DIALOG OK");
-                keyPass= String.valueOf(keyET.getText());
-                Log.d(TAG,keyPass);
+                mKeyPass= String.valueOf(keyET.getText());
+                Log.d(TAG,mKeyPass);
                 if (mode==ConstantManager.MODE_SEC_DIALOG_LOCK) {
                     mCloseRec = true;
                 }
                 if (mode == ConstantManager.MODE_SEC_DIALOG_UNLOCK) {
-                    Log.d(TAG,Func.md5Hash(keyPass));
+                    Log.d(TAG,Func.md5Hash(mKeyPass));
                     Log.d(TAG,mKeyHash);
-                    if (Func.md5Hash(keyPass).equals(mKeyHash)){
+                    if (Func.md5Hash(mKeyPass).equals(mKeyHash)){
                         Log.d(TAG,"PASS SUCCEFUL");
                     } else {
                         Log.d(TAG,"NO PASS");
@@ -280,6 +280,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         @Override
         public void okDialog(String keyPass) {
             Log.d(TAG,keyPass);
+            mKeyPass = keyPass;
             if (keyMode == ConstantManager.MODE_SEC_DIALOG_LOCK) {
                 mCloseRec = true;
             }
@@ -290,6 +291,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                     Log.d(TAG,"PASS SUCCEFUL");
                 } else {
                     Log.d(TAG,"NO PASS");
+                    finish();
                     return;
                 }
                 if (! work_form)
@@ -317,7 +319,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             dialog.setNegativeButton(R.string.dialog_no, myDialogClickListener);
             //dialog.create();
             dialog.show();
-
             return;
         }
         super.onBackPressed();
@@ -349,7 +350,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 answerIntent.putExtra(ConstantManager.LONG_DATA,mLong.getText().toString());
                 answerIntent.putExtra(ConstantManager.DATE_DATA,format.format(newDate));
                 answerIntent.putExtra(ConstantManager.RECORD_CLOSE,mCloseRec);
-                answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,Func.md5Hash(keyPass));
+                answerIntent.putExtra(ConstantManager.RECORD_PASS_SAVE,Func.md5Hash(mKeyPass));
                 if (mPhotoFile != null) {
                     answerIntent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mPhotoFile.toString());
                 }
