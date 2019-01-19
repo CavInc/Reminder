@@ -84,6 +84,7 @@ public class DataBaseConnector {
         updValue.put("rec_date",Func.dateToStr(record.getDate(),"yyyy-MM-dd"));
         updValue.put("close_rec",record.getCloseRec());
         updValue.put("pass_rec",record.getPassHash());
+        updValue.put("photo_file",record.getPhotoFile());
 
         Log.d(TAG,"CLOSE REC : " +Integer.toString(record.getCloseRec()));
 

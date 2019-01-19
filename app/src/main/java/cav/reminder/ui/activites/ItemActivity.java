@@ -175,7 +175,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         }
 
         try {
-            mPhotoFile = File.createTempFile(imageFile, "jpg", storageDir);
+            mPhotoFile = File.createTempFile(imageFile, ".jpg", storageDir);
         } catch (IOException e) {
             e.printStackTrace();
             return;
