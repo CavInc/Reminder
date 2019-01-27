@@ -289,6 +289,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 Log.d(TAG,mKeyHash);
                 if (Func.md5Hash(keyPass).equals(mKeyHash)){
                     Log.d(TAG,"PASS SUCCEFUL");
+                    mLong.setVisibility(View.VISIBLE);
                 } else {
                     Log.d(TAG,"NO PASS");
                     finish();
