@@ -101,6 +101,7 @@ public class DataBaseConnector {
         values.put("type_rec",1);
         values.put("rec_date", Func.dateToStr(record.getDate(),"yyyy-MM-dd"));
         values.put("todo_count",model.size());
+        values.put("todo_done_count",record.getDoneCount());
         if (record.getId() != -1){
             values.put("_id",record.getId());
         }

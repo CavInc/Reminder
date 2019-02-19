@@ -196,6 +196,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
+    private void updateUI(){
+        ArrayList<RecordHeaderRes> record = mDataManager.getAllRecord();
+        if (mAdapter == null) {
+            mAdapter = new DataAdapter(this, R.layout.main_item_list, record);
+            mAdapter.setNotifyOnChange(true);
+            mListView.setAdapter(mAdapter);
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     protected void onPause() {
         if (mAdView != null) {
@@ -404,7 +415,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
     };
 
-    private Dialog dialog;
 
     private void viewItemDialog() {
         EditDeleteDialog deleteDialog = new EditDeleteDialog();

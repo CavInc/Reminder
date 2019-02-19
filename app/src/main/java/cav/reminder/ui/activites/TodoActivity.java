@@ -207,7 +207,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
                     checkCount += 1;
                 }
             }
-            mRecord = new RecordHeaderRes(mRecID,mName.getText().toString(),new Date(),"");
+            mRecord = new RecordHeaderRes(mRecID,mName.getText().toString(),new Date(),"",models.size(),checkCount);
             int id = mDataManager.getDataBaseConnector().addToDoRec(mRecord,models);
 
             // сохраниили и отдали данные

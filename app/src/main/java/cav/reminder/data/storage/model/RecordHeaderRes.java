@@ -35,6 +35,14 @@ public class RecordHeaderRes {
         mDate = date;
         mBodyRec = bodyRec;
     }
+    public RecordHeaderRes(int id, String headerRec, Date date, String bodyRec,int allTodoCount, int doneCount) {
+        mId = id;
+        mHeaderRec = headerRec;
+        mDate = date;
+        mBodyRec = bodyRec;
+        mAllTodoCount = allTodoCount;
+        mDoneCount = doneCount;
+    }
 
     public RecordHeaderRes(int id, String headerRec, Date date, String bodyRec,String photofile,boolean closeRec,String passHash) {
         mId = id;
