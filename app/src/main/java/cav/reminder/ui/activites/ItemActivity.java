@@ -281,6 +281,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         public void okDialog(String keyPass) {
             Log.d(TAG,keyPass);
             mKeyPass = keyPass;
+            if (mKeyPass.length() == 0 ) return;
+
             if (keyMode == ConstantManager.MODE_SEC_DIALOG_LOCK) {
                 mCloseRec = true;
             }
