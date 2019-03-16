@@ -51,6 +51,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private File mPhotoFile = null;
     private int keyMode=-1;
     private boolean work_form = false;
+    private MenuItem itemUnlock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +86,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString()));
             }
         }
-        if (mode==ConstantManager.MODE_VIEW_RECORD){
+        if (mode == ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
             mShort.setLongClickable(false);
             mShort.setCursorVisible(false);
@@ -124,14 +125,18 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_item_activity,menu);
-        if (mode==ConstantManager.MODE_VIEW_RECORD){
+        itemUnlock = menu.findItem(R.id.unloc_rec);
+        if (mode == ConstantManager.MODE_VIEW_RECORD){
             Log.d(TAG,"GREATE MENU NO ENABLE");
             MenuItem item = menu.findItem(R.id.lock_rec);
             item.setEnabled(false);
-            item = menu.findItem(R.id.unloc_rec);
-            item.setEnabled(false);
+            itemUnlock.setEnabled(false);
             item = menu.findItem(R.id.photo_rec);
             item.setEnabled(false);
+        }
+        if (!mCloseRec) {
+            itemUnlock.setEnabled(false);
+            itemUnlock.setVisible(false);
         }
         return true;
     }
