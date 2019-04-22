@@ -9,6 +9,7 @@ import android.widget.CheckedTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import cav.reminder.R;
@@ -44,7 +45,14 @@ public class TodoAdapter extends ArrayAdapter<TodoSpecModel>{
         holder.mTodoTextView.setChecked(record.isCheck());
         if (record.isAlarm()) {
             holder.mIcon.setImageResource(R.drawable.ic_alarm_black_24dp);
-            holder.mDateTime.setText(Func.dateToStr(record.getDate(),"hh:mm"));
+            // я знаю что так делать не стоит и надо более правильно но пофиг
+            String currDt = Func.dateToStr(new Date(),"yyyy-MM-dd");
+            String recDt = Func.dateToStr(record.getDate(),"yyyy-MM-dd");
+            if (currDt.equals(recDt)) {
+                holder.mDateTime.setText(Func.dateToStr(record.getDate(), "hh:mm"));
+            } else {
+                holder.mDateTime.setText(Func.dateToStr(record.getDate(),"dd.MM.yy HH:mm"));
+            }
         } else {
             holder.mIcon.setImageResource(R.drawable.ic_alarm_gray_24dp);
             holder.mDateTime.setText("");

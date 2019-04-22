@@ -23,6 +23,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/todo_item_img"
+            android:layout_gravity="right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
