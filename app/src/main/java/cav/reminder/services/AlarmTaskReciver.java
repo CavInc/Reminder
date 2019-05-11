@@ -1,6 +1,8 @@
 package cav.reminder.services;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -19,6 +21,7 @@ import cav.reminder.utils.ConstantManager;
 
 public class AlarmTaskReciver extends BroadcastReceiver {
     private static final String TAG = "ATR";
+    private static final String CHANEL_ID = "cav.reminder.Reminder";
     private Context mContext;
     private int mRecID;
     private String mName;
@@ -40,9 +43,18 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         setNotification(context);
     }
 
+
     private void setNotification(Context context){
         NotificationManager notificationManager = (NotificationManager) mContext
                 .getSystemService(Context.NOTIFICATION_SERVICE);
+        //для А8+
+        if (Build.VERSION.SDK_INT >= 26) {
+            NotificationChannel channel = new NotificationChannel(CHANEL_ID,"Reminder",NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Reminder");
+            channel.enableLights(true);
+            channel.enableVibration(true);
+            notificationManager.createNotificationChannel(channel);
+        }
 
         Notification notification = null;
 
@@ -59,8 +71,13 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         Log.d(TAG,"String alarm :"+mDataManager.getPreferensManager().getRingtone());
 
 
+        Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            builder = new Notification.Builder(mContext,CHANEL_ID);
+        } else {
+            builder = new Notification.Builder(mContext);
+        }
 
-        Notification.Builder builder = new Notification.Builder(mContext);
         builder.setContentIntent(pi)
                 .setSmallIcon(android.R.drawable.ic_dialog_email)
                 .setWhen(System.currentTimeMillis())
