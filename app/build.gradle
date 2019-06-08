@@ -8,8 +8,8 @@ android {
         applicationId "cav.reminder"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 11
-        versionName "1.0.6"
+        versionCode 14
+        versionName "1.0.7"
         project.ext.set("archivesBaseName", "Reminder-" + defaultConfig.versionName);
         resConfigs "en", "ru"
     }
@@ -37,5 +37,4 @@ dependencies {
     compile 'com.android.support:appcompat-v7:27.1.0'
     compile 'com.android.support:design:27.1.0'
     compile 'com.github.clans:fab:1.6.4'
-    compile 'com.google.android.gms:play-services-ads:11.0.4'
 }

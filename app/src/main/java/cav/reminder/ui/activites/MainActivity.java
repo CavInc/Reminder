@@ -26,9 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.github.clans.fab.FloatingActionMenu;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
+
 
 import java.util.ArrayList;
 
@@ -68,16 +66,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private DataManager mDataManager;
     private RecordHeaderRes mItem=null;
 
-        SQLiteDatabase db;
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MobileAds.initialize(this,getResources().getString(R.string.admob_id));
-        mAdView = (AdView) findViewById(R.id.adView);
 
 
         //setDataBase();
@@ -134,11 +128,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         });
         */
-
-
-
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
     }
     private boolean flag = false;
 
@@ -182,14 +171,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onResume() {
         super.onResume();
         Log.d(TAG,"RESUME");
-        if (! mDataManager.isOnline()) {
-            mAdView.setVisibility(View.GONE);
-        } else {
-            mAdView.setVisibility(View.VISIBLE);
-            if (mAdView != null) {
-                mAdView.resume();
-            }
-        }
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITER);
@@ -209,18 +191,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onPause() {
-        if (mAdView != null) {
-            mAdView.pause();
-        }
         super.onPause();
     }
 
     /** Called before the activity is destroyed */
     @Override
     public void onDestroy() {
-        if (mAdView != null) {
-            mAdView.destroy();
-        }
         super.onDestroy();
     }
 
