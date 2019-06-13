@@ -52,6 +52,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private int keyMode=-1;
     private boolean work_form = false;
     private MenuItem itemUnlock;
+    private MenuItem itemEdit;
+    private MenuItem itemPhoto;
+    private MenuItem itemLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,18 +124,26 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_item_activity,menu);
         itemUnlock = menu.findItem(R.id.unloc_rec);
+        itemEdit = menu.findItem(R.id.edit_rec);
+        itemPhoto = menu.findItem(R.id.photo_rec);
+        itemLock = menu.findItem(R.id.lock_rec);
         if (mode == ConstantManager.MODE_VIEW_RECORD){
             Log.d(TAG,"GREATE MENU NO ENABLE");
-            MenuItem item = menu.findItem(R.id.lock_rec);
-            item.setEnabled(false);
+            itemLock.setEnabled(false);
+            itemLock.setVisible(false);
+
             itemUnlock.setEnabled(false);
-            item = menu.findItem(R.id.photo_rec);
-            item.setEnabled(false);
+            itemUnlock.setVisible(false);
+
+            itemPhoto.setVisible(false);
+            itemEdit.setVisible(true);
+
         }
         if (!mCloseRec) {
             itemUnlock.setEnabled(false);
@@ -144,7 +155,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Log.d(TAG,"BACK BUTTON");
                 onBackPressed();
                 return true;
             case R.id.lock_rec:
@@ -161,10 +171,36 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             case R.id.photo_rec:
                 loadProtoFromCamera();
                 break;
+            case R.id.edit_rec:
+                selectEdit();
+                break;
         }
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void selectEdit() {
+        mode = ConstantManager.MODE_EDIT_RECORD;
+        itemEdit.setVisible(false);
+        itemPhoto.setVisible(true);
+        itemPhoto.setEnabled(true);
+        itemLock.setVisible(true);
+        itemLock.setEnabled(true);
+
+        mShort.setFocusable(true);
+        mShort.setLongClickable(true);
+        mShort.setCursorVisible(true);
+        mShort.setEnabled(true);
+        mShort.setFocusableInTouchMode(true);
+
+        mLong.setFocusable(true);
+        mLong.setLongClickable(true);
+        mLong.setCursorVisible(true);
+        mLong.setEnabled(true);
+        mLong.setFocusableInTouchMode(true);
+
+        mSaveButton.setText(R.string.save_button_txt);
     }
 
     private void loadProtoFromCamera() {

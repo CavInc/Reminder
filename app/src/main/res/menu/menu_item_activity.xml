@@ -12,5 +12,11 @@
     <item android:id="@+id/unloc_rec"
           android:title="@string/open_record"
           android:showAsAction="never" />
+    <item
+        android:id="@+id/edit_rec"
+        android:icon="@drawable/ic_create_white_24dp"
+        android:title="Edit"
+        android:visible="false"
+        app:showAsAction="ifRoom"/>
 
 </menu>
