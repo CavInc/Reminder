@@ -420,8 +420,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         switch (requestCode){
             case ConstantManager.REQUEST_CAMERA_PICTURE:
                 if (resultCode == RESULT_OK && mPhotoFile !=null){
+                    Log.d(TAG,mPhotoFile.getAbsolutePath());
                    // mSelectedImage = Uri.fromFile(mPhotoFile);
                   //  insertProfileImage(mSelectedImage);
+                    mPhotoView.setVisibility(View.VISIBLE);
+                    mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString()));
                 } else {
                     mPhotoFile = null;
                 }

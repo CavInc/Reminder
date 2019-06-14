@@ -29,6 +29,7 @@ import com.github.clans.fab.FloatingActionMenu;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 import cav.reminder.R;
@@ -320,6 +321,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             case ConstantManager.ITEM_ACTIVITY_EDIT:
                 Log.d(TAG,"RETURN EDIT");
                 if (resultCode == RESULT_OK && data !=null){
+                    /*
                     RecordHeaderRes lrecord = new RecordHeaderRes(data.getIntExtra(ConstantManager.RECORD_ID,-1),
                             data.getStringExtra(ConstantManager.SHORT_DATA),
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA),"yyyy-MM-dd"),
@@ -334,10 +336,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mAdapter.insert(lrecord,id);
 
                     mAdapter.notifyDataSetChanged();
+                    */
+                    storeEditRecord(data.getIntExtra(ConstantManager.RECORD_ID, -1),
+                            data.getStringExtra(ConstantManager.SHORT_DATA),
+                            data.getStringExtra(ConstantManager.DATE_DATA),
+                            data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                            data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
                 }
                 break;
             case ConstantManager.ITEM_ACTIVITY_VIEW:
                 Log.d(TAG,"RETURN VIEW");
+                if (resultCode == RESULT_OK && data != null) {
+                    int id = data.getIntExtra(ConstantManager.RECORD_ID, -1);
+                    Log.d(TAG,"RET ID : "+id);
+                    if (id != -1) {
+                        storeEditRecord(data.getIntExtra(ConstantManager.RECORD_ID, -1),
+                                data.getStringExtra(ConstantManager.SHORT_DATA),
+                                data.getStringExtra(ConstantManager.DATE_DATA),
+                                data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                                data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
+                                data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                    }
+                }
                 break;
             //"To Do" ac
             case ConstantManager.ITEM_TODO_NEW:
@@ -378,6 +399,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
         }
        // super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void storeEditRecord(int recid, String title, String recDate, String bodyRec,
+                                 String photoFile, boolean recClose, String recPass){
+        RecordHeaderRes lrecord = new RecordHeaderRes(recid,
+                title,
+                Func.strToDate(recDate,"yyyy-MM-dd"),
+                bodyRec,photoFile,
+                recClose,
+                recPass);
+        mDataManager.getDataBaseConnector().updateRecord(lrecord);
+        int id = mAdapter.getPosition(mItem);
+        mAdapter.remove(mItem);
+        mAdapter.insert(lrecord,id);
+
+        mAdapter.notifyDataSetChanged();
     }
 
     AdapterView.OnItemLongClickListener itemLongListener = new AdapterView.OnItemLongClickListener() {
