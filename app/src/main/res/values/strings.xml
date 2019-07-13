@@ -14,9 +14,6 @@
     <string name="done_todo">Done ToDo : </string>
     <string name="todo_setalarm">Set Alarm</string>
 
-    <!-- admob -->
-    <string name="admob_id" translatable="false">ca-app-pub-9439056714762229~6755749342</string>
-    <string name="admob_baner" translatable="false">ca-app-pub-9439056714762229/3005022236</string>
     <string name="menu_settings">Settings</string>
     <string name="ringtone_setting_str">Ringtone</string>
     <string name="fab_add_item">Add a note</string>
@@ -24,5 +21,8 @@
     <string name="todo_menu_edit">Edit</string>
     <string name="todo_menu_done">Done</string>
     <string name="security_key">Security key:</string>
+    <string name="dialog_title_warning">Attention !!!</string>
+    <string name="dialog_store_msg">Are you sure you want to exit without saving?</string>
+    <string name="dialog_title_add_work">Add task</string>
 
 </resources>

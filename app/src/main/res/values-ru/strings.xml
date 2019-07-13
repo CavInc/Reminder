@@ -21,4 +21,7 @@
     <string name="todo_menu_edit">Редактировать</string>
     <string name="todo_menu_done">Сохранить</string>
     <string name="security_key">Пароль</string>
+    <string name="dialog_title_warning">Внимание !!!</string>
+    <string name="dialog_store_msg">Вы уверены что хотите выйти без сохранения ?</string>
+    <string name="dialog_title_add_work">Добавить задание</string>
 </resources>

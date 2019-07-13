@@ -157,7 +157,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
             View vl = LayoutInflater.from(this).inflate(R.layout.create_edit_todo_layout, null);
             mNameItem = (TextView) vl.findViewById(R.id.dialog_ce_toto);
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-            dialog.setTitle("Добавить заданние")
+            dialog.setTitle(R.string.dialog_title_add_work)
                     .setView(vl)
                     .setNegativeButton(R.string.dialog_no,null)
                     .setPositiveButton(R.string.dialog_yes,mTodoListener)

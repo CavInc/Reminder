@@ -357,7 +357,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         if (this.mode==ConstantManager.MODE_EDIT_RECORD){
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
             dialog.setTitle(getString(R.string.dialog_item_title));
-            dialog.setMessage("Вы уверены что хотите выйти без сохранения ?");
+            dialog.setMessage(R.string.dialog_store_msg);
             dialog.setIcon(android.R.drawable.ic_dialog_info);
             dialog.setPositiveButton(R.string.dialog_yes, myDialogClickListener);
             dialog.setNegativeButton(R.string.dialog_no, myDialogClickListener);

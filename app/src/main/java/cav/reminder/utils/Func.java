@@ -26,6 +26,7 @@ import cav.reminder.services.AlarmTaskReciver;
  */
 public class Func {
     public static Date strToDate(String dateS,String mask){
+        if (dateS.equals(" ")) return null;
         DateFormat format = new SimpleDateFormat(mask);
         try {
             return format.parse(dateS);
