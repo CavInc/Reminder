@@ -49,7 +49,7 @@ public class TodoAdapter extends ArrayAdapter<TodoSpecModel>{
             String currDt = Func.dateToStr(new Date(),"yyyy-MM-dd");
             String recDt = Func.dateToStr(record.getDate(),"yyyy-MM-dd");
             if (currDt.equals(recDt)) {
-                holder.mDateTime.setText(Func.dateToStr(record.getDate(), "hh:mm"));
+                holder.mDateTime.setText(Func.dateToStr(record.getDate(), "HH:mm"));
             } else {
                 holder.mDateTime.setText(Func.dateToStr(record.getDate(),"dd.MM.yy HH:mm"));
             }
