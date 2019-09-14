@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -63,7 +64,14 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         intent.putExtra(ConstantManager.RECORD_ID,mRecID);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        // Для полного запуска последовательности
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(TodoActivity.class);
+        stackBuilder.addNextIntent(intent);
+
+
+        //PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = stackBuilder.getPendingIntent(mRecID+mPosID,PendingIntent.FLAG_UPDATE_CURRENT);
 
         //Uri ringURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Uri ringURI = Uri.parse(mDataManager.getPreferensManager().getRingtone());
