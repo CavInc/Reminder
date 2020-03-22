@@ -101,7 +101,8 @@ public class Func {
         intent.putExtra(ConstantManager.TODO_REC_NAME,model.getName());
         intent.putExtra(ConstantManager.TODO_REC_ID,recid);
 
-        PendingIntent pi= PendingIntent.getBroadcast(context,ConstantManager.ALARM_CONST, intent,0);
+        PendingIntent pi= PendingIntent.getBroadcast(context,ConstantManager.ALARM_CONST+recid+model.getPosition(),
+                intent,PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar c = Calendar.getInstance();
         c.setTime(date);
         am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);

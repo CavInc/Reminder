@@ -8,8 +8,8 @@ android {
         applicationId "cav.reminder"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 16
-        versionName "1.0.9"
+        versionCode 17
+        versionName "1.0.10"
         project.ext.set("archivesBaseName", "Reminder-" + defaultConfig.versionName);
         resConfigs "en", "ru"
     }
