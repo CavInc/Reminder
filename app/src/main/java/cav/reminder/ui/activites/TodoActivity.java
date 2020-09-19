@@ -23,9 +23,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import cav.reminder.R;
-import cav.reminder.data.TodoSpecModel;
+
 import cav.reminder.data.manager.DataManager;
 import cav.reminder.data.storage.model.RecordHeaderRes;
+import cav.reminder.data.storage.model.TodoSpecModel;
 import cav.reminder.ui.adapters.TodoAdapter;
 import cav.reminder.ui.dialogs.DateTimerFragment;
 import cav.reminder.utils.ConstantManager;

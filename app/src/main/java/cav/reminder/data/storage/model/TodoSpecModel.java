@@ -1,4 +1,4 @@
-package cav.reminder.data;
+package cav.reminder.data.storage.model;
 
 import android.util.Log;
 

@@ -13,7 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 import cav.reminder.R;
-import cav.reminder.data.TodoSpecModel;
+
+import cav.reminder.data.storage.model.TodoSpecModel;
 import cav.reminder.utils.Func;
 
 public class TodoAdapter extends ArrayAdapter<TodoSpecModel>{

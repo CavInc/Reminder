@@ -18,7 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import cav.reminder.data.TodoSpecModel;
+
+import cav.reminder.data.storage.model.TodoSpecModel;
 import cav.reminder.services.AlarmTaskReciver;
 
 /**
@@ -67,8 +68,8 @@ public class Func {
 
     @SuppressWarnings({"deprecation"})
     public static Bitmap getPicSize(String mCurrentPhotoPath){
-        int targetW = 400;
-        int targetH = 300;
+        int targetW = 600; //400 x 300
+        int targetH = 400;
 
         // Читаем с inJustDecodeBounds=true для определения размеров
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -90,11 +91,22 @@ public class Func {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
 
         return bitmap;
+    }
+
+    public static void getPictyreSizeFile(String currentPhoto){
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(currentPhoto, bmOptions);
+
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
 
     }
 
+
     // добавим будильник
-    public static void addAlert(Context context,Date date,TodoSpecModel model,int recid){
+    public static void addAlert(Context context, Date date, TodoSpecModel model, int recid){
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent=new Intent(context, AlarmTaskReciver.class);
         intent.putExtra(ConstantManager.TODO_POS_ID,model.getPosition());

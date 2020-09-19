@@ -7,8 +7,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import cav.reminder.data.TodoSpecModel;
 import cav.reminder.data.manager.DataManager;
+import cav.reminder.data.storage.model.TodoSpecModel;
 
 public class StartAlarmInReboot extends Service {
     private DataManager mDataManager;

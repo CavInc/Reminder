@@ -15,7 +15,7 @@ import android.os.Build;
 import android.util.Log;
 
 import cav.reminder.R;
-import cav.reminder.data.TodoSpecModel;
+
 import cav.reminder.data.manager.DataManager;
 import cav.reminder.ui.activites.TodoActivity;
 import cav.reminder.utils.ConstantManager;
