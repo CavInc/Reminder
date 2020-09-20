@@ -19,6 +19,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
+import cav.reminder.data.storage.model.PhotoPictyreDataModel;
 import cav.reminder.data.storage.model.TodoSpecModel;
 import cav.reminder.services.AlarmTaskReciver;
 
@@ -93,7 +94,7 @@ public class Func {
         return bitmap;
     }
 
-    public static void getPictyreSizeFile(String currentPhoto){
+    public static PhotoPictyreDataModel getPictyreSizeFile(String currentPhoto){
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(currentPhoto, bmOptions);
@@ -102,6 +103,7 @@ public class Func {
         int photoH = bmOptions.outHeight;
 
 
+        return new PhotoPictyreDataModel(photoW,photoH);
     }
 
 

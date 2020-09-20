@@ -8,6 +8,8 @@
     <!-- - для HTC и некоторых других: -->
     <uses-permission android:name="android.permission.QUICKBOOT_POWERON"/>
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:name=".utils.App"
         android:allowBackup="true"
@@ -33,8 +35,7 @@
             </meta-data>
         </activity>
         <activity
-            android:name=".ui.activites.PhotoViewActivity"
-            android:screenOrientation="landscape">
+            android:name=".ui.activites.PhotoViewActivity">
         </activity>
         <activity android:name=".ui.activites.PrefActivity"
                   android:label="@string/menu_settings">
