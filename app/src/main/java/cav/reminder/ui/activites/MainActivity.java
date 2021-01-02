@@ -2,34 +2,28 @@ package cav.reminder.ui.activites;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.github.clans.fab.FloatingActionMenu;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 
 
 import cav.reminder.R;
@@ -45,18 +39,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private String TAG ="REMINDER_MAIN";
 
     ListView mListView;
-    //private FloatingActionButton newButton;
-
-  //  private FloatingActionButton mNewRecord;
-  //  private FloatingActionButton mNewTodo;
-
-
-
-     // animation fab
-    Animation show_fab_record;
-    Animation hide_fab_record;
-    Animation show_fab_todo;
-    Animation hide_fab_todo;
 
     private FloatingActionMenu mFabMenu;
 
@@ -66,6 +48,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private DataManager mDataManager;
     private RecordHeaderRes mItem=null;
+
+    private SearchView mSearchView;
 
 
     @Override
@@ -83,19 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setupToolbar(toolbar);
 
         mListView = (ListView) findViewById(R.id.listView);
-      //  newButton = (FloatingActionButton) findViewById(R.id.newButton);
-      //  newButton.setOnClickListener(this);
 
-      //  mNewRecord = (FloatingActionButton) findViewById(R.id.fab_new_record);
-      //  mNewTodo = (FloatingActionButton) findViewById(R.id.fab_new_todo);
-     //   mNewRecord.setOnClickListener(this);
-      //  mNewTodo.setOnClickListener(this);
-
-        // animation
-      //  show_fab_record =  AnimationUtils.loadAnimation(getApplication(), R.anim.fab_new_rec_show);
-     //   hide_fab_record = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_rec_hide);
-     //   show_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_show);
-    //    hide_fab_todo = AnimationUtils.loadAnimation(getApplication(),R.anim.fab_new_todo_hide);
         mFabMenu = findViewById(R.id.fab_menu);
 
         findViewById(R.id.fab_add_item).setOnClickListener(this);
@@ -131,6 +103,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         });
         */
+
+        mSearchView = findViewById(R.id.main_search);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if (searchManager != null){
+            mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    if (newText.length() == 0){
+                        mAdapter = null;
+                        updateUI();
+                    } else {
+                        mAdapter.getFilter().filter(newText);
+                    }
+                    return  true;
+                }
+            });
+        }
     }
     private boolean flag = false;
 

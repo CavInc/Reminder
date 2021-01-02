@@ -130,4 +130,9 @@ public class RecordHeaderRes {
     public void setDoneCount(int doneCount) {
         mDoneCount = doneCount;
     }
+
+    @Override
+    public String toString() {
+        return mHeaderRec;
+    }
 }
