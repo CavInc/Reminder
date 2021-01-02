@@ -2,16 +2,14 @@ package cav.reminder.ui.activites;
 
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import cav.reminder.R;
 import cav.reminder.utils.ConstantManager;
 
-public class BaseActivity extends AppCompatActivity{
+public class BaseActivity extends AppCompatActivity {
     private final String TAG = ConstantManager.TAG_PREFIX;
 
     protected ProgressDialog mProgressDialog;

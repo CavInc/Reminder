@@ -1,16 +1,11 @@
 package cav.reminder.ui.activites;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
 import android.view.Menu;
@@ -26,6 +21,10 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.util.ArrayList;
 
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import cav.reminder.R;
 import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.data.manager.DataManager;

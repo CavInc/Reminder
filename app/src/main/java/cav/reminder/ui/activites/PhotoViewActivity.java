@@ -1,13 +1,12 @@
 package cav.reminder.ui.activites;
 
 import android.content.pm.ActivityInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
 import java.io.File;
 
+import androidx.appcompat.app.AppCompatActivity;
 import cav.reminder.R;
 import cav.reminder.data.storage.model.PhotoPictyreDataModel;
 import cav.reminder.utils.ConstantManager;
