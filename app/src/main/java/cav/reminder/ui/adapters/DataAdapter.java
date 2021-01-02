@@ -86,6 +86,10 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         return row;
     }
 
+    public void setData(ArrayList<RecordHeaderRes> data){
+        this.clear();
+        this.addAll(data);
+    }
 
 
     class ViewHolder {

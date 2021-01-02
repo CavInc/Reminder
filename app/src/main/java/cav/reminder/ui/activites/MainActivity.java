@@ -101,11 +101,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.fab_add_item).setOnClickListener(this);
         findViewById(R.id.fab_add_todo).setOnClickListener(this);
 
+        /*
         ArrayList<RecordHeaderRes> record = mDataManager.getAllRecord();
 
         mAdapter = new DataAdapter(this,R.layout.main_item_list,record);
         mAdapter.setNotifyOnChange(true);
         mListView.setAdapter(mAdapter);
+        */
 
         mListView.setOnItemClickListener(mItemListener);
         mListView.setOnItemLongClickListener(itemLongListener);
@@ -177,6 +179,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_WRITER);
         }
+        updateUI();
     }
 
     private void updateUI(){
@@ -186,6 +189,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             mAdapter.setNotifyOnChange(true);
             mListView.setAdapter(mAdapter);
         } else {
+            mAdapter.setData(record);
             mAdapter.notifyDataSetChanged();
         }
     }
