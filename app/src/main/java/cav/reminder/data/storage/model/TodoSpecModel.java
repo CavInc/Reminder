@@ -1,5 +1,6 @@
 package cav.reminder.data.storage.model;
 
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ public class TodoSpecModel {
     private Date mDate;
     private boolean mAlarm = false;
     private int mRecId;
+    private boolean mDone = false; // сработавщий будильник
 
     public TodoSpecModel(int position, String name, boolean check) {
         mPosition = position;
@@ -42,6 +44,18 @@ public class TodoSpecModel {
 
     public int getRecId() {
         return mRecId;
+    }
+
+    public void setRecId(int recId) {
+        mRecId = recId;
+    }
+
+    public boolean isDone() {
+        return mDone;
+    }
+
+    public void setDone(boolean done) {
+        mDone = done;
     }
 
     public int getPosition() {
@@ -74,5 +88,26 @@ public class TodoSpecModel {
 
     public void setDate(Date date) {
         mDate = date;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == this)
+            return true;
+        if(obj == null)
+            return false;
+        if (obj.getClass() == this.getClass()){
+            if (getPosition() == ((TodoSpecModel) (obj)).getPosition()){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (obj instanceof Integer) {
+            if (this.getPosition() == (Integer) obj){
+                return true;
+            }
+        }
+        return false;
     }
 }

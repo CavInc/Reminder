@@ -26,6 +26,7 @@ public interface ConstantManager {
     String RECORD_CLOSE="RECORD_CLOSE";
     String RECORD_PASS_SAVE = "RECORD_PASS_SAVE";
     String RECORD_PHOTO_FILE = "RECORD_PHOTO_FILE";
+    String RECORD_POS_ID = "RECORD_POS_ID";
 
     int MODE_SEC_DIALOG_LOCK = 0;
     int MODE_SEC_DIALOG_UNLOCK = 1;

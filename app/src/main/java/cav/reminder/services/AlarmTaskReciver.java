@@ -62,6 +62,7 @@ public class AlarmTaskReciver extends BroadcastReceiver {
         Intent intent = new Intent(context, TodoActivity.class);
         intent.putExtra(ConstantManager.MODE_RECORD,ConstantManager.MODE_VIEW_RECORD);
         intent.putExtra(ConstantManager.RECORD_ID,mRecID);
+        intent.putExtra(ConstantManager.RECORD_POS_ID,mPosID);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Для полного запуска последовательности

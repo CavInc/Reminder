@@ -16,6 +16,11 @@
         android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <View
+        android:layout_marginBottom="8dp"
+        android:background="@color/depp_purple_dark"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

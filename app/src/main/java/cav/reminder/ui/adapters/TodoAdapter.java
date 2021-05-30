@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.Date;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
 import cav.reminder.R;
 
 import cav.reminder.data.storage.model.TodoSpecModel;
@@ -57,6 +58,11 @@ public class TodoAdapter extends ArrayAdapter<TodoSpecModel>{
         } else {
             holder.mIcon.setImageResource(R.drawable.ic_alarm_gray_24dp);
             holder.mDateTime.setText("");
+        }
+        if (record.isDone()) {
+            holder.mTodoTextView.setTextColor(ContextCompat.getColor(getContext(),R.color.app_red_dark));
+        } else {
+            holder.mTodoTextView.setTextColor(ContextCompat.getColor(getContext(),android.R.color.black));
         }
 
 

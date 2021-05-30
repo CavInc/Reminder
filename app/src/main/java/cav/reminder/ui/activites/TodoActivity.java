@@ -46,6 +46,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
 
     private int mode = 0;
     private int mRecID = -1;
+    private int mPosID = -1;
 
     private Menu mMenu;
     private boolean mSetMode = false;
@@ -72,7 +73,14 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         if ((mode == ConstantManager.MODE_VIEW_RECORD) || (mode == ConstantManager.MODE_EDIT_RECORD)) {
             mName.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
+            mPosID = getIntent().getIntExtra(ConstantManager.RECORD_POS_ID,-1);
             model = mDataManager.getDataBaseConnector().getToDoRec(mRecID);
+            if (mPosID != -1) {
+                int id = model.indexOf(new TodoSpecModel(mPosID,null,false));
+                if (id != -1) {
+                    model.get(id).setDone(true);
+                }
+            }
         }
 
         mTodoAdapter = new TodoAdapter(this,R.layout.todo_item,model);
