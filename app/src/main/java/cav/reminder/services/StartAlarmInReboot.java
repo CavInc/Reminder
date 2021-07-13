@@ -1,7 +1,9 @@
 package cav.reminder.services;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -21,6 +23,15 @@ public class StartAlarmInReboot extends Service {
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
         throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        int NOTIFICATION_ID = (int) (System.currentTimeMillis()%10000);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForeground(NOTIFICATION_ID, new Notification.Builder(this).build());
+        }
     }
 
     @Override

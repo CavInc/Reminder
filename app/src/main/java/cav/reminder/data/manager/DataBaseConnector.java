@@ -169,7 +169,14 @@ public class DataBaseConnector {
         open();
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
-
+            // TodoSpecModel(int position, String name, Date date, int recId) {
+            rec.add(new TodoSpecModel(
+                    cursor.getInt(cursor.getColumnIndex("position")),
+                    cursor.getString(cursor.getColumnIndex("todo_title")),
+                    Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
+                            cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:mm"),
+                    cursor.getInt(cursor.getColumnIndex("_id"))
+            ));
         }
         close();
         return rec;

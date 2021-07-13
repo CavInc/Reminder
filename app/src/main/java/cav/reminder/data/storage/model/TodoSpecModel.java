@@ -42,6 +42,14 @@ public class TodoSpecModel {
 
     }
 
+
+    public TodoSpecModel(int position, String name, Date date, int recId) {
+        mPosition = position;
+        mName = name;
+        mDate = date;
+        mRecId = recId;
+    }
+
     public int getRecId() {
         return mRecId;
     }
