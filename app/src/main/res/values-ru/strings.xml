@@ -24,4 +24,9 @@
     <string name="dialog_title_warning">Внимание !!!</string>
     <string name="dialog_store_msg">Вы уверены что хотите выйти без сохранения ?</string>
     <string name="dialog_title_add_work">Добавить задание</string>
+    <string name="dialog_title_delete">Удалить</string>
+    <string name="dialog_delete_mesage">Удаляем связанное фото ?</string>
+    <string name="select_item_edit">Редактировать</string>
+    <string name="select_item_send_email">Отправить на почту</string>
+    <string name="select_item_delete">Удалить</string>
 </resources>

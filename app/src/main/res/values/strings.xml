@@ -24,5 +24,10 @@
     <string name="dialog_title_warning">Attention !!!</string>
     <string name="dialog_store_msg">Are you sure you want to exit without saving?</string>
     <string name="dialog_title_add_work">Add task</string>
+    <string name="select_item_edit">Edit</string>
+    <string name="select_item_send_email">Send to mail</string>
+    <string name="select_item_delete">Delete</string>
+    <string name="dialog_title_delete">Delete</string>
+    <string name="dialog_delete_mesage">Удаляем связанное фото ?</string>
 
 </resources>

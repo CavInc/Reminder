@@ -1,8 +1,10 @@
 package cav.reminder.ui.activites;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.widget.SearchView;
 import com.github.clans.fab.FloatingActionMenu;
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -466,7 +469,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
                     mAdapter.remove(mItem);
                     mAdapter.notifyDataSetChanged();
-
+                    // спрашиваем удалять ли фото файл
+                    if (mItem.getPhotoFile() != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle(R.string.dialog_title_delete)
+                                .setMessage(R.string.dialog_delete_mesage)
+                                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        File file = new File(mItem.getPhotoFile());
+                                        file.delete();
+                                    }
+                                })
+                                .setNegativeButton(R.string.dialog_no, null)
+                                .show();
+                    }
 
                     break;
                 case R.id.send_mail:
