@@ -46,6 +46,9 @@
         android:ems="10"
         android:lines="10"
         android:id="@+id/long_et"
+        android:autoLink="all"
+        android:linksClickable="true"
+        android:textColorLink="@color/depp_purple_dark"
         android:layout_below="@+id/long_text_tv"
         android:layout_above="@+id/save_item_button"
         android:gravity="top"/>

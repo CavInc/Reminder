@@ -429,7 +429,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
 
     private void viewItemDialog() {
-        EditDeleteDialog deleteDialog = new EditDeleteDialog();
+        EditDeleteDialog deleteDialog = new EditDeleteDialog().newInstance(mItem.getTypeRec());
         deleteDialog.setSelectEditDeleteListener(mSelectEditDeleteListener);
         deleteDialog.show(getSupportFragmentManager(),"EDD");
     }
@@ -466,6 +466,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mDataManager.getDataBaseConnector().deleteRecord(mItem.getId());
                     mAdapter.remove(mItem);
                     mAdapter.notifyDataSetChanged();
+
+
                     break;
                 case R.id.send_mail:
                     Intent sendMail = new Intent(Intent.ACTION_SEND);
