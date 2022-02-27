@@ -467,6 +467,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mAdapter.remove(mItem);
                     mAdapter.notifyDataSetChanged();
                     break;
+                case R.id.send_mail:
+                    Intent sendMail = new Intent(Intent.ACTION_SEND);
+                    sendMail.setType("plain/text");
+                    sendMail.putExtra(Intent.EXTRA_SUBJECT,mItem.getHeaderRec());
+                    sendMail.putExtra(Intent.EXTRA_TEXT,mItem.getBodyRec());
+                    startActivity(sendMail);
+                    break;
             }
         }
     };
