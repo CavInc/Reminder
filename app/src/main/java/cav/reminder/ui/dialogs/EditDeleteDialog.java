@@ -51,8 +51,10 @@ public class EditDeleteDialog extends DialogFragment implements View.OnClickList
         if (mTypeItem == ConstantManager.TYPE_REC_MEMO) {
             v.findViewById(R.id.send_mail).setOnClickListener(this);
         } else {
-            v.findViewById(R.id.send_mail).setEnabled(false);
-            v.findViewById(R.id.send_mail).setBackgroundColor(getResources().getColor(R.color.app_gray));
+            //v.findViewById(R.id.send_mail).setEnabled(false);
+            //v.findViewById(R.id.send_mail).setBackgroundColor(getResources().getColor(R.color.app_gray));
+            v.findViewById(R.id.send_mail).setVisibility(View.GONE);
+            v.findViewById(R.id.send_mail_vb).setVisibility(View.GONE);
         }
 
         mEditLayout.setOnClickListener(this);
