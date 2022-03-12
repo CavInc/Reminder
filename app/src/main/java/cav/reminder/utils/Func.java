@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Pair;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -67,10 +68,21 @@ public class Func {
         return hash;
     }
 
+    public static Pair<Integer, Integer> getPictureFullSize(String photoPath){
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        Pair<Integer,Integer> size = new Pair<>(photoW,photoH);
+        return size;
+    }
+
     @SuppressWarnings({"deprecation"})
-    public static Bitmap getPicSize(String mCurrentPhotoPath){
-        int targetW = 600; //400 x 300
-        int targetH = 400;
+    public static Bitmap getPicSize(String mCurrentPhotoPath,int w ,int h){
+        int targetW = w; //400 x 300
+        int targetH = h;
 
         // Читаем с inJustDecodeBounds=true для определения размеров
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -94,6 +106,7 @@ public class Func {
         return bitmap;
     }
 
+    // возвращаем размер картинки
     public static PhotoPictyreDataModel getPictyreSizeFile(String currentPhoto){
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;

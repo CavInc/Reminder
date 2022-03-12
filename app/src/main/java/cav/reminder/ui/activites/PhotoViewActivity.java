@@ -39,8 +39,10 @@ public class PhotoViewActivity extends AppCompatActivity {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             }
 
+
+
             mPhotoFile = new File(file);
-            mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString()));
+            mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),1027,780));
         }
 
     }
