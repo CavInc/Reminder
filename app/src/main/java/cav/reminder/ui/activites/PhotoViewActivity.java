@@ -9,21 +9,21 @@ import android.view.ScaleGestureDetector;
 import android.widget.CursorTreeAdapter;
 import android.widget.ImageView;
 
-import com.zolad.zoominimageview.ZoomInImageView;
-import com.zolad.zoominimageview.ZoomInImageViewAttacher;
+
+import com.ortiz.touchview.TouchImageView;
 
 import java.io.File;
 
 import androidx.appcompat.app.AppCompatActivity;
 import cav.reminder.R;
 import cav.reminder.data.storage.model.PhotoPictyreDataModel;
-import cav.reminder.ui.CustomImageView;
+
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
 
 
 public class PhotoViewActivity extends AppCompatActivity {
-    private ImageView mPhotoView;
+    private TouchImageView mPhotoView;
     private File mPhotoFile;
 
     private ScaleGestureDetector mScaleGestureDetector;
@@ -59,9 +59,8 @@ public class PhotoViewActivity extends AppCompatActivity {
            // mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),w,h));
             //mPhotoView.setBitmap(Func.getPicSize(mPhotoFile.toString(),w,h));
 
-            ZoomInImageViewAttacher mIvAttacter = new ZoomInImageViewAttacher(mPhotoView);
             mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),w,h));
-            mIvAttacter.setZoomable(true);
+
         }
 
     }
