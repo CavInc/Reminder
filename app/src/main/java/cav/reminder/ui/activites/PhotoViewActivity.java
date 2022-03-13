@@ -4,10 +4,8 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
-import android.widget.CursorTreeAdapter;
-import android.widget.ImageView;
+
 
 
 import com.ortiz.touchview.TouchImageView;
@@ -26,7 +24,6 @@ public class PhotoViewActivity extends AppCompatActivity {
     private TouchImageView mPhotoView;
     private File mPhotoFile;
 
-    private ScaleGestureDetector mScaleGestureDetector;
     private float mScaleFactor = 1.0f;
 
     @Override
@@ -36,7 +33,6 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         mPhotoView =  findViewById(R.id.photo_view_iv);
 
-        //mScaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
 
         String sf = getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE);
         if (sf != null) {
@@ -63,22 +59,5 @@ public class PhotoViewActivity extends AppCompatActivity {
 
         }
 
-    }
-    /*
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return mScaleGestureDetector.onTouchEvent(event);
-    }
-    */
-
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            mScaleFactor *= detector.getScaleFactor();
-            mPhotoView.setScaleX(mScaleFactor);
-            mPhotoView.setScaleY(mScaleFactor);
-            return true;
-        }
     }
 }
