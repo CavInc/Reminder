@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/gray"
     tools:context="cav.reminder.ui.activites.PhotoViewActivity">
-    <cav.reminder.ui.CustomImageView
+    <ImageView
         android:id="@+id/photo_view_iv"
         android:background="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
-        android:scaleType="center"/>
+       />
 
 </RelativeLayout>
