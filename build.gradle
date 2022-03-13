@@ -2,6 +2,7 @@
 
 buildscript {
     repositories {
+        google()
         mavenCentral() //Новая линия
         jcenter()
     }
@@ -15,11 +16,12 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenCentral() //Новая линия
-        jcenter()
         maven {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        mavenCentral() //Новая линия
+        jcenter()
+        maven { url 'https://jitpack.io' }
     }
 }
