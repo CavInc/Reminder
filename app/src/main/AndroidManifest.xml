@@ -43,6 +43,7 @@
         <activity android:name=".ui.activites.PrefActivity"
                   android:label="@string/menu_settings">
         </activity>
+        <activity android:name=".ui.activites.AboutActivity"/>
         <provider
             android:authorities="${applicationId}.provider"
             android:name="androidx.core.content.FileProvider"

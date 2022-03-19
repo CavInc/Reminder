@@ -158,6 +158,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             Intent setting = new Intent(this,PrefActivity.class);
             startActivity(setting);
         }
+        if (item.getItemId() == R.id.menu_about) {
+            Intent about = new Intent(this,AboutActivity.class);
+            startActivity(about);
+        }
         return super.onOptionsItemSelected(item);
     }
 
