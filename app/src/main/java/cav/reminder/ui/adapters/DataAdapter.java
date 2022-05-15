@@ -81,6 +81,11 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             holder.photoFile.setVisibility(View.GONE);
             holder.bodyRec.setText(mContext.getString(R.string.all_count_todo)
                     +record.getAllTodoCount()+" "+mContext.getString(R.string.done_todo)+record.getDoneCount());
+            if (record.getDoneCount()<record.getAllTodoCount()) {
+                holder.bodyRec.setTextColor(mContext.getResources().getColor(R.color.app_red_dark));
+            } else {
+                holder.bodyRec.setTextColor(mContext.getResources().getColor(R.color.gray));
+            }
         }
 
         return row;

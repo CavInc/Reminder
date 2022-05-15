@@ -43,8 +43,7 @@
         app:menu_shadowRadius="4dp"
         app:menu_shadowXOffset="1dp"
         app:menu_shadowYOffset="3dp"
-        app:menu_openDirection="up"
-        >
+        app:menu_openDirection="up" >
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_add_item"
             app:fab_label="@string/fab_add_item"
