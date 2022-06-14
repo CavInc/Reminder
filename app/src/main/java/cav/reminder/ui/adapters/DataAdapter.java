@@ -86,6 +86,8 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             } else {
                 holder.bodyRec.setTextColor(mContext.getResources().getColor(R.color.gray));
             }
+        } else {
+            holder.bodyRec.setTextColor(mContext.getResources().getColor(R.color.gray));
         }
 
         return row;
