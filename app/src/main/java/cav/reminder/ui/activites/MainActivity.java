@@ -60,7 +60,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
 
 
-
         //setDataBase();
         mDataManager = DataManager.getInstance();
 
@@ -75,36 +74,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         findViewById(R.id.fab_add_item).setOnClickListener(this);
         findViewById(R.id.fab_add_todo).setOnClickListener(this);
 
-        /*
-        ArrayList<RecordHeaderRes> record = mDataManager.getAllRecord();
-
-        mAdapter = new DataAdapter(this,R.layout.main_item_list,record);
-        mAdapter.setNotifyOnChange(true);
-        mListView.setAdapter(mAdapter);
-        */
-
         mListView.setOnItemClickListener(mItemListener);
         mListView.setOnItemLongClickListener(itemLongListener);
-
-        /*
-        mListView.setOnScrollListener(new AbsListView.OnScrollListener(){
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == SCROLL_STATE_IDLE){
-                    newButton.show();
-                    flag = true;
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (flag /*newButton.isShown()*//*){
-                    newButton.hide();
-                    flag = false;
-                }
-            }
-        });
-        */
 
         mSearchView = findViewById(R.id.main_search);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -212,26 +183,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mFabMenu.close(true);
         Intent intent;
         switch (v.getId()){
-            /*
-            case R.id.newButton:
-                if (!statusFab) {
-                    //showFABMenu();
-                    statusFab = true;
-                } else {
-                   // hideFABMenu();
-                    statusFab = false;
-                }
-                break;
-            */
-            /*
-            case R.id.fab_new_record:
-               // hideFABMenu();
-                addNewRecord();
-                break;
-            case R.id.fab_new_todo:
-                addNewTODO();
-                break;
-                */
             case R.id.fab_add_item:
                 addNewRecord();
                 break;
@@ -242,41 +193,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
-    // показать float button menu
-    /*
-    private void showFABMenu(){
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
-        layoutParams.rightMargin += (int) (mNewRecord.getWidth() * 0.8);
-        layoutParams.bottomMargin += (int) (mNewRecord.getHeight() * 0.25);
-        mNewRecord.setLayoutParams(layoutParams);
-        mNewRecord.setAnimation(show_fab_record);
-        mNewRecord.setClickable(true);
-
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mNewTodo.getLayoutParams();
-        layoutParams2.rightMargin += (int) (mNewTodo.getWidth() * 0.25);
-        layoutParams2.bottomMargin += (int) (mNewTodo.getHeight() * 0.7);
-        mNewTodo.setLayoutParams(layoutParams2);
-        mNewTodo.startAnimation(show_fab_todo);
-        mNewTodo.setClickable(true);
-    }
-    // скрыть float button menu
-    private void hideFABMenu(){
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mNewRecord.getLayoutParams();
-        layoutParams.rightMargin -= (int) (mNewRecord.getWidth() * 0.8);
-        layoutParams.bottomMargin -= (int) (mNewRecord.getHeight() * 0.25);
-        mNewRecord.setLayoutParams(layoutParams);
-        mNewRecord.setAnimation(hide_fab_record);
-        mNewRecord.setClickable(false);
-
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) mNewTodo.getLayoutParams();
-        layoutParams2.rightMargin -= (int) (mNewTodo.getWidth() * 0.25);
-        layoutParams2.bottomMargin -= (int) (mNewTodo.getHeight() * 0.7);
-        mNewTodo.setLayoutParams(layoutParams2);
-        mNewTodo.startAnimation(hide_fab_todo);
-        mNewTodo.setClickable(false);
-
-    }
-    */
 
     // добавляем новую заметку
     private void addNewRecord(){
