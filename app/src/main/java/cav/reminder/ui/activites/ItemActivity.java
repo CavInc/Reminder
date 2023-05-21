@@ -208,10 +208,18 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         String imageFile = "JPEG_"+timeStamp+"_";
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
             return ;
-        File storageDir = new File (Environment.getExternalStorageDirectory(), "Reminder");
-        if (! storageDir.exists()) {
-            if (!storageDir.mkdirs()){
-                return;
+        File storageDir;
+        if (Build.VERSION.SDK_INT >= 30){
+            storageDir = new File(this.getExternalFilesDir("Reminder"),"Reminder");
+            if (! storageDir.exists()) {
+                storageDir.mkdirs();
+            }
+        } else {
+            storageDir = new File(Environment.getExternalStorageDirectory(), "Reminder");
+            if (!storageDir.exists()) {
+                if (!storageDir.mkdirs()) {
+                    return;
+                }
             }
         }
 
