@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Pair;
 
@@ -121,18 +122,34 @@ public class Func {
 
 
     // добавим будильник
-    public static void addAlert(Context context, Date date, TodoSpecModel model, int recid){
+    public static void addAlert(Context context, Date date, TodoSpecModel model, int recid) {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent=new Intent(context, AlarmTaskReciver.class);
-        intent.putExtra(ConstantManager.TODO_POS_ID,model.getPosition());
-        intent.putExtra(ConstantManager.TODO_REC_NAME,model.getName());
-        intent.putExtra(ConstantManager.TODO_REC_ID,recid);
+        Intent intent = new Intent(context, AlarmTaskReciver.class);
+        intent.putExtra(ConstantManager.TODO_POS_ID, model.getPosition());
+        intent.putExtra(ConstantManager.TODO_REC_NAME, model.getName());
+        intent.putExtra(ConstantManager.TODO_REC_ID, recid);
 
-        PendingIntent pi= PendingIntent.getBroadcast(context,ConstantManager.ALARM_CONST+recid+model.getPosition(),
-                intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            pi = PendingIntent.getBroadcast(context, ConstantManager.ALARM_CONST + recid + model.getPosition(),
+                    intent, PendingIntent.FLAG_MUTABLE);
+        } else {
+            pi = PendingIntent.getBroadcast(context, ConstantManager.ALARM_CONST + recid + model.getPosition(),
+                    intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
         Calendar c = Calendar.getInstance();
         c.setTime(date);
-        am.set(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pi);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            am.setExact(AlarmManager.RTC_WAKEUP,c.getTimeInMillis(),pi);
+        } else {
+            am.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pi);
+        }
+
+
     }
 
 }

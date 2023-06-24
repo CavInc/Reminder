@@ -1,5 +1,6 @@
 package cav.reminder.data.manager;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -162,9 +163,10 @@ public class DataBaseConnector {
     }
 
     // список будильников при старте
+    @SuppressLint("Range")
     public ArrayList<TodoSpecModel> getActiveAlarm(){
         ArrayList<TodoSpecModel> rec = new ArrayList<>();
-        String sql = "select _id,position_id,todo_title,alarm_date,alarm_time from todo_spec\n" +
+        String sql = "select _id,position_id,todo_title,alarm_date,alarm_time from "+DBHelper.TABLE_TODO_SPEC+"\n" +
                 "where not alarm_date is null and done_flg=0";
         open();
         Cursor cursor = database.rawQuery(sql,null);
