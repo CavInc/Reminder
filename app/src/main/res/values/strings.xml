@@ -1,5 +1,5 @@
 <resources>
-    <!--<string name="app_name">Reminder</string>-->
+    <string name="app_name">Reminder</string>
     <string name="save_button_txt">Save</string>
     <string name="dialog_title">Working in item...</string>
     <string name="close_button_txt">Close</string>
