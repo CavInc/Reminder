@@ -72,7 +72,12 @@ public class AlarmTaskReciver extends BroadcastReceiver {
 
 
         //PendingIntent pi = PendingIntent.getActivity(mContext,mRecID+mPosID,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-        PendingIntent pi = stackBuilder.getPendingIntent(mRecID+mPosID,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S){
+            pi = stackBuilder.getPendingIntent(mRecID + mPosID, PendingIntent.FLAG_MUTABLE);
+        } else {
+            pi = stackBuilder.getPendingIntent(mRecID + mPosID, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
 
         //Uri ringURI = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Uri ringURI = Uri.parse(mDataManager.getPreferensManager().getRingtone());
