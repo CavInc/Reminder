@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "30.0.1"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "cav.reminder"
         minSdkVersion 18
         targetSdkVersion 31
-        versionCode 25
-        versionName "1.0.19"
+        versionCode 27
+        versionName "1.0.21"
         project.ext.set("archivesBaseName", "Reminder-" + defaultConfig.versionName);
         resConfigs "en", "ru"
     }
