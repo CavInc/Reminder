@@ -1,6 +1,7 @@
 package cav.reminder.ui.activites;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 
 import android.view.Menu;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -25,6 +28,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -39,6 +47,7 @@ import cav.reminder.utils.Func;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private static final int REQUEST_WRITER = 845;
+    private static final int REQUEST_CODE_SCHEDULE_EXACT_ALARM = 243;
     private String TAG ="REMINDER_MAIN";
 
     ListView mListView;
@@ -54,6 +63,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private SearchView mSearchView;
 
+    private boolean permissionRequested = false;
+
+    private ActivityResultLauncher<Intent> requestScheduleExactAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +113,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 }
             });
         }
+
+        requestScheduleExactAlarm = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            Log.d(TAG, "SCHEDULE_EXACT_ALARM granted");
+                        } else {
+                            Log.d(TAG, "SCHEDULE_EXACT_ALARM denied");
+                        }
+                    }
+                }
+        );
     }
     private boolean flag = false;
 
@@ -149,14 +176,30 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         super.onResume();
         Log.d(TAG,"RESUME");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        int permissionStatus = ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM);
+        Log.d(TAG, "SCHEDULE_EXACT_ALARM status: " + (permissionStatus == PackageManager.PERMISSION_GRANTED ? "GRANTED" : "DENIED"));
 
+        // Проверяем необходимость запроса разрешения
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+                Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                requestScheduleExactAlarm.launch(intent);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            // Для Android 11
         } else {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Для более старых версий
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITER);
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_WRITER);
             }
         }
+
+
         updateUI();
     }
 
@@ -198,6 +241,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_SCHEDULE_EXACT_ALARM) {
+            if (grantResults.length > 0 &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "Разрешение получено");
+                // Здесь можно продолжить работу с разрешением
+            } else {
+                Log.d(TAG, "Разрешение отклонено");
+                // Обработка случая отказа пользователя
+                showPermissionDeniedMessage();
+            }
+        }
+    }
+
+    private void showPermissionRationaleDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Необходимое разрешение")
+                .setMessage("Приложение нуждается в разрешении для работы с будильниками")
+                .setPositiveButton("ОК", (dialog, which) -> {
+                    ActivityCompat.requestPermissions(this,
+                            new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM},
+                            REQUEST_CODE_SCHEDULE_EXACT_ALARM);
+                })
+                .setNegativeButton("Отмена", (dialog, which) -> {
+                    // Обработка отмены
+                })
+                .show();
+    }
+
+    private void showPermissionDeniedMessage() {
+        Toast.makeText(this, "Разрешение отклонено. Приложение может работать некорректно",
+                Toast.LENGTH_LONG).show();
+    }
 
     // добавляем новую заметку
     private void addNewRecord(){

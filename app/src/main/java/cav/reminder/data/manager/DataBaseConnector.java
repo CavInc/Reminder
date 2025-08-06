@@ -173,7 +173,7 @@ public class DataBaseConnector {
         while (cursor.moveToNext()){
             // TodoSpecModel(int position, String name, Date date, int recId) {
             rec.add(new TodoSpecModel(
-                    cursor.getInt(cursor.getColumnIndex("position")),
+                    cursor.getInt(cursor.getColumnIndex("position_id")),
                     cursor.getString(cursor.getColumnIndex("todo_title")),
                     Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
                             cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:mm"),
