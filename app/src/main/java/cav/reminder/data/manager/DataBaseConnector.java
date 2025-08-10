@@ -20,7 +20,7 @@ import cav.reminder.utils.Func;
  */
 public class DataBaseConnector {
 
-    private String TAG="REMINDER_DBCONNECTOR";
+    private final String TAG="REM_DBCON";
 
     private SQLiteDatabase database;
     private DBHelper mDBHelper;
@@ -172,13 +172,16 @@ public class DataBaseConnector {
         Cursor cursor = database.rawQuery(sql,null);
         while (cursor.moveToNext()){
             // TodoSpecModel(int position, String name, Date date, int recId) {
-            rec.add(new TodoSpecModel(
-                    cursor.getInt(cursor.getColumnIndex("position_id")),
-                    cursor.getString(cursor.getColumnIndex("todo_title")),
-                    Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
-                            cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:mm"),
-                    cursor.getInt(cursor.getColumnIndex("_id"))
-            ));
+            String alarmDate = cursor.getString(cursor.getColumnIndex("alarm_date"));
+            if (!alarmDate.isEmpty()) {
+                rec.add(new TodoSpecModel(
+                        cursor.getInt(cursor.getColumnIndex("position_id")),
+                        cursor.getString(cursor.getColumnIndex("todo_title")),
+                        Func.strToDate(alarmDate + " " +
+                                cursor.getString(cursor.getColumnIndex("alarm_time")), "yyyy-MM-dd HH:mm"),
+                        cursor.getInt(cursor.getColumnIndex("_id"))
+                ));
+            }
         }
         close();
         return rec;

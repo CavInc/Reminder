@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -48,7 +49,7 @@ import cav.reminder.utils.Func;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private static final int REQUEST_WRITER = 845;
     private static final int REQUEST_CODE_SCHEDULE_EXACT_ALARM = 243;
-    private String TAG ="REMINDER_MAIN";
+    private final String TAG ="REM_MAIN";
 
     ListView mListView;
 
@@ -63,7 +64,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     private SearchView mSearchView;
 
-    private boolean permissionRequested = false;
 
     private ActivityResultLauncher<Intent> requestScheduleExactAlarm;
 
@@ -76,11 +76,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         //setDataBase();
         mDataManager = DataManager.getInstance();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         setupToolbar(toolbar);
 
-        mListView = (ListView) findViewById(R.id.listView);
+        mListView = findViewById(R.id.listView);
 
         mFabMenu = findViewById(R.id.fab_menu);
 
@@ -124,12 +124,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             Log.d(TAG, "SCHEDULE_EXACT_ALARM granted");
                         } else {
                             Log.d(TAG, "SCHEDULE_EXACT_ALARM denied");
+                            showPermissionDeniedMessage();
                         }
                     }
                 }
         );
     }
-    private boolean flag = false;
 
     private void setupToolbar(Toolbar toolbar) {
         setSupportActionBar(toolbar);
@@ -182,9 +182,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         // Проверяем необходимость запроса разрешения
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            System.out.println("ALARM can: "+alarmManager.canScheduleExactAlarms());
             if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Разрешение на будильник")
+                        .setMessage("Чтобы точно ставить напоминания, необходимо разрешение на установку точных будильников.")
+                        .setPositiveButton("Открыть настройки", (dialog, which) -> {
+                            Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                            intent.setData(uri);
+                            requestScheduleExactAlarm.launch(intent);
+                        })
+                        .setNegativeButton("Отмена", null)
+                        .show();
+
+/*
                 Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
-                requestScheduleExactAlarm.launch(intent);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                requestScheduleExactAlarm.launch(intent);*/
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // Для Android 11
@@ -229,7 +245,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         mFabMenu.close(true);
-        Intent intent;
         switch (v.getId()){
             case R.id.fab_add_item:
                 addNewRecord();
@@ -238,7 +253,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 addNewTODO();
                 break;
         }
-
     }
 
     @Override
@@ -256,21 +270,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 showPermissionDeniedMessage();
             }
         }
-    }
-
-    private void showPermissionRationaleDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Необходимое разрешение")
-                .setMessage("Приложение нуждается в разрешении для работы с будильниками")
-                .setPositiveButton("ОК", (dialog, which) -> {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM},
-                            REQUEST_CODE_SCHEDULE_EXACT_ALARM);
-                })
-                .setNegativeButton("Отмена", (dialog, which) -> {
-                    // Обработка отмены
-                })
-                .show();
     }
 
     private void showPermissionDeniedMessage() {

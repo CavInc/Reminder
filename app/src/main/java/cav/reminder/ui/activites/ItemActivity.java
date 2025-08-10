@@ -36,7 +36,7 @@ import cav.reminder.utils.Func;
 
 public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
-    private String TAG = "REMINDER_ITEM";
+    private final String TAG = "REM_ITEM";
 
     private EditText mShort;
     private EditText mLong;
@@ -44,7 +44,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private ImageView mPhotoView;
 
     private int mRecID=-1;
-    private Date mDateRect;
+
     private int mode=0;
     private boolean mCloseRec = false;
     private String mKeyHash ;
@@ -61,13 +61,13 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar =  findViewById(R.id.toolbar);
 
 
-        mShort = (EditText) findViewById(R.id.short_et);
-        mLong = (EditText) findViewById(R.id.long_et);
-        mSaveButton = (Button) findViewById(R.id.save_item_button);
-        mPhotoView = (ImageView) findViewById(R.id.photo_item);
+        mShort =  findViewById(R.id.short_et);
+        mLong = findViewById(R.id.long_et);
+        mSaveButton =  findViewById(R.id.save_item_button);
+        mPhotoView =  findViewById(R.id.photo_item);
         mPhotoView.setOnClickListener(this);
 
         mSaveButton.setOnClickListener(this);
@@ -424,7 +424,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
             case ConstantManager.REQUEST_CAMERA_PICTURE:
                 if (resultCode == RESULT_OK && mPhotoFile !=null){
@@ -437,6 +436,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                     mPhotoFile = null;
                 }
                 break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
