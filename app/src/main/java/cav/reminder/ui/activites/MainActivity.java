@@ -402,6 +402,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
         }
        // super.onActivityResult(requestCode, resultCode, data);
     }

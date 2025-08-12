@@ -13,7 +13,7 @@ import cav.reminder.utils.App;
 import cav.reminder.utils.Func;
 
 public class DataManager {
-    private String TAG ="REMINDER_DATAMANAGER";
+    private final String TAG ="REM_DM";
 
     private static DataManager INSTANCE = null;
 
@@ -44,17 +44,17 @@ public class DataManager {
         this.mDbc.open();
         Cursor cursor = this.mDbc.getAllRecord();
         while (cursor.moveToNext()){
-            Log.d(TAG,cursor.getString(cursor.getColumnIndex("short_name")));
-            record.add(new RecordHeaderRes(cursor.getInt(cursor.getColumnIndex("_id")),
-                    cursor.getString(cursor.getColumnIndex("short_name")),
-                    Func.strToDate(cursor.getString(cursor.getColumnIndex("rec_date")),"yyyy-MM-dd"),
-                    cursor.getString(cursor.getColumnIndex("msg_body")),
-                    cursor.getString(cursor.getColumnIndex("photo_file")),
-                    (cursor.getInt(cursor.getColumnIndex("close_rec"))==1),
-                    cursor.getString(cursor.getColumnIndex("pass_rec")),
-                    cursor.getInt(cursor.getColumnIndex("type_rec")),
-                    cursor.getInt(cursor.getColumnIndex("todo_count")),
-                    cursor.getInt(cursor.getColumnIndex("todo_done_count"))));
+            Log.d(TAG,cursor.getString(cursor.getColumnIndexOrThrow("short_name")));
+            record.add(new RecordHeaderRes(cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("short_name")),
+                    Func.strToDate(cursor.getString(cursor.getColumnIndexOrThrow("rec_date")),"yyyy-MM-dd"),
+                    cursor.getString(cursor.getColumnIndexOrThrow("msg_body")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("photo_file")),
+                    (cursor.getInt(cursor.getColumnIndexOrThrow("close_rec"))==1),
+                    cursor.getString(cursor.getColumnIndexOrThrow("pass_rec")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("type_rec")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("todo_count")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("todo_done_count"))));
         }
         this.mDbc.close();
         return record;
