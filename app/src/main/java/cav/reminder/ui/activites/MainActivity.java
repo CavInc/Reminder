@@ -49,6 +49,7 @@ import cav.reminder.utils.Func;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private static final int REQUEST_WRITER = 845;
     private static final int REQUEST_CODE_SCHEDULE_EXACT_ALARM = 243;
+    private static final int REQUEST_POST = 215;
     private final String TAG ="REM_MAIN";
 
     ListView mListView;
@@ -201,6 +202,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 Uri uri = Uri.fromParts("package", getPackageName(), null);
                 intent.setData(uri);
                 requestScheduleExactAlarm.launch(intent);*/
+            }
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+               ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.POST_NOTIFICATIONS},REQUEST_POST);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             // Для Android 11
