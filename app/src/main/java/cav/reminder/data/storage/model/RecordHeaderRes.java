@@ -15,6 +15,8 @@ public class RecordHeaderRes {
     private int mAllTodoCount = 0 ; // количество все записей TO DO в блоке
     private int mDoneCount = 0; // количество выполненных записей в блоке
 
+    private String[] mPhotoFiles; // массив с именами файлов фотографий
+
     public RecordHeaderRes(String headerRec, Date date, String bodyRec) {
         mHeaderRec = headerRec;
         mDate = date;
@@ -129,6 +131,14 @@ public class RecordHeaderRes {
 
     public void setDoneCount(int doneCount) {
         mDoneCount = doneCount;
+    }
+
+    public String[] getPhotoFiles() {
+        return mPhotoFiles;
+    }
+
+    public void setPhotoFiles(String[] photoFiles) {
+        mPhotoFiles = photoFiles;
     }
 
     @Override

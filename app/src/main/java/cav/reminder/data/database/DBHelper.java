@@ -10,10 +10,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper{
 
-    public static final int DATABASE_VERSION = 1 ;
+    public static final int DATABASE_VERSION = 2;
     public static final String TABLE_REMINDER = "REMINDER";
     public static final String TABLE_TODO_SPEC ="TODO_SPEC";
     public static final String TABLE_ALARM = "ALARM";
+    public static final String TABLE_PHOTO = "PHOTO";
 
     public static final String DATABASE_NAME = "reminder.db3";
 
@@ -35,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper{
     private void updateDatabase(SQLiteDatabase db, int oldVersion, int newVersion){
         // нет данных в базе
         if (oldVersion<1){
-            db.execSQL("create table "+TABLE_REMINDER+"" +
+            db.execSQL("create table if not exists "+TABLE_REMINDER+"" +
                     "(_id integer not null primary key AUTOINCREMENT," +
                     "short_name text," + // title
                     "msg_body text," +  // subject body
@@ -48,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper{
                     "todo_done_count integer default 0,"+
                     "todo_count integer default 0 )");
 
-            db.execSQL("create table "+TABLE_TODO_SPEC+""+
+            db.execSQL("create table if not exists "+TABLE_TODO_SPEC+""+
                     "(_id integer not null, "+
                     " position_id integer not null," +
                     " todo_title text,"+
@@ -56,15 +57,28 @@ public class DBHelper extends SQLiteOpenHelper{
                     " alarm_time text,"+
                     " done_flg boolean default 0,primary key(_id,position_id)"+")");
 
-            db.execSQL("create table "+TABLE_ALARM+" "+
+            db.execSQL("create table if not exists "+TABLE_ALARM+" "+
                     "(item_id integer not null)");
 
 
-        }else {
-            /*
-            db.execSQL("alter table "+TABLE_REMINDER+""+
-            " add column close_rec integer;" );
-            */
+
+            db.execSQL("create table if not exists "+TABLE_PHOTO+" "+
+                    "(id integer not null," +
+                    "reminder_id integer not null," +
+                    "photo_file text," +
+                    "primary key(id, reminder_id))");
+
+
+        } else {
+            db.execSQL("create table if not exists "+TABLE_PHOTO+" "+
+                    "(id integer not null," +
+                    "reminder_id integer not null," +
+                    "photo_file text," +
+                    "primary key(id, reminder_id))");
+
+            db.execSQL("insert into " + TABLE_PHOTO + " " +
+                    "select _id,_id,photo_file from " + TABLE_REMINDER + " " +
+                    "where photo_file is not null");
 
         }
 
