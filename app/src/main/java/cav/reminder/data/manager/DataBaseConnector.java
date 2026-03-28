@@ -48,9 +48,12 @@ public class DataBaseConnector {
     // вернуть запись по _id
     public RecordHeaderRes getRecord(int id){
         RecordHeaderRes rec=null;
-
-
         return rec;
+    }
+
+    public Cursor getPhotosIdRecord(int record_id) {
+        return database.query(DBHelper.TABLE_PHOTO,new String[]{"id","reminder_id","photo_file"},
+                "reminder_id="+record_id,null,null,null,null);
     }
 
     // добавить новую запись
@@ -64,6 +67,23 @@ public class DataBaseConnector {
         newValue.put("photo_file",record.getPhotoFile());
         open();
         long id =database.insert(DBHelper.TABLE_REMINDER,null,newValue);
+        if (record.getPhotoFiles().length != 0){
+            String sql = "select max(id) + 1 as ci from "+ DBHelper.TABLE_PHOTO +" where reminder_id="+id;
+            long photo_id = 1;
+            Cursor cursor = database.rawQuery(sql,null);
+            while (cursor.moveToNext()){
+                photo_id = cursor.getInt(0);
+            }
+            for (int i=0;i<record.getPhotoFiles().length;i++){
+                ContentValues protoitem = new ContentValues();
+                protoitem.put("id",photo_id);
+                protoitem.put("reminder_id",id);
+                protoitem.put("photo_file",record.getPhotoFiles()[i]);
+                database.insertOrThrow(DBHelper.TABLE_PHOTO,null,protoitem);
+                photo_id += 1;
+            }
+
+        }
         Log.d(TAG,"REC ? "+Long.toString(id));
         close();
         return (int) id;
@@ -89,7 +109,12 @@ public class DataBaseConnector {
         Log.d(TAG,"CLOSE REC : " +Integer.toString(record.getCloseRec()));
 
         open();
-        database.update(DBHelper.TABLE_REMINDER,updValue,"_id="+record.getId(),null);
+        database.update(DBHelper.TABLE_REMINDER, updValue, "_id=" + record.getId(), null);
+        if (record.getPhotoFiles().length != 0){
+            for (int i=0;i<record.getPhotoFiles().length;i++){
+                
+            }
+        }
         close();
     }
 

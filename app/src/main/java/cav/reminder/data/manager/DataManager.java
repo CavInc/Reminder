@@ -21,6 +21,8 @@ public class DataManager {
     private DataBaseConnector mDbc;
     private Context mContext;
 
+    private RecordHeaderRes mRecordHeaderRes;
+
     public DataManager() {
         mContext = App.getContext();
         this.mPreferensManager = new PreferensManager();
@@ -45,6 +47,12 @@ public class DataManager {
         Cursor cursor = this.mDbc.getAllRecord();
         while (cursor.moveToNext()){
             Log.d(TAG,cursor.getString(cursor.getColumnIndexOrThrow("short_name")));
+            // выбираем фотки
+            ArrayList<String> photos_array = new ArrayList<>();
+            Cursor photos = mDbc.getPhotosIdRecord(cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
+            while (photos.moveToNext()){
+                photos_array.add(photos.getString(photos.getColumnIndexOrThrow("photo_file")));
+            }
             record.add(new RecordHeaderRes(cursor.getInt(cursor.getColumnIndexOrThrow("_id")),
                     cursor.getString(cursor.getColumnIndexOrThrow("short_name")),
                     Func.strToDate(cursor.getString(cursor.getColumnIndexOrThrow("rec_date")),"yyyy-MM-dd"),
@@ -54,7 +62,10 @@ public class DataManager {
                     cursor.getString(cursor.getColumnIndexOrThrow("pass_rec")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("type_rec")),
                     cursor.getInt(cursor.getColumnIndexOrThrow("todo_count")),
-                    cursor.getInt(cursor.getColumnIndexOrThrow("todo_done_count"))));
+                    cursor.getInt(cursor.getColumnIndexOrThrow("todo_done_count")),
+                    photos_array
+                    ));
+
         }
         this.mDbc.close();
         return record;
@@ -73,5 +84,13 @@ public class DataManager {
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo !=null && netInfo.isConnectedOrConnecting();
+    }
+
+    public RecordHeaderRes getRecordHeaderRes() {
+        return mRecordHeaderRes;
+    }
+
+    public void setRecordHeaderRes(RecordHeaderRes recordHeaderRes) {
+        mRecordHeaderRes = recordHeaderRes;
     }
 }

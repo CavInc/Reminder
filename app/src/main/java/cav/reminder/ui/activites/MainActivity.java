@@ -319,7 +319,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             Func.strToDate(data.getStringExtra(ConstantManager.DATE_DATA),"yyyy-MM-dd"),
                             data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
-                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE),
+                            data.getStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES));
                     int id = mDataManager.getDataBaseConnector().insertRecord(lrecord);
                     lrecord.setId(id);
                     mAdapter.insert(lrecord,0);
@@ -377,7 +378,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getStringExtra(ConstantManager.LONG_DATA),
                             data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
-                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE),
+                            new ArrayList<>());
                     lrecord.setTypeRec(ConstantManager.TYPE_REC_TODO);
                     lrecord.setId(data.getIntExtra(ConstantManager.RECORD_ID,-1));
                     lrecord.setAllTodoCount(data.getIntExtra(ConstantManager.TODO_COUNT_SIZE,0));
@@ -462,6 +464,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                         intent.putExtra(ConstantManager.RECORD_CLOSE, mItem.isCloseRec());
                         intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
                         intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
+                        intent.putExtra(ConstantManager.RECORD_PHOTO_FILES,mItem.getPhotoFiles());
 
                         startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_EDIT);
                     } else {
@@ -529,6 +532,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 intent.putExtra(ConstantManager.RECORD_CLOSE, mItem.isCloseRec());
                 intent.putExtra(ConstantManager.RECORD_PASS_SAVE, mItem.getPassHash());
                 intent.putExtra(ConstantManager.RECORD_PHOTO_FILE, mItem.getPhotoFile());
+                intent.putExtra(ConstantManager.RECORD_PHOTO_FILES,mItem.getPhotoFiles());
                 startActivityForResult(intent, ConstantManager.ITEM_ACTIVITY_VIEW);
             }
             // запись с 'to do'

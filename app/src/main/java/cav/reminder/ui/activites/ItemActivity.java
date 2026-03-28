@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import androidx.appcompat.app.ActionBar;
@@ -49,12 +50,14 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private boolean mCloseRec = false;
     private String mKeyHash ;
     private File mPhotoFile = null;
+    private ArrayList<String> mPhotoFiles = new ArrayList<>();
     private int keyMode=-1;
     private boolean work_form = false;
     private MenuItem itemUnlock;
     private MenuItem itemEdit;
     private MenuItem itemPhoto;
     private MenuItem itemLock;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +91,14 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 //mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
                 mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
             }
+            ArrayList<String> sphotos = getIntent().getStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES);
+            System.out.println("LIST PHOTO -----");
+            if (sphotos != null ) {
+                for (String s : sphotos) {
+                    Log.d(TAG, s);
+                }
+            }
+
         }
         if (mode == ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
@@ -248,6 +259,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    @Deprecated
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFile = "JPEG_"+timeStamp+"_";
@@ -409,6 +421,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 if (mode==ConstantManager.MODE_EDIT_RECORD){
                     answerIntent.putExtra(ConstantManager.RECORD_ID,mRecID);
                 }
+                answerIntent.putStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES,mPhotoFiles);
                 //answerIntent.putExtra(ConstantManager.DATE_DATA,); добавить текущую дату
                 setResult(RESULT_OK, answerIntent);
                 finish(); // закрываем активити
@@ -430,6 +443,10 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                     Log.d(TAG,mPhotoFile.getAbsolutePath());
                    // mSelectedImage = Uri.fromFile(mPhotoFile);
                   //  insertProfileImage(mSelectedImage);
+                    mPhotoFiles.add(mPhotoFile.toString());
+                    //TODO Тут нужен показ всех иконок в карусели
+
+
                     mPhotoView.setVisibility(View.VISIBLE);
                     mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
                 } else {

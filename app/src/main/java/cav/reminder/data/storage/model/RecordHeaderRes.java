@@ -1,5 +1,6 @@
 package cav.reminder.data.storage.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class RecordHeaderRes {
@@ -22,13 +23,15 @@ public class RecordHeaderRes {
         mDate = date;
         mBodyRec = bodyRec;
     }
-    public RecordHeaderRes(String headerRec, Date date, String bodyRec,String photofile,boolean closeRec,String passHash) {
+    public RecordHeaderRes(String headerRec, Date date, String bodyRec, String photofile,
+                           boolean closeRec, String passHash, ArrayList<String> photoFiles) {
         mHeaderRec = headerRec;
         mDate = date;
         mBodyRec = bodyRec;
         mPhotoFile = photofile;
         mCloseRec = closeRec;
         mPassHash = passHash;
+        mPhotoFiles = photoFiles.toArray(new String[0]);
     }
 
     public RecordHeaderRes(int id, String headerRec, Date date, String bodyRec) {
@@ -46,7 +49,8 @@ public class RecordHeaderRes {
         mDoneCount = doneCount;
     }
 
-    public RecordHeaderRes(int id, String headerRec, Date date, String bodyRec,String photofile,boolean closeRec,String passHash) {
+    public RecordHeaderRes(int id, String headerRec, Date date, String bodyRec,String photofile,boolean closeRec,
+                           String passHash) {
         mId = id;
         mHeaderRec = headerRec;
         mDate = date;
@@ -58,7 +62,8 @@ public class RecordHeaderRes {
 
     public RecordHeaderRes(int id, String headerRec, Date date,
                            String bodyRec, String photoFile,
-                           boolean closeRec, String passHash, int typeRec, int allTodoCount, int doneCount) {
+                           boolean closeRec, String passHash, int typeRec, int allTodoCount, int doneCount,
+                           ArrayList<String> photoFiles) {
         mId = id;
         mHeaderRec = headerRec;
         mDate = date;
@@ -69,6 +74,7 @@ public class RecordHeaderRes {
         mTypeRec = typeRec;
         mAllTodoCount = allTodoCount;
         mDoneCount = doneCount;
+        mPhotoFiles = photoFiles.toArray(new String[0]);
     }
 
     public int getId(){
