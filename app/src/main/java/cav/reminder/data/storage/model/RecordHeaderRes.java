@@ -5,9 +5,9 @@ import java.util.Date;
 
 public class RecordHeaderRes {
     private int mId = -1;
-    private String mHeaderRec;
-    private Date mDate;
-    private String mBodyRec;
+    private final String mHeaderRec;
+    private final Date mDate;
+    private final String mBodyRec;
     private String mPhotoFile;
     private String mAudioRecFile;
     private boolean mCloseRec; // зашифрованная запись

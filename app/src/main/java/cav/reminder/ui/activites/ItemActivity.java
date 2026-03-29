@@ -76,7 +76,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         mSaveButton.setOnClickListener(this);
         setupToolbar(toolbar);
 
-        // получили переданное значение
+        // Получили переданное значение
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
         if ((mode==ConstantManager.MODE_EDIT_RECORD) || (mode==ConstantManager.MODE_VIEW_RECORD)) {
             mShort.setText(getIntent().getStringExtra(ConstantManager.RECORD_HEADER));
@@ -91,7 +91,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 //mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
                 mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
             }
-            ArrayList<String> sphotos = getIntent().getStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES);
+            String[] sphotos = getIntent().getStringArrayExtra(ConstantManager.RECORD_PHOTO_FILES);
             System.out.println("LIST PHOTO -----");
             if (sphotos != null ) {
                 for (String s : sphotos) {

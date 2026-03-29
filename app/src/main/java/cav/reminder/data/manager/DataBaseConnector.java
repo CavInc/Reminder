@@ -110,9 +110,11 @@ public class DataBaseConnector {
 
         open();
         database.update(DBHelper.TABLE_REMINDER, updValue, "_id=" + record.getId(), null);
-        if (record.getPhotoFiles().length != 0){
-            for (int i=0;i<record.getPhotoFiles().length;i++){
-                
+        if (record.getPhotoFiles() != null) {
+            if (record.getPhotoFiles().length != 0) {
+                for (int i = 0; i < record.getPhotoFiles().length; i++) {
+
+                }
             }
         }
         close();
@@ -154,13 +156,13 @@ public class DataBaseConnector {
                 "_id="+recID,null,null,null,"position_id");
         while (cursor.moveToNext()){
             Date dt = null;
-            if (cursor.getString(cursor.getColumnIndex("alarm_date")) != null) {
-                dt = Func.strToDate(cursor.getString(cursor.getColumnIndex("alarm_date"))+" "+
-                        cursor.getString(cursor.getColumnIndex("alarm_time")),"yyyy-MM-dd HH:mm");
+            if (cursor.getString(cursor.getColumnIndexOrThrow("alarm_date")) != null) {
+                dt = Func.strToDate(cursor.getString(cursor.getColumnIndexOrThrow("alarm_date"))+" "+
+                        cursor.getString(cursor.getColumnIndexOrThrow("alarm_time")),"yyyy-MM-dd HH:mm");
             }
-            rec.add(new TodoSpecModel(cursor.getInt(cursor.getColumnIndex("position_id")),
-                    cursor.getString(cursor.getColumnIndex("todo_title")),
-                    (cursor.getInt(cursor.getColumnIndex("done_flg")) == 1 ? true : false),
+            rec.add(new TodoSpecModel(cursor.getInt(cursor.getColumnIndexOrThrow("position_id")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("todo_title")),
+                    (cursor.getInt(cursor.getColumnIndexOrThrow("done_flg")) == 1 ? true : false),
                     dt));
         }
         close();

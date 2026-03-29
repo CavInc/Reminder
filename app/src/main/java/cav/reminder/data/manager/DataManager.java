@@ -17,9 +17,9 @@ public class DataManager {
 
     private static DataManager INSTANCE = null;
 
-    private PreferensManager mPreferensManager;
-    private DataBaseConnector mDbc;
-    private Context mContext;
+    private final PreferensManager mPreferensManager;
+    private final DataBaseConnector mDbc;
+    private final Context mContext;
 
     private RecordHeaderRes mRecordHeaderRes;
 
