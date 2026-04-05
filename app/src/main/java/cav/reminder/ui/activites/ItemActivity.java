@@ -291,50 +291,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         KeyDialog keyDialog = new KeyDialog();
         keyDialog.setKeyDialogListener(mKeyDialogListener);
         keyDialog.show(getSupportFragmentManager(),"KD");
-
-        /*
-        final Dialog dialog = new Dialog(this);
-        dialog.setTitle("Key");
-        dialog.setContentView(R.layout.key_item_dialog);
-        final EditText keyET = (EditText) dialog.findViewById(R.id.key_dialog_edit);
-        Button okButton = (Button) dialog.findViewById(R.id.ok_button);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG,"KEY DIALOG OK");
-                mKeyPass= String.valueOf(keyET.getText());
-                Log.d(TAG,mKeyPass);
-                if (mode==ConstantManager.MODE_SEC_DIALOG_LOCK) {
-                    mCloseRec = true;
-                }
-                if (mode == ConstantManager.MODE_SEC_DIALOG_UNLOCK) {
-                    Log.d(TAG,Func.md5Hash(mKeyPass));
-                    Log.d(TAG,mKeyHash);
-                    if (Func.md5Hash(mKeyPass).equals(mKeyHash)){
-                        Log.d(TAG,"PASS SUCCEFUL");
-                    } else {
-                        Log.d(TAG,"NO PASS");
-                        return;
-                    }
-                    if (! work_form)
-                        mCloseRec = false;
-                }
-                dialog.dismiss();
-            }
-        });
-        Button cancelButton = (Button) dialog.findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (work_form) {
-                    finish();
-                }
-            }
-        });
-        dialog.show();
-        */
-
     }
 
     KeyDialog.KeyDialogListener mKeyDialogListener = new KeyDialog.KeyDialogListener() {

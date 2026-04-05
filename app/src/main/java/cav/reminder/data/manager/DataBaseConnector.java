@@ -8,12 +8,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import cav.reminder.data.storage.model.RecordHeaderRes;
 import cav.reminder.data.database.DBHelper;
 import cav.reminder.data.storage.model.TodoSpecModel;
 import cav.reminder.utils.Func;
+
+import static java.util.Arrays.stream;
 
 /**
  * Created by cav on 09.10.16.
@@ -84,7 +87,7 @@ public class DataBaseConnector {
             }
 
         }
-        Log.d(TAG,"REC ? "+Long.toString(id));
+        Log.d(TAG,"REC ? "+ id);
         close();
         return (int) id;
     }
@@ -110,11 +113,27 @@ public class DataBaseConnector {
 
         open();
         database.update(DBHelper.TABLE_REMINDER, updValue, "_id=" + record.getId(), null);
+
         if (record.getPhotoFiles() != null) {
             if (record.getPhotoFiles().length != 0) {
+                String[] update_photofiles = record.getPhotoFiles();
+                ContentValues updPhoto = new ContentValues();
+                Cursor cursor = database.query(DBHelper.TABLE_PHOTO,
+                        new String[]{"id","reminder_id","photo_file"},"reminder_id=" + record.getId(),null,null,null,"id");
+
+                while (cursor.moveToNext()) {
+                    String photo_file = cursor.getString(cursor.getColumnIndexOrThrow("photo_file"));
+                    if (Arrays.asList(update_photofiles).contains(photo_file)){
+                        updPhoto.put("reminder_id",record.getId());
+                        updPhoto.put("photo_file",photo_file);
+                        Log.d(TAG,photo_file);
+                    };
+                }
+                /*
                 for (int i = 0; i < record.getPhotoFiles().length; i++) {
 
                 }
+                 */
             }
         }
         close();
