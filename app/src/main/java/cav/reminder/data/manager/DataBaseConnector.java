@@ -207,6 +207,12 @@ public class DataBaseConnector {
         close();
     }
 
+    public void deletePhotosItem(int id) {
+        open();
+        database.delete(DBHelper.TABLE_PHOTO,"reminder_id="+id,null);
+        close();
+    }
+
     // Список дел
     public int addToDoRec(RecordHeaderRes record, ArrayList<TodoSpecModel> model){
         open();

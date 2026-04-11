@@ -33,7 +33,6 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -255,6 +254,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.fab_add_todo:
                 addNewTODO();
+                break;
+            default:
                 break;
         }
     }
@@ -490,7 +491,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     mAdapter.remove(mItem);
                     mAdapter.notifyDataSetChanged();
                     // спрашиваем удалять ли фото файл
-                    if (mItem.getPhotoFile() != null) {
+/*                    if (mItem.getPhotoFile() != null) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setTitle(R.string.dialog_title_delete)
                                 .setMessage(R.string.dialog_delete_mesage)
@@ -499,6 +500,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                                     public void onClick(DialogInterface dialog, int which) {
                                         File file = new File(mItem.getPhotoFile());
                                         file.delete();
+                                                                            }
+                                })
+                                .setNegativeButton(R.string.dialog_no, null)
+                                .show();
+                    }*/
+
+                    if (mItem.getPhotoFiles() != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle(R.string.dialog_title_delete)
+                                .setMessage(R.string.dialog_delete_mesage)
+                                .setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        for (String s:mItem.getPhotoFiles()) {
+                                            File file = new File(s);
+                                            file.delete();
+                                            mDataManager.getDataBaseConnector().deletePhotosItem(mItem.getId());
+                                        }
                                     }
                                 })
                                 .setNegativeButton(R.string.dialog_no, null)
