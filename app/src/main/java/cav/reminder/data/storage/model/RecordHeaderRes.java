@@ -50,7 +50,7 @@ public class RecordHeaderRes {
     }
 
     public RecordHeaderRes(int id, String headerRec, Date date, String bodyRec,String photofile,boolean closeRec,
-                           String passHash) {
+                           String passHash,ArrayList<String> photoFiles) {
         mId = id;
         mHeaderRec = headerRec;
         mDate = date;
@@ -58,6 +58,7 @@ public class RecordHeaderRes {
         mPhotoFile = photofile;
         mCloseRec = closeRec;
         mPassHash = passHash;
+        mPhotoFiles = photoFiles.toArray(new String[0]);
     }
 
     public RecordHeaderRes(int id, String headerRec, Date date,

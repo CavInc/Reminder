@@ -350,9 +350,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                     storeEditRecord(data.getIntExtra(ConstantManager.RECORD_ID, -1),
                             data.getStringExtra(ConstantManager.SHORT_DATA),
                             data.getStringExtra(ConstantManager.DATE_DATA),
-                            data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                            data.getStringExtra(ConstantManager.LONG_DATA),
+                            data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
-                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE),
+                            data.getStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES));
                 }
                 break;
             case ConstantManager.ITEM_ACTIVITY_VIEW:
@@ -364,9 +366,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                         storeEditRecord(data.getIntExtra(ConstantManager.RECORD_ID, -1),
                                 data.getStringExtra(ConstantManager.SHORT_DATA),
                                 data.getStringExtra(ConstantManager.DATE_DATA),
-                                data.getStringExtra(ConstantManager.LONG_DATA),data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
+                                data.getStringExtra(ConstantManager.LONG_DATA),
+                                data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                                 data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
-                                data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                                data.getStringExtra(ConstantManager.RECORD_PASS_SAVE),
+                                data.getStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES));
                     }
                 }
                 break;
@@ -397,7 +401,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                             data.getStringExtra(ConstantManager.LONG_DATA),
                             data.getStringExtra(ConstantManager.RECORD_PHOTO_FILE),
                             data.getBooleanExtra(ConstantManager.RECORD_CLOSE,false),
-                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE));
+                            data.getStringExtra(ConstantManager.RECORD_PASS_SAVE),
+                            data.getStringArrayListExtra(ConstantManager.RECORD_PHOTO_FILES));
                     lrecord.setTypeRec(ConstantManager.TYPE_REC_TODO);
                     lrecord.setAllTodoCount(data.getIntExtra(ConstantManager.TODO_COUNT_SIZE,0));
                     lrecord.setDoneCount(data.getIntExtra(ConstantManager.TODO_DONE_COUNT,0));
@@ -415,13 +420,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     }
 
     private void storeEditRecord(int recid, String title, String recDate, String bodyRec,
-                                 String photoFile, boolean recClose, String recPass){
+                                 String photoFile, boolean recClose, String recPass,
+                                 ArrayList<String> photoFiles){
         RecordHeaderRes lrecord = new RecordHeaderRes(recid,
                 title,
                 Func.strToDate(recDate,"yyyy-MM-dd"),
                 bodyRec,photoFile,
                 recClose,
-                recPass);
+                recPass,
+                photoFiles
+                );
         mDataManager.getDataBaseConnector().updateRecord(lrecord);
         int id = mAdapter.getPosition(mItem);
         mAdapter.remove(mItem);

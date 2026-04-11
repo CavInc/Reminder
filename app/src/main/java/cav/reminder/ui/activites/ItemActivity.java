@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import androidx.appcompat.app.ActionBar;
@@ -91,10 +92,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 //mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
                 mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
             }
-            String[] sphotos = getIntent().getStringArrayExtra(ConstantManager.RECORD_PHOTO_FILES);
+            String[] photoFiles = getIntent().getStringArrayExtra(ConstantManager.RECORD_PHOTO_FILES);
+            mPhotoFiles = new ArrayList<>(Arrays.asList(photoFiles));
             System.out.println("LIST PHOTO -----");
-            if (sphotos != null ) {
-                for (String s : sphotos) {
+            if (mPhotoFiles != null ) {
+                for (String s : mPhotoFiles) {
                     Log.d(TAG, s);
                 }
             }

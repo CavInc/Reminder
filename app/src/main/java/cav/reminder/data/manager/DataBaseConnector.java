@@ -114,28 +114,96 @@ public class DataBaseConnector {
         open();
         database.update(DBHelper.TABLE_REMINDER, updValue, "_id=" + record.getId(), null);
 
-        if (record.getPhotoFiles() != null) {
+/*        if (record.getPhotoFiles() != null) {
             if (record.getPhotoFiles().length != 0) {
                 String[] update_photofiles = record.getPhotoFiles();
                 ContentValues updPhoto = new ContentValues();
                 Cursor cursor = database.query(DBHelper.TABLE_PHOTO,
                         new String[]{"id","reminder_id","photo_file"},"reminder_id=" + record.getId(),null,null,null,"id");
 
+                Cursor cursorMaxId = database.rawQuery("select max(id) as ci from "+DBHelper.TABLE_PHOTO
+                        +" where reminder_id=" + record.getId(),null);
+
+                int maxId = 0;
+                while (cursorMaxId.moveToNext()) {
+                    maxId = cursorMaxId.getInt(0);
+                }
                 while (cursor.moveToNext()) {
                     String photo_file = cursor.getString(cursor.getColumnIndexOrThrow("photo_file"));
-                    if (Arrays.asList(update_photofiles).contains(photo_file)){
+                    if (!Arrays.asList(update_photofiles).contains(photo_file)){
+                        updPhoto.put("id",maxId);
                         updPhoto.put("reminder_id",record.getId());
                         updPhoto.put("photo_file",photo_file);
                         Log.d(TAG,photo_file);
+                        maxId += 1;
                     };
                 }
-                /*
-                for (int i = 0; i < record.getPhotoFiles().length; i++) {
-
-                }
-                 */
             }
+        }*/
+
+        if (record.getPhotoFiles() != null && record.getPhotoFiles().length > 0) {
+            String[] newPhotoFiles = record.getPhotoFiles();
+            int reminderId = record.getId();
+
+            // Шаг 1: Получаем текущие фото из БД
+            Cursor cursor = database.query(
+                    DBHelper.TABLE_PHOTO,
+                    new String[]{"id", "photo_file"},
+                    "reminder_id = ?",
+                    new String[]{String.valueOf(reminderId)},
+                    null, null, "id"
+            );
+
+            ArrayList<String> currentPhotos = new ArrayList<>();
+            ArrayList<Integer> currentIds = new ArrayList<>();
+
+            while (cursor.moveToNext()) {
+                currentPhotos.add(cursor.getString(cursor.getColumnIndexOrThrow("photo_file")));
+                currentIds.add(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
+            }
+            cursor.close();
+
+            // Шаг 2: Находим максимальный ID для нового фото
+            Cursor maxIdCursor = database.rawQuery(
+                    "SELECT MAX(id) FROM " + DBHelper.TABLE_PHOTO + " WHERE reminder_id = ?",
+                    new String[]{String.valueOf(reminderId)}
+            );
+            int nextId = 1;
+            if (maxIdCursor.moveToFirst() && !maxIdCursor.isNull(0)) {
+                nextId = maxIdCursor.getInt(0) + 1;
+            }
+            maxIdCursor.close();
+
+            // Шаг 3: Определяем, какие фото нужно удалить (есть в БД, но нет в новом списке)
+            for (int i = 0; i < currentPhotos.size(); i++) {
+                String photoFile = currentPhotos.get(i);
+                if (!Arrays.asList(newPhotoFiles).contains(photoFile)) {
+                    database.delete(DBHelper.TABLE_PHOTO,
+                            "reminder_id = ? AND photo_file = ?",
+                            new String[]{String.valueOf(reminderId), photoFile});
+                    Log.d(TAG, "Deleted photo: " + photoFile);
+                }
+            }
+
+            // Шаг 4: Добавляем новые фото (которых ещё нет в БД)
+            for (String newFile : newPhotoFiles) {
+                if (!currentPhotos.contains(newFile)) {
+                    ContentValues values = new ContentValues();
+                    values.put("id", nextId++);
+                    values.put("reminder_id", reminderId);
+                    values.put("photo_file", newFile);
+                    database.insert(DBHelper.TABLE_PHOTO, null, values);
+                    Log.d(TAG, "Added new photo: " + newFile);
+                }
+            }
+
+        } else {
+            // Если передан пустой массив — удаляем все фото
+            database.delete(DBHelper.TABLE_PHOTO, "reminder_id = ?", new String[]{String.valueOf(record.getId())});
+            Log.d(TAG, "No photos provided. All deleted.");
         }
+
+
         close();
     }
 
