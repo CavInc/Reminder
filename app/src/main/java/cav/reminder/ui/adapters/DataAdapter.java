@@ -70,6 +70,13 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
             } else {
                 holder.photoFile.setImageResource(R.drawable.ic_camera_alt_gray_24dp);
             }
+
+            if (record.getPhotoFiles() != null && record.getPhotoFiles().length != 0){
+                holder.photoFile.setImageResource(R.drawable.ic_camera_alt_black_24dp);
+            } else {
+                holder.photoFile.setImageResource(R.drawable.ic_camera_alt_gray_24dp);
+            }
+
         /*
         holder.bodyRec.setText(record.getBodyRec().substring(0,
                 (record.getBodyRec().length() < 60 ? record.getBodyRec().length() : 60)));*/
