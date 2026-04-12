@@ -16,8 +16,6 @@ import cav.reminder.data.database.DBHelper;
 import cav.reminder.data.storage.model.TodoSpecModel;
 import cav.reminder.utils.Func;
 
-import static java.util.Arrays.stream;
-
 /**
  * Created by cav on 09.10.16.
  */
@@ -26,7 +24,7 @@ public class DataBaseConnector {
     private final String TAG="REM_DBCON";
 
     private SQLiteDatabase database;
-    private DBHelper mDBHelper;
+    private final DBHelper mDBHelper;
 
     public DataBaseConnector(Context context){
         mDBHelper = new DBHelper(context,DBHelper.DATABASE_NAME,null,DBHelper.DATABASE_VERSION);
@@ -258,6 +256,7 @@ public class DataBaseConnector {
                     (cursor.getInt(cursor.getColumnIndexOrThrow("done_flg")) == 1 ? true : false),
                     dt));
         }
+        cursor.close();
         close();
         return rec;
     }
@@ -303,6 +302,7 @@ public class DataBaseConnector {
                 ));
             }
         }
+        cursor.close();
         close();
         return rec;
     }

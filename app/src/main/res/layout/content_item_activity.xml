@@ -31,11 +31,18 @@
         android:scaleType="centerCrop"
         android:visibility="gone" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/photos_lv"
+        tools:listitem="@layout/photo_item"
+        android:layout_below="@+id/photo_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Детальное описание"
-        android:layout_below="@+id/photo_item"
+        android:layout_below="@+id/photos_lv"
         android:id="@+id/long_text_tv"/>
 
     <EditText

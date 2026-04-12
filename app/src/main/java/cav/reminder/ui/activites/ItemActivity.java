@@ -31,7 +31,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import cav.reminder.R;
+import cav.reminder.ui.adapters.PhotoItemsAdapter;
 import cav.reminder.ui.dialogs.KeyDialog;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
@@ -59,6 +62,9 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     private MenuItem itemPhoto;
     private MenuItem itemLock;
 
+    private RecyclerView mRecyclerView;
+
+    private PhotoItemsAdapter mPhotoItemsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,11 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         mSaveButton.setOnClickListener(this);
         setupToolbar(toolbar);
 
+        mRecyclerView = findViewById(R.id.photos_lv);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+
         // Получили переданное значение
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
         if ((mode==ConstantManager.MODE_EDIT_RECORD) || (mode==ConstantManager.MODE_VIEW_RECORD)) {
@@ -86,20 +97,27 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mCloseRec = getIntent().getBooleanExtra(ConstantManager.RECORD_CLOSE,false);
             mKeyHash = getIntent().getStringExtra(ConstantManager.RECORD_PASS_SAVE);
             String sf = getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE);
-            if (sf != null) {
+/*            if (sf != null) {
                 mPhotoFile = new File(getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE));
                 mPhotoView.setVisibility(View.VISIBLE);
                 //mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
                 mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
-            }
+            }*/
             String[] photoFiles = getIntent().getStringArrayExtra(ConstantManager.RECORD_PHOTO_FILES);
             mPhotoFiles = new ArrayList<>(Arrays.asList(photoFiles));
+
             System.out.println("LIST PHOTO -----");
             if (mPhotoFiles != null ) {
                 for (String s : mPhotoFiles) {
                     Log.d(TAG, s);
                 }
             }
+
+            if (mPhotoItemsAdapter == null){
+                mPhotoItemsAdapter = new PhotoItemsAdapter(mPhotoFiles,mOnClickImageListener);
+                mRecyclerView.setAdapter(mPhotoItemsAdapter);
+            }
+
 
         }
         if (mode == ConstantManager.MODE_VIEW_RECORD){
@@ -392,6 +410,15 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+    PhotoItemsAdapter.OnClickImageListener mOnClickImageListener = new PhotoItemsAdapter.OnClickImageListener() {
+        @Override
+        public void onClickImageListener(int position, String photoFile) {
+            Intent intent = new Intent(ItemActivity.this,PhotoViewActivity.class);
+            intent.putExtra(ConstantManager.RECORD_PHOTO_FILE,photoFile);
+            startActivity(intent);
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
