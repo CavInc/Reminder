@@ -19,10 +19,9 @@ import cav.reminder.utils.Func;
 
 public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
 
-    private LayoutInflater mInflater;
-    private int resLayout;
-    private RecordHeaderRes[] objects;
-    private Context mContext;
+    private final LayoutInflater mInflater;
+    private final int resLayout;
+    private final Context mContext;
 
     public DataAdapter(Context context, int resource, ArrayList<RecordHeaderRes> objects) {
         super(context, resource, objects);
@@ -38,12 +37,12 @@ public class DataAdapter extends ArrayAdapter<RecordHeaderRes> {
         if(row==null){
             row = mInflater.inflate(resLayout,parent,false);
             holder = new ViewHolder();
-            holder.headerRec = (TextView) row.findViewById(R.id.recordTitle);
-            holder.dataRec = (TextView) row.findViewById(R.id.dateTitle);
-            holder.bodyRec = (TextView) row.findViewById(R.id.smallBodyRec);
-            holder.closeRec = (ImageView) row.findViewById(R.id.item_closerec_img);
-            holder.photoFile = (ImageView) row.findViewById(R.id.item_photo_img);
-            holder.todoItem = (ImageView) row.findViewById(R.id.item_todo);
+            holder.headerRec = row.findViewById(R.id.recordTitle);
+            holder.dataRec = row.findViewById(R.id.dateTitle);
+            holder.bodyRec = row.findViewById(R.id.smallBodyRec);
+            holder.closeRec = row.findViewById(R.id.item_closerec_img);
+            holder.photoFile = row.findViewById(R.id.item_photo_img);
+            holder.todoItem =  row.findViewById(R.id.item_todo);
             row.setTag(holder);
         }else{
             holder = (ViewHolder)row.getTag();
