@@ -432,8 +432,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                     //TODO Тут нужен показ всех иконок в карусели
 
 
-                    mPhotoView.setVisibility(View.VISIBLE);
-                    mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
+                    //mPhotoView.setVisibility(View.VISIBLE);
+                    //mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
                 } else {
                     mPhotoFile = null;
                 }
