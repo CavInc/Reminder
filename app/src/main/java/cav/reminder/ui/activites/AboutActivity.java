@@ -19,8 +19,9 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setupToolbar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setupToolbar(toolbar);
+        setupToolBar();
 
         ((TextView) findViewById(R.id.about_vesion)) .setText(BuildConfig.VERSION_NAME);
     }
@@ -34,6 +35,14 @@ public class AboutActivity extends AppCompatActivity {
         }
 
     }
+
+    public void setupToolBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

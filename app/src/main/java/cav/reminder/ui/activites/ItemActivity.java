@@ -71,7 +71,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item);
 
-        Toolbar toolbar =  findViewById(R.id.toolbar);
+        //Toolbar toolbar =  findViewById(R.id.toolbar);
 
 
         mShort =  findViewById(R.id.short_et);
@@ -81,7 +81,8 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         mPhotoView.setOnClickListener(this);
 
         mSaveButton.setOnClickListener(this);
-        setupToolbar(toolbar);
+        //setupToolbar(toolbar);
+        setupToolBar();
 
         mRecyclerView = findViewById(R.id.photos_lv);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -140,6 +141,14 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         }
 
     }
+
+    public void setupToolBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 
     @Override
     protected void onResume() {

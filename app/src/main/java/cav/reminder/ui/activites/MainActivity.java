@@ -76,9 +76,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         //setDataBase();
         mDataManager = DataManager.getInstance();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        setupToolbar(toolbar);
+        //Toolbar toolbar = findViewById(R.id.toolbar);
+        //setupToolbar(toolbar);
+        setupToolBar();
 
         mListView = findViewById(R.id.listView);
 
@@ -138,6 +138,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+    }
+
+    public void setupToolBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override

@@ -57,7 +57,7 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_todo);
 
         mDataManager = DataManager.getInstance();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mFabNew = (FloatingActionButton) findViewById(R.id.fab_todo_add_item);
 
         mFabNew.setOnClickListener(this);
@@ -86,7 +86,8 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         mTodoAdapter = new TodoAdapter(this,R.layout.todo_item,model);
         mListView.setAdapter(mTodoAdapter);
 
-        setupToolbar(toolbar);
+        //setupToolbar(toolbar);
+        setupToolBar();
 
         if (mode == ConstantManager.MODE_VIEW_RECORD) {
             mName.setFocusable(false);
@@ -105,6 +106,14 @@ public class TodoActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    public void setupToolBar(){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
