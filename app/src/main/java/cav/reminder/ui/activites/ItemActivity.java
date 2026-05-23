@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,6 +39,9 @@ import cav.reminder.ui.adapters.PhotoItemsAdapter;
 import cav.reminder.ui.dialogs.KeyDialog;
 import cav.reminder.utils.ConstantManager;
 import cav.reminder.utils.Func;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
@@ -73,12 +77,13 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
 
         //Toolbar toolbar =  findViewById(R.id.toolbar);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         mShort =  findViewById(R.id.short_et);
         mLong = findViewById(R.id.long_et);
         mSaveButton =  findViewById(R.id.save_item_button);
-        mPhotoView =  findViewById(R.id.photo_item);
-        mPhotoView.setOnClickListener(this);
+        //mPhotoView =  findViewById(R.id.photo_item);
+        //mPhotoView.setOnClickListener(this);
 
         mSaveButton.setOnClickListener(this);
         //setupToolbar(toolbar);
@@ -88,7 +93,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(layoutManager);
 
-
         // Получили переданное значение
         mode = getIntent().getIntExtra(ConstantManager.MODE_RECORD,-1);
         if ((mode==ConstantManager.MODE_EDIT_RECORD) || (mode==ConstantManager.MODE_VIEW_RECORD)) {
@@ -97,30 +101,19 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mRecID = getIntent().getIntExtra(ConstantManager.RECORD_ID,-1);
             mCloseRec = getIntent().getBooleanExtra(ConstantManager.RECORD_CLOSE,false);
             mKeyHash = getIntent().getStringExtra(ConstantManager.RECORD_PASS_SAVE);
-            String sf = getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE);
-/*            if (sf != null) {
-                mPhotoFile = new File(getIntent().getStringExtra(ConstantManager.RECORD_PHOTO_FILE));
-                mPhotoView.setVisibility(View.VISIBLE);
-                //mPhotoView.setImageURI(Uri.fromFile(mPhotoFile));
-                mPhotoView.setImageBitmap(Func.getPicSize(mPhotoFile.toString(),600,400));
-            }*/
             String[] photoFiles = getIntent().getStringArrayExtra(ConstantManager.RECORD_PHOTO_FILES);
             mPhotoFiles = new ArrayList<>(Arrays.asList(photoFiles));
-
-            System.out.println("LIST PHOTO -----");
-            if (mPhotoFiles != null ) {
-                for (String s : mPhotoFiles) {
-                    Log.d(TAG, s);
-                }
+            if (photoFiles.length == 0) {
+                mRecyclerView.setVisibility(GONE);
+            } else {
+                mRecyclerView.setVisibility(VISIBLE);
             }
-
             if (mPhotoItemsAdapter == null){
                 mPhotoItemsAdapter = new PhotoItemsAdapter(mPhotoFiles,mOnClickImageListener);
                 mRecyclerView.setAdapter(mPhotoItemsAdapter);
             }
-
-
         }
+
         if (mode == ConstantManager.MODE_VIEW_RECORD){
             mShort.setFocusable(false);
             mShort.setLongClickable(false);
@@ -130,16 +123,6 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
             mLong.setCursorVisible(false);
             mSaveButton.setText(R.string.close_button_txt);
         }
-
-    }
-
-    private void setupToolbar(Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar!=null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
     }
 
     public void setupToolBar(){
@@ -337,7 +320,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
                 Log.d(TAG,mKeyHash);
                 if (Func.md5Hash(keyPass).equals(mKeyHash)){
                     Log.d(TAG,"PASS SUCCEFUL");
-                    mLong.setVisibility(View.VISIBLE);
+                    mLong.setVisibility(VISIBLE);
                 } else {
                     Log.d(TAG,"NO PASS");
                     finish();
@@ -453,6 +436,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
     }
 
     // обрезка изображения
+/*
     private void setPic(String mCurrentPhotoPath) {
         // Get the dimensions of the View
         int targetW = mPhotoView.getWidth();
@@ -476,6 +460,7 @@ public class ItemActivity extends BaseActivity implements View.OnClickListener {
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         mPhotoView.setImageBitmap(bitmap);
     }
+*/
 
 
 }
